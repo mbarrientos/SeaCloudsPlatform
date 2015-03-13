@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SeaClouds Dashboard - Add new application wizard</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="css/lib/metisMenu.min.css" rel="stylesheet">
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+
+    <!-- Bootstrap wizard  -->
+    <link href="css/lib/bootstrap-wizard.css" rel="stylesheet">
+
+
+
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation"
+         style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-brand extrnLink"
+               href="http://www.seaclouds-project.eu/"> <img
+                    class="img-responsive " src="img/seaclouds-header.png"
+                    style="max-width: 100px; margin-top: -18px;" alt="SeaClouds project main website">
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">SeaClouds Dashboard</a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <!-- TODO: Get alert number from Monitoring API -->
+        <ul class="nav navbar-top-links navbar-right">
+
+            <li id ="loading-spinner"></li>
+            <li class="divider"></li>
+            <li class="divider"></li>
+            <li class="divider"></li>
+
+
+            <li class="dropdown"><a class="dropdown-toggle"
+                                    data-toggle="dropdown" href="#"><span class="badge">0</span><i
+                    class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li><a href="#">
+                        <div>
+                            <i class="fa fa-exclamation fa-fw"></i>This feature will be
+                            available in prior releases<span
+                                class="pull-right text-muted small">Just now</span>
+                        </div>
+                    </a></li>
+                    <li class="divider"></li>
+
+                    <!-- TODO: Open all alerts page -->
+                    <li class="disabled"><a class="text-center" href="#"> <strong>See
+                        All Alerts</strong> <i class="fa fa-angle-right"></i>
+                    </a></li>
+                </ul>
+            </li>
+                <!-- /.dropdown-alerts -->
+            <!-- /.dropdown -->
+            <li class="dropdown"><a class="dropdown-toggle"
+                                    data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
+                <i class="fa fa-caret-down"></i>
+            </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li class="disabled"><a href="#"><i
+                            class="fa fa-user fa-fw"></i>User Profile</a></li>
+                    <li class="disabled"><a href="#"><i
+                            class="fa fa-gear fa-fw"></i>Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="fa fa-exclamation fa-fw"></i>
+                        This feature will be available in prior releases</a></li>
+                </ul>
+                <!-- /.dropdown-user --></li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-nav sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li><a href="index.html"><i class="fa fa-dashboard fa-home"></i>&nbsp;Home</a></li>
+                    <li class="">
+                            <a href="#"><i class="fa fa-magic"></i> SeaClouds Assistants<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" aria-expanded="false" style="height: 0px;">
+                                <li><a href="wizard.html" class=""><strong><i class="fa fa-plus-circle"></i>&nbsp;Add new application</strong></a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-minus-circle"></i>&nbsp;Remove application</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-external-link"></i>&nbsp;Migrate application</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                    </li>
+
+
+                    <li><a href="monitor.html" class=""><i class="fa fa-dashboard"></i>&nbsp;Monitor</a></li>
+                    <li><a href="sla.html" class=""><i class="fa fa-file-text-o"></i>&nbsp;SLA Service</a></li>
+                    <li class="">
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i>&nbsp;Avanced Module Usage<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" aria-expanded="false" style="height: 0px;">
+                                <li><a href="not-available.html" class=""><i class="fa fa-pencil-square-o"></i>&nbsp;Module Profile Designer</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-search"></i>&nbsp;Discoverer</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-puzzle-piece"></i>&nbsp;Matchmaker</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-rocket"></i>&nbsp;Optimizer</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-sitemap"></i>&nbsp;Planner</a></li>
+                                <li><a href="deployer.html" class=""><i class="fa fa-download"></i>&nbsp;Deployer</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                    </li>
+                </ul>
+                <!-- /#side-menu -->
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Add new application wizard
+                    <small>Design and deploy cloud software</small> 
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default" id="panel-step-1">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle">1</a>
+                                            <p>Design your Application Topology</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                                            <p>Restrictions and SLA</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                                            <p>Finding appropiate Cloud Providers</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                                            <p>Ready to deploy</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="vertical-align:middle">
+                            <div class="col-lg-6 col-lg-offset-4"> 
+                                <img class="img-responsive" src="img/wizard/step1.png">
+                            </div>
+                    </div>
+                    <div class="panel-footer ">
+                          <button type="button" class="btn btn-default" onclick="previousStep()" disabled>Back</button>
+                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+                    </div>
+                </div>
+                <!-- /panel-step-1 -->
+
+
+                <div class="panel panel-default hidden" id="panel-step-2">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+                                            <p>Design your Application Topology</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle">2</a>
+                                            <p>Restrictions and SLA</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                                            <p>Finding appropiate Cloud Providers</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                                            <p>Ready to deploy</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="vertical-align:middle">
+                            <div class="col-lg-6 col-lg-offset-4"> 
+                                <img class="img-responsive" src="img/wizard/step2.png">
+                            </div>
+                    </div>
+                    <div class="panel-footer">
+                          <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
+                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+
+                    </div>
+                </div>
+                <!-- /panel-step-2 -->
+
+
+                <div class="panel panel-default hidden" id="panel-step-3">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+                                            <p>Design your Application Topology</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle"disabled="disabled">2</a>
+                                            <p>Restrictions and SLA</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle" >3</a>
+                                            <p>Finding appropiate Cloud Providers</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                                            <p>Ready to deploy</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="vertical-align:middle">
+                            <div class="col-lg-6 col-lg-offset-4"> 
+                                <img class="img-responsive" src="img/wizard/step3.png">
+                            </div>
+                    </div>
+                    <div class="panel-footer">
+                          <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
+                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+
+                    </div>
+                </div>
+                <!-- /panel-step-3 -->
+
+                <div class="panel panel-default hidden" id="panel-step-4">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+                                            <p>Design your Application Topology</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle"disabled="disabled">2</a>
+                                            <p>Restrictions and SLA</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" >3</a>
+                                            <p>Finding appropiate Cloud Providers</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle" disabled="disabled">4</a>
+                                            <p>Ready to deploy</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="vertical-align:middle">
+                            <div class="col-lg-6 col-lg-offset-4"> 
+                                <img class="img-responsive" src="img/wizard/step4.png">
+                            </div>
+                    </div>
+                    <div class="panel-footer">
+                          <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
+                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+
+                    </div>
+                </div>
+                <!-- /panel-step-4 -->
+
+                <div class="panel panel-default hidden" id="panel-step-5">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+                                            <p>Design your Application Topology</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle"disabled="disabled">2</a>
+                                            <p>Restrictions and SLA</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" >3</a>
+                                            <p>Finding appropiate Cloud Providers</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+                                            <p>Ready to deploy</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle" disabled="disabled">5</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="vertical-align:middle">
+                            <div class="col-lg-6 col-lg-offset-4"> 
+                                <img class="img-responsive" src="img/wizard/step5.png">
+                            </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-default" onclick="previousStep()" disabled>Back</button>
+                        <a href="monitor.html" type="button" class="btn btn-primary" >Go to Monitor</a>
+                        <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+                    </div>
+                </div>
+                <!-- /panel-step-4 -->
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Core Scripts - Include with every page -->
+<script src="js/lib/jquery-1.10.2.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/lib/metisMenu.min.js"></script>
+<script src="js/lib/spin.min.js"></script>
+
+<!-- SB Admin Scripts - Include with every page -->
+<script src="js/sb-admin.js"></script>
+
+<!-- SeaClouds configuration constants -->
+<script src="js/config.js"></script>
+
+<script type="text/javascript">
+var currentStep = 1;
+
+function previousStep(){
+    if(currentStep != 1){
+        $('#panel-step-' + currentStep).addClass('hidden');
+        currentStep--;
+        $('#panel-step-' + currentStep).removeClass('hidden');
+    }
+}
+
+function nextStep(){
+    if(currentStep != 5){
+        $('#panel-step-' + currentStep).addClass('hidden');
+        currentStep++;
+        $('#panel-step-' + currentStep).removeClass('hidden');
+    }
+}
+
+</script>
+
+</body>
+
+</html>
