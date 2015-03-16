@@ -167,7 +167,7 @@
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Ready to deploy</p>
+                                            <p>Configuration summary</p>
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
@@ -179,14 +179,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-body" style="vertical-align:middle">
-                            <div class="col-lg-6 col-lg-offset-4"> 
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;vertical-align:middle">
+                            <div class="col-lg-6 col-lg-offset-4">
                                 <img class="img-responsive" src="img/wizard/step1.png">
                             </div>
                     </div>
                     <div class="panel-footer ">
                           <button type="button" class="btn btn-default" onclick="previousStep()" disabled>Back</button>
-                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <button type="button" class="btn btn-default btn-primary" onclick="nextStep()">Next</button>
                           <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Ready to deploy</p>
+                                            <p>Configuration summary</p>
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
@@ -224,14 +224,95 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-body" style="vertical-align:middle">
-                            <div class="col-lg-6 col-lg-offset-4"> 
-                                <img class="img-responsive" src="img/wizard/step2.png">
-                            </div>
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                            <div class="col-lg-8">
+                                <table class="table table-striped">
+                                    <legend>Enabled restrictions</legend>
+                                <thead>
+                                <td><strong>Entity</strong></td>
+                                <td><strong>Metric</strong></td>
+                                <td><strong>Action</strong></td>
+                                <td><strong>Rule</strong></td>
+                                <td></td>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>PHP</td>
+                                        <td>Response time</td>
+                                        <td>Scale-up</td>
+                                        <td>Less than 120ms</td>
+                                        <td><button type="button" class="close" aria-label="Remove"><span aria-hidden="true">&times;</span></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>PHP</td>
+                                        <td>Average CPU usage</td>
+                                        <td>Scale-Down</td>
+                                        <td>Less than 60%</td>
+                                        <td><button type="button" class="close" aria-label="Remove"><span aria-hidden="true">&times;</span></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>MySQL</td>
+                                        <td>Transactions per seconds</td>
+                                        <td>Migrate</td>
+                                        <td>Greater than 1000</td>
+                                        <td><button type="button" class="close" aria-label="Remove"><span aria-hidden="true">&times;</span></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-4">
+                            <form class="form-horizontal">
+                                <legend>Add new constrain</legend>
+
+                                <div class="form-group">
+                                    <label for="entitySelector" class="col-sm-2 control-label">Entity</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="entitySelector">
+                                            <option>PHP</option>
+                                            <option>RESTEasy</option>
+                                            <option>MySQL</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="metricSelector" class="col-sm-2 control-label">Metric</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="metricSelector">
+                                            <option>Response Time</option>
+                                            <option>Transactions per second</option>
+                                            <option>Average CPU Usage</option>
+                                            <option>Average RAM Usage</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="entitySelector" class="col-sm-2 control-label">Action</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="actionSelector">
+                                            <option>Scale-Up</option>
+                                            <option>Scale-Down</option>
+                                            <option>Migrate</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ruleInput" class="col-sm-2 control-label">Rule</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ruleInput" placeholder="EQUAL TO 120">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button type="submit" class="btn btn-default">Sign in</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
                     </div>
                     <div class="panel-footer">
                           <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
-                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <button type="button" class="btn btn-default btn-primary" onclick="nextStep()">Next</button>
                           <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
 
                     </div>
@@ -259,7 +340,7 @@
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Ready to deploy</p>
+                                            <p>Configuration summary</p>
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
@@ -270,14 +351,84 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-body" style="vertical-align:middle">
-                            <div class="col-lg-6 col-lg-offset-4"> 
-                                <img class="img-responsive" src="img/wizard/step3.png">
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            <strong>PHP</strong> <i class="fa fa-long-arrow-right"></i>  <strong>Amazon EC2</strong> <i class="fa fa-check text-success pull-right"></i>
+                                       </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body">
+                                        <p>
+                                            Amazon Elastic Compute Cloud (EC2) is a central part of Amazon.com's cloud computing platform, Amazon Web Services (AWS).
+                                            EC2 allows users to rent virtual computers on which to run their own computer applications. EC2 allows scalable deployment
+                                            of applications by providing a Web service through which a user can boot an Amazon Machine Image to create a virtual machine,
+                                            which Amazon calls an "instance", containing any software desired. A user can create, launch, and terminate server instances as needed,
+                                            paying by the hour for active servers, hence the term "elastic". EC2 provides users with control over the geographical location
+                                            of instances that allows for latency optimization and high levels of redundancy.
+                                        </p>
+                                        <strong><i class="fa fa-sliders"> Option summary</i></strong>
+                                        <ul>
+                                            <li>  <i class="fa fa-cubes"></i> Compute units: <span class="text-success">5 Units</span></li>
+                                            <li>  <i class="fa fa-flash"></i> Available RAM: <span class="text-success">8 Gigabytes</span></li>
+                                            <li>  <i class="fa fa-exchange"></i> Bandwidth: <span class="text-success">100 Megabytes/s</span></li>
+                                            <li>  <i class="fa fa-money"></i> Monthly costs: <span class="text-success">100 USD</span></li>
+
+
+                                        </ul>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button type="button" class="btn btn-default">More information</button>
+                                        <button type="button" class="btn btn-primary">Change target provider</button>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            <strong>RESTEasy</strong> <i class="fa fa-long-arrow-right"></i>  <strong>HP</strong> <i class="fa fa-check text-success pull-right"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button type="button" class="btn btn-default">More information</button>
+                                        <button type="button" class="btn btn-primary">Change target provider</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingThree">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            <strong>MySQL</strong> <i class="fa fa-long-arrow-right"></i>  <strong>HP</strong> <i class="fa fa-check text-success pull-right"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                    <div class="panel-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                    <div class="panel-footer">
+                                        <button type="button" class="btn btn-default">More information</button>
+                                        <button type="button" class="btn btn-primary">Change target provider</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="panel-footer">
                           <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
-                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <button type="button" class="btn btn-default btn-primary" onclick="nextStep()">Next</button>
                           <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
 
                     </div>
@@ -299,30 +450,92 @@
                                             <p>Restrictions and SLA</p>
                                         </div>
                                         <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" >3</a>
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled" >3</a>
                                             <p>Finding appropiate Cloud Providers</p>
                                         </div>
                                         <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-primary btn-circle" disabled="disabled">4</a>
-                                            <p>Ready to deploy</p>
+                                            <a href="#" type="button" class="btn btn-primary btn-circle">4</a>
+                                            <p>Configuration summary</p>
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
-                                            <p>Process Summary</p>
+                                            <p>Process result</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel-body" style="vertical-align:middle">
-                            <div class="col-lg-6 col-lg-offset-4"> 
-                                <img class="img-responsive" src="img/wizard/step4.png">
-                            </div>
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                        <h3><span class="text-muted">Your process is almost over, please just take a look before deploying your application</span></h3>
+                        <hr>
+                        <span style="padding-left: 20px"><strong>PHP</strong></span>
+                        <ul>
+                            <li>
+                                Hardware overview:
+                                <ul class="list-inline">
+                                    <li style="padding-left: 5px"><strong>Compute units:</strong> 5 Units</li>
+                                    <li><strong>Available RAM:</strong> 8 Gigabytes</li>
+                                    <li><strong>Bandwidth:</strong> 100 Megabytes/s</li>
+                                    <li><strong>Location:</strong> Amazon EC2</li>
+                                    <li><strong>Monthly Cost (Estimated):</strong> 100 USD</li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                Reconfiguration Strategies:
+                                <ul>
+                                    <li style="padding-left: 5px">Scale-up when Response Time is less than 120ms</li>
+                                    <li style="padding-left: 5px">Scale-down when Average CPU usage is less than 60%</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <span style="padding-left: 20px"><strong>RESTEasy</strong></span>
+                        <ul>
+                            <li>
+                                Hardware overview:
+                                    <ul class="list-inline">
+                                        <li style="padding-left: 5px"><strong>Compute units:</strong> 3 Units</li>
+                                        <li><strong>Available RAM:</strong> 2 Gigabytes</li>
+                                        <li><strong>Bandwidth:</strong> 100 Megabytes/s</li>
+                                        <li><strong>Location:</strong> Amazon EC2</li>
+                                        <li><strong>Monthly Cost (Estimated):</strong> 80 USD</li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    Reconfiguration Strategies:
+                                    <ul class="list-inline">
+                                        <li style="padding-left: 5px">None</li>
+                                    </ul>
+                                </li>
+                        </ul>
+                        <span style="padding-left: 20px"><strong>MySQL</strong></span>
+                        <ul>
+                            <li>
+                                Hardware overview:
+                                <ul class="list-inline">
+                                    <li style="padding-left: 5px"><strong>Compute units:</strong> 4 Units</li>
+                                    <li><strong>Available RAM:</strong> 16 Gigabytes</li>
+                                    <li><strong>Bandwidth:</strong> 100 Megabytes/s</li>
+                                    <li><strong>Location:</strong> Amazon EC2</li>
+                                    <li><strong>Monthly Cost (Estimated):</strong> 150 USD</li>
+
+                                </ul>
+                            </li>
+                            <li>
+                                Reconfiguration Strategies:
+                                <ul>
+                                    <li style="padding-left: 5px">Migrate when Transactions per seconds are greater than 1000</li>
+                                </ul>
+                            </li>
+                        </ul>
+
                     </div>
                     <div class="panel-footer">
                           <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
-                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Next</button>
+                          <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Deploy</button>
                           <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
 
                     </div>
@@ -344,15 +557,15 @@
                                             <p>Restrictions and SLA</p>
                                         </div>
                                         <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" >3</a>
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled" >3</a>
                                             <p>Finding appropiate Cloud Providers</p>
                                         </div>
                                         <div class="stepwizard-step">
                                             <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Ready to deploy</p>
+                                            <p>Configuration summary</p>
                                         </div>
                                         <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-primary btn-circle" disabled="disabled">5</a>
+                                            <a href="#" type="button" class="btn btn-primary btn-circle">5</a>
                                             <p>Process Summary</p>
                                         </div>
                                     </div>
@@ -360,10 +573,33 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel-body" style="vertical-align:middle">
-                            <div class="col-lg-6 col-lg-offset-4"> 
-                                <img class="img-responsive" src="img/wizard/step5.png">
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                        <h3><span class="text-muted">Please hold on while we deploy your application</span></h3>
+                        <hr>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                100%
                             </div>
+                        </div>
+                        <h3>Process log</h3>
+                        <code style="padding-left: 0px;">
+                            Deployer: Processing the DAM file... Done<br>
+                            Deployer: Verifying application container integrity... Done<br>
+                            Deployer: Checking if the user has the needed credentials... Done<br>
+                            Deployer: Deploying MySQL to HP... Done<br>
+                            Deployer: Deploying RESTEasy to HP... Done<br>
+                            Deployer: Deploying PHP to Amazon EC2... Done<br>
+                            Deployer: Wiring application... Done<br>
+                            Deployer: Waiting until the applications becomes available... Done<br>
+                            Deployer: Configuring the Monitoring Agents... Done<br>
+                            Deployer: Deploying the Monitoring Agents... Done<br>
+                            Deployer: Checking conectivity with the Monitoring Agents... Done<br>
+                            Deployer: Everything done.<br>
+
+
+
+
+                        </code>
                     </div>
                     <div class="panel-footer">
                         <button type="button" class="btn btn-default" onclick="previousStep()" disabled>Back</button>
@@ -406,13 +642,14 @@ function previousStep(){
     }
 }
 
-function nextStep(){
-    if(currentStep != 5){
+function nextStep() {
+    if (currentStep != 5) {
         $('#panel-step-' + currentStep).addClass('hidden');
         currentStep++;
         $('#panel-step-' + currentStep).removeClass('hidden');
     }
 }
+
 
 </script>
 
