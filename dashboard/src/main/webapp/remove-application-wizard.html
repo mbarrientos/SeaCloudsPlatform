@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SeaClouds Dashboard - Delete new application wizard</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="css/lib/metisMenu.min.css" rel="stylesheet">
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+
+    <!-- Bootstrap wizard  -->
+    <link href="css/lib/bootstrap-wizard.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation"
+         style="margin-bottom: 0">
+        <div class="navbar-header">
+            <a class="navbar-brand extrnLink"
+               href="http://www.seaclouds-project.eu/"> <img
+                    class="img-responsive " src="img/seaclouds-header.png"
+                    style="max-width: 100px; margin-top: -18px;" alt="SeaClouds project main website">
+            </a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".sidebar-collapse">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">SeaClouds Dashboard</a>
+        </div>
+        <!-- /.navbar-header -->
+
+        <ul class="nav navbar-top-links navbar-right">
+
+            <li id ="loading-spinner"></li>
+            <li class="divider"></li>
+            <li class="divider"></li>
+            <li class="divider"></li>
+
+            <li class="dropdown"><a class="dropdown-toggle"
+                                    data-toggle="dropdown" href="#"><span class="badge">0</span><i
+                    class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i> </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li><a href="#">
+                        <div>
+                            <i class="fa fa-exclamation fa-fw"></i>This feature will be
+                            available in prior releases<span
+                                class="pull-right text-muted small">Just now</span>
+                        </div>
+                    </a></li>
+                    <li class="divider"></li>
+
+                    <li class="disabled"><a class="text-center" href="#"> <strong>See
+                        All Alerts</strong> <i class="fa fa-angle-right"></i>
+                    </a></li>
+                </ul>
+            </li>
+                <!-- /.dropdown-alerts -->
+            <!-- /.dropdown -->
+            <li class="dropdown"><a class="dropdown-toggle"
+                                    data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw"></i>
+                <i class="fa fa-caret-down"></i>
+            </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li class="disabled"><a href="#"><i
+                            class="fa fa-user fa-fw"></i>User Profile</a></li>
+                    <li class="disabled"><a href="#"><i
+                            class="fa fa-gear fa-fw"></i>Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#"><i class="fa fa-exclamation fa-fw"></i>
+                        This feature will be available in prior releases</a></li>
+                </ul>
+                <!-- /.dropdown-user --></li>
+            <!-- /.dropdown -->
+        </ul>
+        <!-- /.navbar-top-links -->
+
+        <div class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-nav sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li><a href="index.html"><i class="fa fa-dashboard fa-home"></i>&nbsp;Home</a></li>
+                    <li class="">
+                            <a href="#"><i class="fa fa-magic"></i> SeaClouds Assistants<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" aria-expanded="false" style="height: 0px;">
+                                <li><a href="add-application-wizard.html" class=""><i class="fa fa-plus-circle"></i>&nbsp;Add new application</a></li>
+                                <li><a href="remove-application-wizard.html" class=""><strong><i class="fa fa-minus-circle"></i>&nbsp;Remove application</strong></a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-external-link"></i>&nbsp;Migrate application</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                    </li>
+
+                    <li><a href="monitor.html" class=""><i class="fa fa-dashboard"></i>&nbsp;Monitor</a></li>
+                    <li><a href="sla.html" class=""><i class="fa fa-file-text-o"></i>&nbsp;SLA Service</a></li>
+                    <li class="">
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i>&nbsp;Avanced Module Usage<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" aria-expanded="false" style="height: 0px;">
+                                <li><a href="not-available.html" class=""><i class="fa fa-pencil-square-o"></i>&nbsp;Module Profile Designer</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-search"></i>&nbsp;Discoverer</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-puzzle-piece"></i>&nbsp;Matchmaker</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-rocket"></i>&nbsp;Optimizer</a></li>
+                                <li><a href="not-available.html" class=""><i class="fa fa-sitemap"></i>&nbsp;Planner</a></li>
+                                <li><a href="deployer.html" class=""><i class="fa fa-download"></i>&nbsp;Deployer</a></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                    </li>
+                </ul>
+                <!-- /#side-menu -->
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Remove application wizard
+                    <small>Expunge an existing application</small>
+                </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default" id="panel-step-1">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle">1</a>
+                                            <p>Choose your application</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                                            <p>Confirm the removal</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                      </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;vertical-align:middle">
+                        <div class="col-lg-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading clearfix"><i class="fa fa-gears fa-fw"></i> PetStore
+                                    <input class="pull-right" type="checkbox" disabled>
+
+                                </div>
+                                <div class="panel-body">
+                                    <strong>ID: </strong> To2T3RR<br>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <strong>Application Components</strong>
+                                        </li>
+                                        <li  class="dropdown-header">
+                                            <i class="fa fa-search"></i> Web Server</i>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" style="padding-left : 15%">
+                                                <li>
+                                                    <i class="fa fa-chevron-right"></i> <strong>ID: </strong>JD33ZT9U
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-chevron-right"></i> <strong>Type: </strong>Node JS 0.10
+                                                </li>
+                                                <li role="presentation" class="dropdown-header">
+                                                    <a href="#" data-toggle="collapse" class="active" data-target="#JD33ZT9U-locations-collapse"><i
+                                                            class="fa fa-map-marker"></i> Locations <i
+                                                            class="fa fa-angle-down"></i></a></li>
+                                                <li id="JD33ZT9U-locations-collapse" class="collapse">
+                                                    <ul class="list-unstyled" style="padding-left : 5%">
+                                                        <li>
+                                                            <i class="fa fa-chevron-right"></i> <strong>Name: </strong>Pivotal CloudFoundry
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li  class="dropdown-header">
+                                            <i class="fa fa-search"></i> Database </i>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" style="padding-left : 15%">
+                                                <li>
+                                                    <i class="fa fa-chevron-right"></i> <strong>ID: </strong>RR33NND
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-chevron-right"></i> <strong>Type: </strong>Mongo DB Cluster
+                                                </li>
+                                                <li role="presentation" class="dropdown-header">
+                                                    <a href="#" data-toggle="collapse" class="active" data-target="#RR33NND-locations-collapse"><i
+                                                            class="fa fa-map-marker"></i> Locations <i
+                                                            class="fa fa-angle-down"></i></a></li>
+                                                <li id="RR33NND-locations-collapse" class="collapse">
+                                                    <ul class="list-unstyled" style="padding-left : 5%">
+                                                        <li>
+                                                            <i class="fa fa-chevron-right"></i> <strong>Name: </strong>Amazon EC2
+                                                        </li>
+                                                        <li>
+                                                            <i class="fa fa-chevron-right"></i> <strong>Name: </strong>HP Cloud
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading clearfix"><i class="fa fa-gears fa-fw"></i> SeaClouds Website
+                                    <input class="pull-right" type="checkbox" checked>
+
+                                </div>
+                                <div class="panel-body">
+                                    <strong>ID: </strong> PPr2eTT<br>
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <strong>Application Components</strong>
+                                        </li>
+                                        <li  class="dropdown-header">
+                                            <i class="fa fa-search"></i> Web Server</i>
+                                        </li>
+                                        <li>
+                                            <ul class="list-unstyled" style="padding-left : 15%">
+                                                <li>
+                                                    <i class="fa fa-chevron-right"></i> <strong>ID: </strong>ZKse12S
+                                                </li>
+                                                <li>
+                                                    <i class="fa fa-chevron-right"></i> <strong>Type: </strong>JBoss AS7
+                                                </li>
+                                                <li role="presentation" class="dropdown-header">
+                                                    <a href="#" data-toggle="collapse" class="active" data-target="#ZKse12S-locations-collapse"><i
+                                                            class="fa fa-map-marker"></i> Locations <i
+                                                            class="fa fa-angle-down"></i></a></li>
+                                                <li id="ZKse12S-locations-collapse" class="collapse">
+                                                    <ul class="list-unstyled" style="padding-left : 5%">
+                                                        <li>
+                                                            <i class="fa fa-chevron-right"></i> <strong>Name: </strong>OpenShift
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer ">
+                        <button type="button" class="btn btn-default" onclick="previousStep()" disabled>Back</button>
+                        <button type="button" class="btn btn-default btn-primary" onclick="nextStep()">Next</button>
+                        <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+                    </div>
+                </div>
+                <!-- /panel-step-1 -->
+
+
+                <div class="panel panel-default hidden" id="panel-step-2">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+                                            <p>Choose your application</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle" >2</a>
+                                            <p>Confirm the removal</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;vertical-align:middle; position:relative">
+                        <h3>Application to be removed</h3>
+                        <hr>
+                        <ul>
+                            <li><strong>Name: </strong> SeaClouds Website </li>
+                            <li><strong>Uptime:</strong> 1 year 4 days 7 hours 54 minutes</li>
+                            <li><strong>Main url:</strong> http://www.seaclouds-project.eu</li>
+                            <li><strong>Active SLA violations:</strong> None</li>
+                            <li><strong>Last SLA violation:</strong> March 07 2014</li>
+                            <li><strong>Modules: </strong> 1
+                                <ul>
+                                    <li>JBoss AS7 in Amazon EC2</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <p class="text-center" style="position: absolute;  bottom: 0px;  margin-left: auto; margin-right: auto;
+                            left: 0; right: 0;">
+                            <strong> You are going to <span class="text-danger">REMOVE</span> this application, this process is
+                            <span class="text-danger">IRREVERSIBLE</span> are you sure?</strong>
+                        </p>
+                    </div>
+                    <div class="panel-footer ">
+                        <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
+                        <button type="button" class="btn btn-default btn-danger" onclick="nextStep()">YES</button>
+                        <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+                    </div>
+                </div>
+                <!-- /panel-step-2 -->
+
+
+                <div class="panel panel-default hidden" id="panel-step-3">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="stepwizard">
+                                    <div class="stepwizard-row setup-panel">
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+                                            <p>Choose your application</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                                            <p>Confirm the removal</p>
+                                        </div>
+                                        <div class="stepwizard-step">
+                                            <a href="#" type="button" class="btn btn-primary btn-circle" >3</a>
+                                            <p>Process Summary</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                        <h3><span class="text-muted">Please hold on while we remove your application</span></h3>
+                        <hr>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                100%
+                            </div>
+                        </div>
+                        <h3>Process log</h3>
+                        <code style="padding-left: 0px;">
+                            Deployer: Verifying exiting dependencies... Done<br>
+                            Monitor:  Disabling Monitoring Agents... Done<br>
+                            Deployer: Stopping running entities... Done<br>
+                            Deployer: Removing instances... Done<br>
+                            Deployer: Everything done.<br>
+                        </code>
+                    </div>
+                    <div class="panel-footer ">
+                        <button type="button" class="btn btn-default" disabled>Back</button>
+                        <a href="monitor.html" type="button" class="btn btn-primary" >Go to home</a>
+                        <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
+                    </div>
+                </div>
+                <!-- /panel-step-3 -->
+
+            </div>
+        </div>
+        <!-- /.row -->
+
+
+        <div class="row">
+
+
+        </div>
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+
+<!-- Core Scripts - Include with every page -->
+<script src="js/lib/jquery-1.10.2.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/lib/metisMenu.min.js"></script>
+<script src="js/lib/spin.min.js"></script>
+
+<!-- SB Admin Scripts - Include with every page -->
+<script src="js/sb-admin.js"></script>
+
+<!-- SeaClouds configuration constants -->
+<script src="js/config.js"></script>
+
+<script type="text/javascript">
+var currentStep = 1;
+
+function previousStep(){
+    if(currentStep != 1){
+        $('#panel-step-' + currentStep).addClass('hidden');
+        currentStep--;
+        $('#panel-step-' + currentStep).removeClass('hidden');
+    }
+}
+
+function nextStep() {
+    if (currentStep != 3) {
+        $('#panel-step-' + currentStep).addClass('hidden');
+        currentStep++;
+        $('#panel-step-' + currentStep).removeClass('hidden');
+    }
+}
+
+
+</script>
+
+</body>
+
+</html>
