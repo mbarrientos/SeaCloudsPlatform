@@ -14,3 +14,20 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+
+/*  Navbar logo adjustment */
+.navbar-brand {
+    padding: 0 10px 0 10px;
+
+}
+
+/*  Panel height adjustment */
+@media (min-width: 320px) {
+    body {
+        height: 100vh;
+    }
+
+    .container-fluid .panel {
+        height: 85vh;
+    }
+}
