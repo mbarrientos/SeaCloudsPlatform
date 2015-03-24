@@ -28,6 +28,10 @@
     }
 
     .container-fluid .panel {
-        height: 85vh;
+
     }
+}
+
+h3 {
+    margin-top: 5px;
 }

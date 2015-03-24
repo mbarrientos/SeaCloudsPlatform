@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="dashboard">
 
 <head>
 
@@ -27,81 +27,22 @@
 
 <div class="wrapper">
 
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand"
-                   href="index.html"> <img
-                        src="img/navbar-header.png" alt="SeaClouds project main website"> SeaClouds Platform  </a>
-            </div>
+    <navbar></navbar>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-                <ul class="nav navbar-nav navbar-left">
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Monitor</a></li>
-                    <li><a href="#">Help</a></li>
-                    <li><a href="#">About SeaClouds Project</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Sign out</a></li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    <div class="container-fluid" ng-controller="wizardController">
 
-    <div class="container-fluid">
-
-                <h3>
-                    Add new application wizard
-                    <small>Design and deploy cloud software</small>
-                </h3>
-            <!-- /.col-lg-12 -->
-        <!-- /.row -->
-
+        <h3>
+            Add new application wizard
+            <small>Design and deploy cloud software</small>
+        </h3>
 
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default" id="panel-step-1">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="stepwizard">
-                                    <div class="stepwizard-row setup-panel">
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-primary btn-circle">1</a>
-                                            <p>Application properties</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-                                            <p>Design topology</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                                            <p>Optimize & Plan</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Configuration summary</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
-                                            <p>Process Summary & Deploy</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <div wizard-header></div>
                     </div>
-                    <div class="panel-body" style="height: 550px; overflow-y:scroll;vertical-align:middle">
+                    <div class="panel-body">
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <label for="applicationName" class="col-sm-2 control-label">Application Name</label>
@@ -147,50 +88,31 @@
                         </form>
                     </div>
                     <div class="panel-footer ">
-                        <button type="button" class="btn btn-default" onclick="previousStep()" disabled>Back</button>
-                        <button type="button" class="btn btn-default btn-primary" onclick="nextStep()">Next</button>
+                        <button type="button" class="btn btn-default" ng-click='previousStep()' disabled>Back</button>
+                        <button type="button" class="btn btn-default btn-primary" ng-click='nextStep()'>Next</button>
                         <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
                     </div>
                 </div>
                 <!-- /panel-step-1 -->
 
-
                 <div class="panel panel-default hidden" id="panel-step-2">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="stepwizard">
-                                    <div class="stepwizard-row setup-panel">
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
-                                            <p>Application properties</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-primary btn-circle">2</a>
-                                            <p>Design topology</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                                            <p>Optimize & Plan</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Configuration summary</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
-                                            <p>Process Summary & Deploy</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <div wizard-header></div>
                     </div>
-                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                    <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
                                     <div class="btn-group" role="toolbar" aria-label="...">
-                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add-form">Add new module</button>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                Add... <span class="caret"> </span>
+                                            </button>
+                                            <ul id="add-buttons" class="dropdown-menu" role="menu">
+                                                <li><a id="add-database" href="#" data-type="Database">Database</a>
+                                                <li><a id="add-restservice" href="#" data-type="RestService">Rest Service</a>
+                                                <li><a id="add-webapplication" href="#" data-type="WebApplication">Web application</a>
+                                            </ul>
+                                        </div>
                                         <button type="button" class="btn btn-default">Create connection</button>
                                         <button type="button" class="btn btn-warning">Remove module</button>
                                     </div>
@@ -312,46 +234,18 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
-                        <button type="button" class="btn btn-default btn-primary" onclick="nextStep()">Next</button>
+                        <button type="button" class="btn btn-default" ng-click='previousStep()'>Back</button>
+                        <button type="button" class="btn btn-default btn-primary" ng-click='nextStep()'>Next</button>
                         <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
                     </div>
                 </div>
                 <!-- /panel-step-2 -->
 
-
                 <div class="panel panel-default hidden" id="panel-step-3">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="stepwizard">
-                                    <div class="stepwizard-row setup-panel">
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
-                                            <p>Application properties</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-                                            <p>Design topology</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-primary btn-circle">3</a>
-                                            <p>Optimize & Plan</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Configuration summary</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
-                                            <p>Process Summary & Deploy</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div wizard-header></div>
                     </div>
-                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                    <div class="panel-body">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingOne">
@@ -427,8 +321,8 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
-                        <button type="button" class="btn btn-default btn-primary" onclick="nextStep()">Next</button>
+                        <button type="button" class="btn btn-default" ng-click='previousStep()'>Back</button>
+                        <button type="button" class="btn btn-default btn-primary" ng-click='nextStep()'>Next</button>
                         <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
 
                     </div>
@@ -437,36 +331,9 @@
 
                 <div class="panel panel-default hidden" id="panel-step-4">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="stepwizard">
-                                    <div class="stepwizard-row setup-panel">
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
-                                            <p>Application properties</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-                                            <p>Design topology</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                                            <p>Optimize & Plan</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-4" type="button" class="btn btn-primary btn-circle">4</a>
-                                            <p>Configuration summary</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-5" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
-                                            <p>Process Summary & Deploy</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div wizard-header></div>
                     </div>
-                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                    <div class="panel-body">
                         <h3><span class="text-muted">Your process is almost over, please just take a look before deploying your application</span></h3>
                         <hr>
                         <span style="padding-left: 20px"><strong>PHP</strong></span>
@@ -534,8 +401,8 @@
 
                     </div>
                     <div class="panel-footer">
-                        <button type="button" class="btn btn-default" onclick="previousStep()">Back</button>
-                        <button type="button" class="btn btn-default btn-success" onclick="nextStep()">Deploy</button>
+                        <button type="button" class="btn btn-default" ng-click='previousStep()'>Back</button>
+                        <button type="button" class="btn btn-default btn-success" ng-click='nextStep()'>Deploy</button>
                         <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
 
                     </div>
@@ -544,36 +411,9 @@
 
                 <div class="panel panel-default hidden" id="panel-step-5">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="stepwizard">
-                                    <div class="stepwizard-row setup-panel">
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
-                                            <p>Application properties</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-                                            <p>Design topology</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                                            <p>Optimize & Plan</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
-                                            <p>Configuration summary</p>
-                                        </div>
-                                        <div class="stepwizard-step">
-                                            <a href="#step-5" type="button" class="btn btn-primary btn-circle">5</a>
-                                            <p>Process Summary & Deploy</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div wizard-header></div>
                     </div>
-                    <div class="panel-body" style="height: 550px; overflow-y:scroll;">
+                    <div class="panel-body">
                         <h3><span class="text-muted">Please hold on while we deploy your application</span></h3>
                         <hr>
                         <div class="progress">
@@ -602,12 +442,12 @@
                         </code>
                     </div>
                     <div class="panel-footer">
-                        <button type="button" class="btn btn-default" onclick="previousStep()" disabled>Back</button>
+                        <button type="button" class="btn btn-default" ng-click='previousStep()' disabled>Back</button>
                         <a href="monitor.html" type="button" class="btn btn-primary" >Go to Monitor</a>
                         <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
                     </div>
                 </div>
-                <!-- /panel-step-4 -->
+                <!-- /panel-step-5 -->
 
             </div>
 
@@ -652,6 +492,9 @@
 
 
 </script>
+
+<script src="js/lib/angular.min.js"></script>
+<script src="app.js"></script>
 
 </body>
 
