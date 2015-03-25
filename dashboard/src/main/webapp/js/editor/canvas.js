@@ -110,10 +110,11 @@ var Canvas = (function() {
             .attr("class", "type")
             .text("REST");
     };
-    
-    var WIDTH = 960,
-        HEIGHT = 500;
-        
+
+    var canvas = $("#canvas");
+    var WIDTH = parseInt(canvas.css("width")),
+        HEIGHT = parseInt(canvas.css("height"));
+
     var NODE_RADIUS = 20;
         
     var fill = d3.scale.category20();
