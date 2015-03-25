@@ -40,14 +40,16 @@
             <div class="col-lg-12">
                 <div class="panel panel-default" id="panel-step-1">
                     <div class="panel-heading">
-                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
+                        <div wizard-header></div>
                     </div>
                     <div class="panel-body wizard-body">
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <label for="applicationName" class="col-sm-2 control-label">Application Name</label>
+
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="applicationName" placeholder="Name of your application">
+                                    <input type="text" class="form-control" id="applicationName"
+                                           placeholder="Name of your application">
                                 </div>
                             </div>
 
@@ -56,14 +58,18 @@
                             <h3>Fill these properties if you want to optimize your application</h3>
 
                             <div class="form-group">
-                                <label for="responseTime" class="col-sm-4 control-label">Desired application response time (ms)</label>
+                                <label for="responseTime" class="col-sm-4 control-label">Desired application response
+                                    time (ms)</label>
+
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="responseTime" placeholder="200">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="availability" class="col-sm-4 control-label">Desired application availability (%)</label>
+                                <label for="availability" class="col-sm-4 control-label">Desired application
+                                    availability (%)</label>
+
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="availability" placeholder="99.9">
                                 </div>
@@ -72,14 +78,17 @@
                             <div class="form-group">
                                 <label for="maxCost" class="col-sm-4 control-label">Maximum estimated cost (€/month):
                                 </label>
+
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="maxCost" placeholder="1000">
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="workload" class="col-sm-4 control-label">Workload (number of requests / per hour)
+                                <label for="workload" class="col-sm-4 control-label">Workload (number of requests / per
+                                    hour)
                                 </label>
+
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" id="workload" placeholder="400">
                                 </div>
@@ -97,25 +106,28 @@
 
                 <div class="panel panel-default hidden" id="panel-step-2">
                     <div class="panel-heading">
-                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
+                        <div wizard-header></div>
                     </div>
                     <div class="panel-body wizard-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                    <div class="btn-group" role="toolbar" aria-label="...">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                Add... <span class="caret"> </span>
-                                            </button>
-                                            <ul id="add-buttons" class="dropdown-menu" role="menu">
-                                                <li><a id="add-database" href="#" data-type="Database">Database</a>
-                                                <li><a id="add-restservice" href="#" data-type="RestService">Rest Service</a>
-                                                <li><a id="add-webapplication" href="#" data-type="WebApplication">Web application</a>
-                                            </ul>
-                                        </div>
-                                        <button type="button" class="btn btn-default">Create connection</button>
-                                        <button type="button" class="btn btn-warning">Remove module</button>
+                                <div class="btn-group" role="toolbar" aria-label="...">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                data-toggle="dropdown" aria-expanded="false">
+                                            Add... <span class="caret"> </span>
+                                        </button>
+                                        <ul id="add-buttons" class="dropdown-menu" role="menu">
+                                            <li><a id="add-database" href="#" data-type="Database">Database</a>
+                                            <li><a id="add-restservice" href="#" data-type="RestService">Rest
+                                                Service</a>
+                                            <li><a id="add-webapplication" href="#" data-type="WebApplication">Web
+                                                application</a>
+                                        </ul>
                                     </div>
+                                    <button type="button" class="btn btn-default">Create connection</button>
+                                    <button type="button" class="btn btn-warning">Remove module</button>
+                                </div>
                                 <div class="modal fade" id="add-form">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
@@ -129,92 +141,202 @@
                                             <div class="modal-body">
                                                 <form role="form" class="form-horizontal">
                                                     <fieldset id="set-common">
-                                                        <legend>Description <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <legend>Description <a href="#"><i
+                                                                class="fa fa-chevron-down"> </i></a></legend>
                                                         <div class="form-group">
                                                             <label for="name" class="col-sm-2">Name</label>
+
                                                             <div class="col-sm-10">
-                                                                <input type="text" class="form-control" id="name" placeholder="Module name">
+                                                                <input type="text" class="form-control" id="name"
+                                                                       placeholder="Module name">
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="label" class="col-sm-2">Label on screen</label>
+
                                                             <div class="col-sm-10">
-                                                                <input type="text" class="form-control" id="label" placeholder="Module label">
+                                                                <input type="text" class="form-control" id="label"
+                                                                       placeholder="Module label">
                                                             </div>
                                                         </div>
                                                     </fieldset>
                                                     <fieldset id="set-code-tech">
-                                                        <legend>Technological Requirements <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <legend>Technological Requirements <a href="#"><i
+                                                                class="fa fa-chevron-down"> </i></a></legend>
                                                         <div class="form-group">
                                                             <label for="code-language" class="col-sm-2">Language</label>
+
                                                             <div class="col-sm-10">
-                                                                <select class="form-control" id="code-language"> </select>
+                                                                <select class="form-control"
+                                                                        id="code-language"> </select>
                                                             </div>
                                                         </div>
                                                     </fieldset>
                                                     <fieldset id="set-database-tech">
-                                                        <legend>Technological Requirements <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <legend>Technological Requirements <a href="#"><i
+                                                                class="fa fa-chevron-down"> </i></a></legend>
                                                         <div class="form-group">
-                                                            <label for="database-category" class="col-sm-2">Category</label>
+                                                            <label for="database-category"
+                                                                   class="col-sm-2">Category</label>
+
                                                             <div class="col-sm-10">
-                                                                <select class="form-control" id="database-category"> </select>
+                                                                <select class="form-control"
+                                                                        id="database-category"> </select>
                                                             </div>
                                                         </div>
                                                     </fieldset>
                                                     <fieldset id="set-nonfunctional">
-                                                        <legend>Non-functional Requirements <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <legend>Non-functional Requirements <a href="#"><i
+                                                                class="fa fa-chevron-down"> </i></a></legend>
                                                         <div class="form-group">
                                                             <label for="nf-cost" class="col-sm-2">Cost</label>
+
                                                             <div class="col-sm-10">
                                                                 <select class="form-control" id="nf-cost"> </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="nf-location" class="col-sm-2">Location</label>
+
                                                             <div class="col-sm-10">
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" id="nf-location-none" name="nf-location" value="">None
+                                                                    <input type="radio" id="nf-location-none"
+                                                                           name="nf-location" value="">None
                                                                 </label>
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" id="nf-location-static" name="nf-location" value="STATIC">Static
+                                                                    <input type="radio" id="nf-location-static"
+                                                                           name="nf-location" value="STATIC">Static
                                                                 </label>
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" id="nf-location-dynamic" name="nf-location" value="DYNAMIC">Dynamic
+                                                                    <input type="radio" id="nf-location-dynamic"
+                                                                           name="nf-location" value="DYNAMIC">Dynamic
                                                                 </label>
                                                             </div>
                                                         </div>
                                                         <div class="form-group" id="nf-location-static-div">
-                                                            <label for="nf-location-static-options" class="col-sm-2">Static location</label>
+                                                            <label for="nf-location-static-options" class="col-sm-2">Static
+                                                                location</label>
+
                                                             <div class="col-sm-10">
-                                                                <select class="form-control" id="nf-location-static-options"> </select>
+                                                                <select class="form-control"
+                                                                        id="nf-location-static-options"> </select>
                                                             </div>
                                                         </div>
                                                         <div class="form-group" id="nf-location-dynamic-div">
                                                             <label class="col-sm-2" for="nf-location-dynamic-options">Policy</label>
+
                                                             <div class="col-sm-10">
-                                                                <select class="form-control" id="nf-location-dynamic-options"> </select>
+                                                                <select class="form-control"
+                                                                        id="nf-location-dynamic-options"> </select>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group">
+                                                        <div class="form-group" style="display: none;">
                                                             <label class="col-sm-2" for="nf-qos">QoS</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" class="form-control" id="nf-qos" name="nf-qos">
+                                                                <table class="table table-bordered" id="nf-qos">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>Metric name</th>
+                                                                        <th>Operator</th>
+                                                                        <th>Threshold</th>
+                                                                        <th>Actions</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr><td>
+                                                                        <input type="text" class="form-control"
+                                                                               name="metric__0">
+                                                                    </td>
+                                                                        <td>
+                                                                            <select class="form-control" name="operator__0"
+                                                                                    id="nf-qos-operator__0">
+
+                                                                                <option value=""></option>
+                                                                                <option value="LT">&lt;</option>
+                                                                                <option value="LE">&lt;=</option>
+                                                                                <option value="EQ">=</option>
+                                                                                <option value="GE">&gt;=</option>
+                                                                                <option value="GT">&gt;</option>
+                                                                                <option value="BETWEEN">between</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control"
+                                                                                   name="threshold__0">
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" data-action="delete"><i
+                                                                                    class="fa fa-remove"> </i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <input type="text" class="form-control"
+                                                                                   name="metric__0">
+                                                                        </td>
+                                                                        <td>
+                                                                            <select class="form-control" name="operator__0"
+                                                                                    id="nf-qos-operator__0">
+
+
+                                                                                <option value=""></option>
+                                                                                <option value="LT">&lt;</option>
+                                                                                <option value="LE">&lt;=</option>
+                                                                                <option value="EQ">=</option>
+                                                                                <option value="GE">&gt;=</option>
+                                                                                <option value="GT">&gt;</option>
+                                                                                <option value="BETWEEN">between</option>
+                                                                            </select>
+                                                                        </td>
+                                                                        <td>
+                                                                            <input type="text" class="form-control"
+                                                                                   name="threshold__0">
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" data-action="delete"><i
+                                                                                    class="fa fa-remove"> </i></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                    <tfoot>
+                                                                    <tr>
+                                                                        <td>
+                                                                        </td>
+                                                                        <td>
+                                                                        </td>
+                                                                        <td>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button type="button" id="nf-qos-add"
+                                                                                    data-action="add"><span
+                                                                                    class="fa fa-plus"> </span></button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tfoot>
+                                                                </table>
                                                             </div>
+                                                            <!--<input type="text" class="form-control" id="nf-qos" name="nf-qos">-->
                                                         </div>
                                                     </fieldset>
                                                     <fieldset id="set-infrastructure">
-                                                        <legend>Provider Infrastructure <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <legend>Provider Infrastructure <a href="#"><i
+                                                                class="fa fa-chevron-down"> </i></a></legend>
                                                         <div class="form-group">
-                                                            <label for="infrastructure" class="col-sm-2">Provider is</label>
+                                                            <label for="infrastructure" class="col-sm-2">Provider
+                                                                is</label>
+
                                                             <div class="col-sm-10">
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" id="infrastructure-none" name="infrastructure" value="">None
+                                                                    <input type="radio" id="infrastructure-none"
+                                                                           name="infrastructure" value="">None
                                                                 </label>
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" id="infrastructure-iaas" name="infrastructure" value="IAAS"> IaaS
+                                                                    <input type="radio" id="infrastructure-iaas"
+                                                                           name="infrastructure" value="IAAS"> IaaS
                                                                 </label>
                                                                 <label class="radio-inline">
-                                                                    <input type="radio" id="infrastructure-paas" name="infrastructure" value="PAAS"> PaaS
+                                                                    <input type="radio" id="infrastructure-paas"
+                                                                           name="infrastructure" value="PAAS"> PaaS
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -222,7 +344,9 @@
                                                 </form>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                                    Close
+                                                </button>
                                                 <button type="button" class="btn btn-primary">Add!</button>
                                             </div>
                                         </div>
@@ -243,34 +367,47 @@
 
                 <div class="panel panel-default hidden" id="panel-step-3">
                     <div class="panel-heading">
-                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
+                        <div wizard-header></div>
                     </div>
                     <div class="panel-body wizard-body">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingOne">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            <strong>PHP</strong> <i class="fa fa-long-arrow-right"></i>  <strong>Amazon EC2</strong> <i class="fa fa-check text-success pull-right"></i>
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                                           aria-expanded="true" aria-controls="collapseOne">
+                                            <strong>PHP</strong> <i class="fa fa-long-arrow-right"></i> <strong>Amazon
+                                            EC2</strong> <i class="fa fa-check text-success pull-right"></i>
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                                     aria-labelledby="headingOne">
                                     <div class="panel-body">
                                         <p>
-                                            Amazon Elastic Compute Cloud (EC2) is a central part of Amazon.com's cloud computing platform, Amazon Web Services (AWS).
-                                            EC2 allows users to rent virtual computers on which to run their own computer applications. EC2 allows scalable deployment
-                                            of applications by providing a Web service through which a user can boot an Amazon Machine Image to create a virtual machine,
-                                            which Amazon calls an "instance", containing any software desired. A user can create, launch, and terminate server instances as needed,
-                                            paying by the hour for active servers, hence the term "elastic". EC2 provides users with control over the geographical location
-                                            of instances that allows for latency optimization and high levels of redundancy.
+                                            Amazon Elastic Compute Cloud (EC2) is a central part of Amazon.com's cloud
+                                            computing platform, Amazon Web Services (AWS).
+                                            EC2 allows users to rent virtual computers on which to run their own
+                                            computer applications. EC2 allows scalable deployment
+                                            of applications by providing a Web service through which a user can boot an
+                                            Amazon Machine Image to create a virtual machine,
+                                            which Amazon calls an "instance", containing any software desired. A user
+                                            can create, launch, and terminate server instances as needed,
+                                            paying by the hour for active servers, hence the term "elastic". EC2
+                                            provides users with control over the geographical location
+                                            of instances that allows for latency optimization and high levels of
+                                            redundancy.
                                         </p>
                                         <strong><i class="fa fa-sliders"> Option summary</i></strong>
                                         <ul>
-                                            <li>  <i class="fa fa-cubes"></i> Compute units: <span class="text-success">5 Units</span></li>
-                                            <li>  <i class="fa fa-flash"></i> Available RAM: <span class="text-success">8 Gigabytes</span></li>
-                                            <li>  <i class="fa fa-exchange"></i> Bandwidth: <span class="text-success">100 Megabytes/s</span></li>
-                                            <li>  <i class="fa fa-money"></i> Monthly costs: <span class="text-success">100 USD</span></li>
+                                            <li><i class="fa fa-cubes"></i> Compute units: <span class="text-success">5 Units</span>
+                                            </li>
+                                            <li><i class="fa fa-flash"></i> Available RAM: <span class="text-success">8 Gigabytes</span>
+                                            </li>
+                                            <li><i class="fa fa-exchange"></i> Bandwidth: <span class="text-success">100 Megabytes/s</span>
+                                            </li>
+                                            <li><i class="fa fa-money"></i> Monthly costs: <span class="text-success">100 USD</span>
+                                            </li>
 
 
                                         </ul>
@@ -284,14 +421,24 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingTwo">
                                     <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            <strong>RESTEasy</strong> <i class="fa fa-long-arrow-right"></i>  <strong>HP</strong> <i class="fa fa-check text-success pull-right"></i>
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            <strong>RESTEasy</strong> <i class="fa fa-long-arrow-right"></i>
+                                            <strong>HP</strong> <i class="fa fa-check text-success pull-right"></i>
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="headingTwo">
                                     <div class="panel-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                                        you probably haven't heard of them accusamus labore sustainable VHS.
                                     </div>
                                     <div class="panel-footer">
                                         <button type="button" class="btn btn-default">More information</button>
@@ -302,14 +449,24 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingThree">
                                     <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            <strong>MySQL</strong> <i class="fa fa-long-arrow-right"></i>  <strong>HP</strong> <i class="fa fa-check text-success pull-right"></i>
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                                           href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            <strong>MySQL</strong> <i class="fa fa-long-arrow-right"></i>
+                                            <strong>HP</strong> <i class="fa fa-check text-success pull-right"></i>
                                         </a>
                                     </h4>
                                 </div>
-                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
+                                     aria-labelledby="headingThree">
                                     <div class="panel-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
+                                        richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
+                                        brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor,
+                                        sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                        shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+                                        Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt
+                                        you probably haven't heard of them accusamus labore sustainable VHS.
                                     </div>
                                     <div class="panel-footer">
                                         <button type="button" class="btn btn-default">More information</button>
@@ -331,10 +488,11 @@
 
                 <div class="panel panel-default hidden" id="panel-step-4">
                     <div class="panel-heading">
-                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
+                        <div wizard-header></div>
                     </div>
                     <div class="panel-body wizard-body">
-                        <h3><span class="text-muted">Your process is almost over, please just take a look before deploying your application</span></h3>
+                        <h3><span class="text-muted">Your process is almost over, please just take a look before deploying your application</span>
+                        </h3>
                         <hr>
                         <span style="padding-left: 20px"><strong>PHP</strong></span>
                         <ul>
@@ -353,7 +511,8 @@
                                 Reconfiguration Strategies:
                                 <ul>
                                     <li style="padding-left: 5px">Scale-up when Response Time is less than 120ms</li>
-                                    <li style="padding-left: 5px">Scale-down when Average CPU usage is less than 60%</li>
+                                    <li style="padding-left: 5px">Scale-down when Average CPU usage is less than 60%
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -394,7 +553,9 @@
                             <li>
                                 Reconfiguration Strategies:
                                 <ul>
-                                    <li style="padding-left: 5px">Migrate when Transactions per seconds are greater than 1000</li>
+                                    <li style="padding-left: 5px">Migrate when Transactions per seconds are greater than
+                                        1000
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -411,13 +572,14 @@
 
                 <div class="panel panel-default hidden" id="panel-step-5">
                     <div class="panel-heading">
-                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
+                        <div wizard-header></div>
                     </div>
                     <div class="panel-body wizard-body">
                         <h3><span class="text-muted">Please hold on while we deploy your application</span></h3>
                         <hr>
                         <div class="progress">
-                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100"
+                                 aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
                                 100%
                             </div>
                         </div>
@@ -437,13 +599,12 @@
                             Deployer: Everything done.<br>
 
 
-
-
                         </code>
                     </div>
                     <div class="panel-footer">
                         <button type="button" class="btn btn-default" ng-click='previousStep()' disabled>Back</button>
-                        <a href="monitor.html" type="button" class="btn btn-primary" >Go to Monitor</a>
+                        <a href="monitor.html" type="button" class="btn btn-primary">Go to Monitor</a>
+
                         <div class="text-danger pull-right"> PROOF OF CONCEPT - Work in progress</div>
                     </div>
                 </div>
