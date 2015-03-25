@@ -19,7 +19,7 @@ var app = angular.module('dashboard', []);
 
 app.directive('navbar', function () {
     return {
-        restrict: 'EA',
+        restrict: 'E',
         replace: true,
         templateUrl: 'views/navbar.html'
     };
@@ -27,7 +27,7 @@ app.directive('navbar', function () {
 
 app.directive('wizardHeader', function(){
     return {
-        restrict: 'EA',
+        restrict: 'E',
         replace: true,
         templateUrl: 'views/wizard-header.html'
     };
@@ -35,10 +35,21 @@ app.directive('wizardHeader', function(){
 
 app.controller('wizardController',['$scope', function($scope){
 
+    $scope.stepTitles = [];
+
     $scope.currentStep = 1;
 
     $scope.isSelected = function(step){
         return $scope.currentStep == step;
+    };
+
+    $scope.getStepCount = function(){
+
+        return $scope.stepTitles.length;
+    };
+
+    $scope.range = function(n) {
+        return new Array(n);
     };
 
     $scope.previousStep = function(){
@@ -50,7 +61,7 @@ app.controller('wizardController',['$scope', function($scope){
     };
 
     $scope.nextStep = function(){
-        if ($scope.currentStep != 5) {
+        if ($scope.currentStep != $scope.getStepCount()) {
             $('#panel-step-' + $scope.currentStep).addClass('hidden');
             $scope.currentStep++;
             $('#panel-step-' + $scope.currentStep).removeClass('hidden');

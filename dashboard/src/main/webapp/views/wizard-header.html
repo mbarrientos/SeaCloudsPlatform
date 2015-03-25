@@ -2,40 +2,12 @@
     <div class="col-lg-12">
         <div class="stepwizard">
             <div class="stepwizard-row setup-panel">
-                <div class="stepwizard-step">
-                    <a href="#step-1" type="button"
-                       ng-class="['btn', 'btn-circle', isSelected(1) ? 'btn-primary' : 'btn-default']"
-                       ng-disabled="!isSelected(1)">1</a>
+                <div class="stepwizard-step" ng-repeat="title in stepTitles track by $index">
+                    <a href="#" type="button"
+                       ng-class="['btn', 'btn-circle', isSelected($index + 1) ? 'btn-primary' : 'btn-default']"
+                       ng-disabled="!isSelected($index + 1)">{{$index + 1}}</a>
 
-                    <p>Application properties</p>
-                </div>
-                <div class="stepwizard-step">
-                    <a href="#step-2" type="button"
-                       ng-class="['btn', 'btn-circle', isSelected(2) ? 'btn-primary' : 'btn-default']"
-                       ng-disabled="!isSelected(2)">2</a>
-
-                    <p>Design topology</p>
-                </div>
-                <div class="stepwizard-step">
-                    <a href="#step-3" type="button"
-                       ng-class="['btn', 'btn-circle', isSelected(3) ? 'btn-primary' : 'btn-default']"
-                       ng-disabled="!isSelected(3)">3</a>
-
-                    <p>Optimize & Plan</p>
-                </div>
-                <div class="stepwizard-step">
-                    <a href="#step-4" type="button"
-                       ng-class="['btn', 'btn-circle', isSelected(4) ? 'btn-primary' : 'btn-default']"
-                       ng-disabled="!isSelected(4)">4</a>
-
-                    <p>Configuration summary</p>
-                </div>
-                <div class="stepwizard-step">
-                    <a href="#step-5" type="button"
-                       ng-class="['btn', 'btn-circle', isSelected(5) ? 'btn-primary' : 'btn-default']"
-                       ng-disabled="!isSelected(5)">5</a>
-
-                    <p>Process Summary & Deploy</p>
+                    <p>{{title}}</p>
                 </div>
             </div>
         </div>

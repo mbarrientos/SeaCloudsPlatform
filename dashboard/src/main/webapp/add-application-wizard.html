@@ -40,7 +40,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default" id="panel-step-1">
                     <div class="panel-heading">
-                        <div wizard-header></div>
+                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
                     </div>
                     <div class="panel-body">
                         <form class="form-horizontal">
@@ -97,7 +97,7 @@
 
                 <div class="panel panel-default hidden" id="panel-step-2">
                     <div class="panel-heading">
-                            <div wizard-header></div>
+                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -243,7 +243,7 @@
 
                 <div class="panel panel-default hidden" id="panel-step-3">
                     <div class="panel-heading">
-                        <div wizard-header></div>
+                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
                     </div>
                     <div class="panel-body">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -331,7 +331,7 @@
 
                 <div class="panel panel-default hidden" id="panel-step-4">
                     <div class="panel-heading">
-                        <div wizard-header></div>
+                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
                     </div>
                     <div class="panel-body">
                         <h3><span class="text-muted">Your process is almost over, please just take a look before deploying your application</span></h3>
@@ -411,7 +411,7 @@
 
                 <div class="panel panel-default hidden" id="panel-step-5">
                     <div class="panel-heading">
-                        <div wizard-header></div>
+                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
                     </div>
                     <div class="panel-body">
                         <h3><span class="text-muted">Please hold on while we deploy your application</span></h3>

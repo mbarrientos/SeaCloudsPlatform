@@ -6,3 +6,4 @@ target/
 .metadata
 .settings/
 out/
+node_modules/
