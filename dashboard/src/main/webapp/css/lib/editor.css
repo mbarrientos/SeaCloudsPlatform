@@ -1,3 +1,10 @@
 fieldset legend {
     font-size: 16px;
 }
+
+@media (min-width: 320px) {
+    #canvas {
+        width: 96vw;
+        height: 400px;
+    }
+}

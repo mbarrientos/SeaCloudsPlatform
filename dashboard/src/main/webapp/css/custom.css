@@ -27,8 +27,11 @@
         height: 100vh;
     }
 
-    .container-fluid .panel {
-
+    .container-fluid .wizard-body {
+        width: 96vw;
+        height: 60vh;
+        min-height: 300px;
+        overflow-y: auto;
     }
 }
 
