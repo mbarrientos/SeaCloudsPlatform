@@ -26,7 +26,7 @@ var language_options = {
     "PYTHON": "Python",
     "RUBY": "Ruby",
     ".NET": ".Net",
-    "PHP": "Php",
+    "PHP": "Php"
 };
 
 
@@ -35,7 +35,7 @@ var database_options = {
     "ORACLE": "Oracle",
     "POSTGRESQL": "PostgreSQL",
     "MONGODB": "MongoDB",
-    "REDIS": "Redis",
+    "REDIS": "Redis"
 };
 
 
@@ -43,9 +43,18 @@ var cost_options = {
     "": "",
     "GOLD": "Gold",
     "SILVER": "Silver",
-    "BRONZE": "Bronze",
+    "BRONZE": "Bronze"
 };
 
+var supported_php_connection = {
+    "REST": "REST",
+    "MySQL": "MySQL",
+    "Cursomize": "Customize"
+};
+
+var connection_type = {
+    "HTTP": "HTTP connection"
+};
 
 var location_static_options = {
     "": "",
@@ -441,7 +450,9 @@ $(document).ready(function() {
     populate_select($("#nf-cost"), cost_options);
     populate_select($("#nf-location-static-options"), location_static_options);
     populate_select($("#nf-location-dynamic-options"), location_dynamic_options);
-  
+    populate_select($("#nf-supported-php-connection"), supported_php_connection);
+    populate_select($("#nf-connection-type"), connection_type);
+
     /*
      * Additional behaviour
      */

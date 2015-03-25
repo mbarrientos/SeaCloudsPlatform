@@ -40,7 +40,7 @@
             <div class="col-lg-12">
                 <div class="panel panel-default" id="panel-step-1">
                     <div class="panel-heading">
-                        <div wizard-header></div>
+                        <wizard-header ng-init="stepTitles = ['Application properties', 'Design topology', 'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy']"></wizard-header>
                     </div>
                     <div class="panel-body wizard-body">
                         <form class="form-horizontal">
@@ -48,8 +48,7 @@
                                 <label for="applicationName" class="col-sm-2 control-label">Application Name</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="applicationName"
-                                           placeholder="Name of your application">
+                                    <input type="text" class="form-control" id="applicationName" placeholder="Name of your application">
                                 </div>
                             </div>
 
@@ -125,7 +124,8 @@
                                                 application</a>
                                         </ul>
                                     </div>
-                                    <button type="button" class="btn btn-default">Create connection</button>
+                                        <button type="button" class="btn btn-default">Create connection</button>
+                                                data-target="#add-connection">Create connection</button>
                                     <button type="button" class="btn btn-warning">Remove module</button>
                                 </div>
                                 <div class="modal fade" id="add-form">
@@ -347,6 +347,124 @@
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                                     Close
                                                 </button>
+                                                <button type="button" class="btn btn-primary">Add!</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="add-connection">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    <span class="sr-only">Close</span>
+                                                </button>
+                                                <h4 class="modal-title">Add new connection</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form role="form" class="form-horizontal">
+                                                    <fieldset id="set-source-module">
+                                                        <legend>Module <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <div class="form-group">
+                                                            <label for="name" class="col-sm-2">Name</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control" id="module-name" placeholder="PHP" disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="label" class="col-sm-2">Label on screen</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control" id="label" placeholder="PHP" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset id="set-target-module">
+                                                        <legend>Add Connection <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <div class="form-group">
+                                                            <label for="nf-supported-php-connection" class="col-sm-2">Target Module</label>
+                                                            <div class="col-sm-5">
+                                                                <select class="form-control" id="nf-supported-php-connection"> </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nf-connection-type" class="col-sm-2">Connection Type</label>
+                                                            <div class="col-sm-5">
+                                                                <select class="form-control" id="nf-connection-type" disabled> </select>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <!--<fieldset id="set-database-tech">
+                                                        <legend>Technological Requirements <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <div class="form-group">
+                                                            <label for="database-category" class="col-sm-2">Category</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" id="database-category"> </select>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset id="set-nonfunctional">
+                                                        <legend>Non-functional Requirements <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <div class="form-group">
+                                                            <label for="nf-cost" class="col-sm-2">Cost</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" id="nf-cost"> </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="nf-location" class="col-sm-2">Location</label>
+                                                            <div class="col-sm-10">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" id="nf-location-none" name="nf-location" value="">None
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" id="nf-location-static" name="nf-location" value="STATIC">Static
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" id="nf-location-dynamic" name="nf-location" value="DYNAMIC">Dynamic
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" id="nf-location-static-div">
+                                                            <label for="nf-location-static-options" class="col-sm-2">Static location</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" id="nf-location-static-options"> </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" id="nf-location-dynamic-div">
+                                                            <label class="col-sm-2" for="nf-location-dynamic-options">Policy</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="form-control" id="nf-location-dynamic-options"> </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2" for="nf-qos">QoS</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control" id="nf-qos" name="nf-qos">
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+                                                    <fieldset id="set-infrastructure">
+                                                        <legend>Provider Infrastructure <a href="#"><i class="fa fa-chevron-down"> </i></a></legend>
+                                                        <div class="form-group">
+                                                            <label for="infrastructure" class="col-sm-2">Provider is</label>
+                                                            <div class="col-sm-10">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" id="infrastructure-none" name="infrastructure" value="">None
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" id="infrastructure-iaas" name="infrastructure" value="IAAS"> IaaS
+                                                                </label>
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" id="infrastructure-paas" name="infrastructure" value="PAAS"> PaaS
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>-->
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 <button type="button" class="btn btn-primary">Add!</button>
                                             </div>
                                         </div>
