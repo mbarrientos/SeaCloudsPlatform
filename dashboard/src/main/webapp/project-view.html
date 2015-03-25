@@ -1,0 +1,167 @@
+<!--
+
+    Copyright 2014 SeaClouds
+    Contact: SeaClouds
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<html ng-app="dashboard">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SeaClouds Dashboard</title>
+
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!-- Core CSS - Include with every page -->
+    <link href="css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+<navbar></navbar>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-sm-12">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" disabled><a href="#"><strong>Nuro Gaming</strong></a></li>
+                    <li role="presentation"><a href="#">Status</a></li>
+                    <li role="presentation" class="active"><a href="#">Application Monitor</a></li>
+                    <li role="presentation"><a href="#">SLA</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-10">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Usage
+                        </div>
+                        <div class="panel-body">
+                            <canvas class="graph" id="myChart-1"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Usage
+                        </div>
+                        <div class="panel-body">
+                            <canvas class="graph" id="myChart-2"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Usage
+                        </div>
+                        <div class="panel-body">
+                            <canvas class="graph" id="myChart-3"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Usage
+                        </div>
+                        <div class="panel-body">
+                            <canvas class="graph" id="myChart-4"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Usage
+                        </div>
+                        <div class="panel-body">
+                            <canvas class="graph" id="myChart-5"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Core Scripts - Include with every page -->
+<script src="js/lib/jquery-1.10.2.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/lib/spin.min.js"></script>
+<script src="js/lib/chart.min.js"></script>
+
+<script src="js/lib/angular.min.js"></script>
+<script src="app.js"></script>
+
+<script>
+    var data = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+            {
+                label: "My First dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: [65, 59, 80, 81, 56, 55, 40]
+            },
+            {
+                label: "My Second dataset",
+                fillColor: "rgba(151,187,205,0.2)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(151,187,205,1)",
+                data: [28, 48, 40, 19, 86, 27, 90]
+            }
+        ]
+    };
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+
+
+    $.each( $("[id^=myChart-]"), function (idx, canvas) {
+        var ctx = canvas.getContext("2d");
+        new Chart(ctx).Line(data, options);
+    });
+
+</script>
+
+
+</body>
+
+</html>

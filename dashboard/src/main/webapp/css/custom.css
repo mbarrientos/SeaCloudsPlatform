@@ -38,3 +38,16 @@
 h3 {
     margin-top: 5px;
 }
+
+
+
+.graph {
+    padding : 0 15% 0 0;
+}
+
+@media (max-width: 1200px) {
+    .graph {
+        padding : 0 3% 1% 0;
+
+    }
+}
