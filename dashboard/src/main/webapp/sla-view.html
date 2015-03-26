@@ -55,26 +55,40 @@
                 <div class="row">
                     <div class="container">
                         <span><h3><small>Select SLA</small></h3></span>
-                        <ul class="nav nav-pills">
-                            <li role="presentation"><a href="#"><span class="text-warning">User - Nuro</span></a></li>
-                            <li role="presentation"><a href="#"><strong><span class="text-success">Nuro - Amazon</span></strong></a></li>
-                            <li role="presentation"><a href="#"><span class="text-danger">Nuro - Cloudfoundry</span></a></li>
-                        </ul>
+                        <div class="btn-group">
+                            <button class="btn btn-warning active">User - Nuro</button>
+                            <button class="btn btn-success">Nuro - Amazon</button>
+                            <button class="btn btn-warning">Nuro - Cloudfoundry</button>
+                        </div>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-lg-4 col-sm-6">
+                    <div class="col-lg-5 col-sm-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 SLA Terms
                             </div>
                             <div class="panel-body">
+                                    <strong>constraint:</strong><br>
+                                    response time &lt; 2000ms
+                                    <br>
+                                    <strong>penalties:</strong><br>
+                                    5 times a day = 10% bonus discount
 
+                                    <hr>
+
+                                    <strong>constraint:</strong><br>
+                                    day availability &gt; 99,5%
+                                    <br>
+                                    <strong>penalties:</strong><br>
+                                    2 times a month = 10% bonus discount
+                                    <br>
+                                    4 times a month = 50% bonus discount
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="panel panel-default">
@@ -82,6 +96,25 @@
                                        Violations
                                     </div>
                                     <div class="panel-body">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Date</th>
+                                                    <th># violations</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>2015-03-26</td>
+                                                    <td>3</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>2015-03-20</td>
+                                                    <td>6</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
@@ -94,6 +127,20 @@
                                         Penalties
                                     </div>
                                     <div class="panel-body">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Date</th>
+                                                    <th>Definition</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>2015-03-26</td>
+                                                    <td>10% bonus discount</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
