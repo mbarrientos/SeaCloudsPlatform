@@ -1,0 +1,127 @@
+<!--
+
+    Copyright 2014 SeaClouds
+    Contact: SeaClouds
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<html ng-app="dashboard">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SeaClouds Dashboard</title>
+
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <!-- Core CSS - Include with every page -->
+    <link href="css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+<navbar></navbar>
+
+<div class="wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 col-sm-12">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation" disabled><a href="#"><strong>Nuro Gaming</strong></a></li>
+                    <li role="presentation"><a href="#">Status</a></li>
+                    <li role="presentation" class="active"><a href="#">Application Monitor</a></li>
+                    <li role="presentation"><a href="#">SLA</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-10">
+                <div class="row">
+                    <div class="container">
+                        <span><h3><small>Select SLA</small></h3></span>
+                        <ul class="nav nav-pills">
+                            <li role="presentation"><a href="#"><span class="text-warning">User - Nuro</span></a></li>
+                            <li role="presentation"><a href="#"><strong><span class="text-success">Nuro - Amazon</span></strong></a></li>
+                            <li role="presentation"><a href="#"><span class="text-danger">Nuro - Cloudfoundry</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                SLA Terms
+                            </div>
+                            <div class="panel-body">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                       Violations
+                                    </div>
+                                    <div class="panel-body">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Penalties
+                                    </div>
+                                    <div class="panel-body">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Core Scripts - Include with every page -->
+<script src="js/lib/jquery-1.10.2.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+<script src="js/lib/spin.min.js"></script>
+<script src="js/lib/chart.min.js"></script>
+
+<script src="js/lib/angular.min.js"></script>
+<script src="app.js"></script>
+
+<script>
+
+
+</script>
+
+
+</body>
+
+</html>
