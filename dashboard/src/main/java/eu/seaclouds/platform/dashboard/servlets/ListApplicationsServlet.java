@@ -36,9 +36,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * @author Adrian Nieto
- */
 public class ListApplicationsServlet extends HttpServlet {
     static Logger log = LoggerFactory.getLogger(ListApplicationsServlet.class);
 
