@@ -33,9 +33,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * @author Adrian Nieto
- */
 public class GetAvailableMetricsServlet extends HttpServlet {
     private boolean isNumberType(SensorSummary sensor){
         return sensor.getType().equals("java.lang.Integer")

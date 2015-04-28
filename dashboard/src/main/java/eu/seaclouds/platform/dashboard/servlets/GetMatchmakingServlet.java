@@ -16,17 +16,12 @@
  */
 package eu.seaclouds.platform.dashboard.servlets;
 
-import seaclouds.Planner;
-
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-/**
- * @author mbarrientos
- */
 public class GetMatchmakingServlet extends HttpServlet {
 
 
@@ -38,10 +33,10 @@ public class GetMatchmakingServlet extends HttpServlet {
             response.sendError(500, "YAML File not found");
         } else {
             try {
-                Planner planner = new Planner(yaml);
+                //Planner planner = new Planner(yaml);
 
                 response.setCharacterEncoding("UTF-8");
-                response.getWriter().write(planner.plan());
+                //response.getWriter().write(planner.plan());
             } catch (Exception e){
                 response.sendError(500, "Error processing Application Model");
             }

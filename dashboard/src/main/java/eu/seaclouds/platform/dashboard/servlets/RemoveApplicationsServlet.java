@@ -27,9 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
-/**
- * @author MBarrientos
- */
 public class RemoveApplicationsServlet extends HttpServlet {
 
 

@@ -41,21 +41,14 @@ public class ConfigParameters {
     public static String SLA_ENDPOINT;
 
     static {
+        /*
+            Loading config keys from Java system properties
+         */
         PLANNER_ENDPOINT = System.getProperty("planner.endpoint");
         MONITOR_ENDPOINT = System.getProperty("monitor.endpoint");
-
-        String deployerAddress = System.getProperty("deployer.host");
-        String deployerHttpPort = System.getProperty("deployer.httpPort");
-        if (deployerAddress != null) {
-            DEPLOYER_ENDPOINT = "http://" + deployerAddress
-                    + ":" + (deployerHttpPort == null ? "8081" : deployerHttpPort);
-
-            DEPLOYER_USERNAME = System.getProperty("deployer.username");
-            DEPLOYER_PASSWORD = System.getProperty("deployer.password");
-        } else {
-            log.error("Property 'deployer.host' not defined");
-        }
-
+        DEPLOYER_ENDPOINT = System.getProperty("deployer.endpoint");
+        DEPLOYER_USERNAME = System.getProperty("deployer.username");
+        DEPLOYER_PASSWORD = System.getProperty("deployer.password");
         SLA_ENDPOINT = System.getProperty("sla.endpoint");
     }
 }

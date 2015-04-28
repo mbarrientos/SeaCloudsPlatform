@@ -1,20 +1,21 @@
-/**
+/*
  * Copyright 2014 SeaClouds
- * Contact: SeaClouds
+ * Contact: dev@seaclouds-project.eu
  *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *        http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-package eu.seaclouds.platform.dashboard.servlets;
+
+package eu.seaclouds.platform.dashboard.resources;
 
 import brooklyn.rest.client.BrooklynApi;
 import brooklyn.rest.domain.ApplicationSummary;
@@ -23,23 +24,77 @@ import brooklyn.rest.domain.LocationSummary;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import eu.seaclouds.platform.dashboard.ConfigParameters;
 import eu.seaclouds.platform.dashboard.connectors.DeployerConnector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import eu.seaclouds.platform.dashboard.utils.HttpGetRequestBuilder;
+import eu.seaclouds.platform.dashboard.utils.HttpPostRequestBuilder;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-public class ListApplicationsServlet extends HttpServlet {
-    static Logger log = LoggerFactory.getLogger(ListApplicationsServlet.class);
+@Path("/deployer")
+@Produces(MediaType.APPLICATION_JSON)
+public class DeployerResource {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @POST
+    @Path("addApplication")
+    public Response addApplication(@QueryParam("yaml") String yaml) {
+        if (yaml == null) {
+            Response.status(Response.Status.NOT_FOUND).entity("Missing yaml file");
+        }
+        try {
+            String deployerResponse = new HttpPostRequestBuilder()
+                    .host(ConfigParameters.DEPLOYER_ENDPOINT)
+                    .path("v1/applications")
+                    .addParam("applicationSpec", yaml)
+                    .build();
+            
+            return new Gson().fromJson(deployerResponse, Response.class);
+        } catch (IOException e) {
+            return Response.serverError().entity("Connection error: couldn't reach Deployer endpoint").build();
+        } catch (URISyntaxException e) {
+            return Response.serverError().entity("Bad request").build();
+        }
+    }
+    
+    @GET
+    @Path("listApplications")
+    public Response listApplications(){
+        try {
+            String rawApplicationsList = new HttpGetRequestBuilder()
+                    .host(ConfigParameters.DEPLOYER_ENDPOINT)
+                    .path("v1/applications")
+                    .build();
+
+            List<ApplicationSummary> applicationSummaries = 
+                    new Gson().fromJson(
+                            rawApplicationsList, 
+                            new TypeToken<List<ApplicationSummary>>(){}.getType());
+            
+            for (ApplicationSummary application : applicationSummaries) {
+                // TODO: complete
+                // ....
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         BrooklynApi BROOKLYN_API = new DeployerConnector().getConnection();
         if (BROOKLYN_API != null) {
             List<ApplicationSummary> applicationSummaries = BROOKLYN_API.getApplicationApi().list();
@@ -119,4 +174,5 @@ public class ListApplicationsServlet extends HttpServlet {
             response.sendError(500, "Connection error: couldn't reach Deployer endpoint");
         }
     }
+
 }
