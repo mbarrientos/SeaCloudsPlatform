@@ -23,17 +23,23 @@
 <web-app>
   <display-name>SeaClouds Dashboard</display-name>
 
-    <!-- Allow live modifications to source-->
-    <context-param>
-        <param-name>org.eclipse.jetty.servlet.Default.useFileMappedBuffer</param-name>
-        <param-value>false</param-value>
-    </context-param>
+    <servlet>
+        <servlet-name>AddMonitoringRulesServlet</servlet-name>
+        <servlet-class>eu.seaclouds.platform.dashboard.servlets.AddMonitoringRulesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddMonitoringRulesServlet</servlet-name>
+        <url-pattern>/servlets/addMonitoringRules</url-pattern>
+    </servlet-mapping>
 
-    <context-param>
-        <param-name>org.mortbay.jetty.servlet.Default.useFileMappedBuffer</param-name>
-        <param-value>false</param-value>
-    </context-param>
-
+    <servlet>
+        <servlet-name>AddSlaAgreementsServlet</servlet-name>
+        <servlet-class>eu.seaclouds.platform.dashboard.servlets.AddSlaAgreementsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddSlaAgreementsServlet</servlet-name>
+        <url-pattern>/servlets/addSlaAgreements</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>GetMetricValueServlet</servlet-name>

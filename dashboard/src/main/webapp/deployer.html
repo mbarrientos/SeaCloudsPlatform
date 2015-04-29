@@ -147,56 +147,130 @@
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <div class="row" id="page-content">
+        <div id="page-content">
+            <div class="row">
 
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div id="app-status-heading" class="panel-heading">
-                        <i class="fa fa-cloud-download"></i> Deploy a new application defined in CAMP YAML format
-                        <a aria-expanded="false" data-toggle="collapse" data-parent="#accordion"
-                           data-target="#app-status-collapsable"><i class="fa fa-chevron-down"></i></a>
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div id="app-status-heading" class="panel-heading">
+                            <i class="fa fa-cloud-download"></i> Deploy a new application defined in CAMP YAML format
+                            <a aria-expanded="false" data-toggle="collapse" data-parent="#accordion"
+                               data-target="#app-status-collapsable"><i class="fa fa-chevron-down"></i></a>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-collapse collapse  " id="app-status-collapsable">
+                            <div class="panel-body" id="yaml-input-panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group" id="text-form-group">
+                                                <label for="yaml-input-textarea">Paste your YAML here</label>
+                                                <textarea id="yaml-input-textarea" class="form-control" rows="3"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group" id="file-form-group">
+                                                <label for="yaml-input-file">Choose a YAML File</label>
+                                                <input type="file" id="yaml-input-file">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="pull-right">
+                                                <button  class="btn btn-primary" onClick="submitYaml()">Deploy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+
                     </div>
+                </div>
+
+                <div class="col-lg-12">
+
+                    <h4><i class="fa fa-laptop"></i> Running applications</h4>
                     <!-- /.panel-heading -->
-                    <div class="panel-collapse collapse  " id="app-status-collapsable">
-                        <div class="panel-body" id="yaml-input-panel-body">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="form-group" id="text-form-group">
-                                            <label for="yaml-input-textarea">Paste your YAML here</label>
-                                            <textarea id="yaml-input-textarea" class="form-control" rows="3"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group" id="file-form-group">
-                                            <label for="yaml-input-file">Choose a YAML File</label>
-                                            <input type="file" id="yaml-input-file">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="pull-right">
-                                            <button  class="btn btn-primary" onClick="submitYaml()">Deploy</button>
-                                        </div>
-                                    </div>
-                                </div>
+
+                    <div id="deployed-applications" >
+                        <div class="panel-body">
+                            <p>Currently no applications are deployed...</p>
                         </div>
                     </div>
 
                 </div>
+
             </div>
+            <h4><i class="fa fa-file-text"></i> Monitoring & SLA configuration</h4>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-dashboard"></i> Monitoring rules
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <form id="form-monitoring-rules" class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <textarea id="textarea-monitoring-rules" class="form-control" style="resize: none"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label for="file-monitoring-rules">Upload a file</label>
+                                        <input type="file" id="file-monitoring-rules">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="button-wrapper" style="padding: 7px">
+                                            <button type="button" class="btn btn-primary" onclick="processMonitoringRules()">
+                                                Load rules
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
-            <div class="col-lg-12">
 
-                <h4><i class="fa fa-laptop"></i> Running applications</h4>
-                <!-- /.panel-heading -->
-
-                <div style="display:none" id="deployed-applications">
+                    </div>
                 </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-dashboard"></i> SLA Agreements
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <form id="form-sla-agreements" class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="col-lg-12">
+                                        <textarea id="textarea-sla-agreements" class="form-control" style="resize: none"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6">
+                                        <label for="file-sla-agreement">Upload a file</label>
+                                        <input type="file" id="file-sla-agreement">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="button-wrapper" style="padding: 7px">
+                                            <button type="button" class="btn btn-primary" onclick="processSlaAgreements()">
+                                                Load agreements
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
 
+
+                    </div>
+                </div>
             </div>
-
         </div>
+
     </div>
 
 </div>
@@ -213,6 +287,7 @@
 <!-- Code Mirror Scripts -->
 <script src="js/lib/codemirror.js"></script>
 <script src="js/lib/codemirror-yaml.js"></script>
+<script src="js/lib/codemirror-xml.js"></script>
 <script src="js/lib/codemirror-simplescrollbars.js"></script>
 
 <!-- PNotify Scripts -  -->
@@ -222,6 +297,8 @@
     var SPINNER = new Spinner({lines: 13, length: 6, width: 2, radius: 5, top: "-5px"}).spin(document.getElementById("loading-spinner"));
     var CONTENT_ID = "deployed-applications";
     var APP_DEPLOYER_TEXTAREA;
+    var MONITORING_RULES_TEXTAREA;
+    var SLA_AGREEMENTS_TEXTAREA;
 
     $(document).ready(function () {
         $("#app-status-heading").on("click", function () {
@@ -239,6 +316,16 @@
         var appDeployer = document.getElementById("yaml-input-textarea");
         APP_DEPLOYER_TEXTAREA = CodeMirror.fromTextArea(appDeployer, {scrollbarStyle: "simple", tabSize: 2});
         APP_DEPLOYER_TEXTAREA.setSize("100%", 300);
+
+        var monitoringRules = document.getElementById("textarea-monitoring-rules");
+        MONITORING_RULES_TEXTAREA = CodeMirror.fromTextArea(monitoringRules, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
+        MONITORING_RULES_TEXTAREA.setSize("100%", 400);
+        MONITORING_RULES_TEXTAREA.setValue("Write your monitoring rules here...");
+
+        var slaAgreements = document.getElementById("textarea-sla-agreements");
+        SLA_AGREEMENTS_TEXTAREA = CodeMirror.fromTextArea(slaAgreements, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
+        SLA_AGREEMENTS_TEXTAREA.setSize("100%", 400);
+        SLA_AGREEMENTS_TEXTAREA.setValue("Write your SLA Agreements here...");
 
         $("#app-status-collapsable").on('shown.bs.collapse', function() {
             if(APP_DEPLOYER_TEXTAREA.getValue().length==0){
@@ -415,6 +502,49 @@
             SPINNER.stop();
         })
         return false;
+    }
+
+
+    function processMonitoringRules() {
+        SPINNER.spin(document.getElementById("loading-spinner"));
+
+        $.post("servlets/addMonitoringRules", {rules: MONITORING_RULES_TEXTAREA.getValue()}, function sendMonitoringRules(response) {
+            SPINNER.stop();
+        }).done(function () {
+            new PNotify({
+                title: 'Setup of monitoring rules was successful',
+                text: 'It will appear soon on the application list',
+                type: 'success'
+            });
+        }).fail(function () {
+            new PNotify({
+                title: 'Error',
+                text: 'Error processing the monitoring rules',
+                type: 'error'
+            });
+            SPINNER.stop();
+        });
+    }
+
+    function processSlaAgreements() {
+        SPINNER.spin(document.getElementById("loading-spinner"));
+
+        $.post("servlets/addSlaAgreements", {sla: SLA_AGREEMENTS_TEXTAREA.getValue(), rules: MONITORING_RULES_TEXTAREA.getValue()}, function sendSlaAgreements(response) {
+            SPINNER.stop();
+        }).done(function () {
+            new PNotify({
+                title: 'SLA agreements were added successfully',
+                text: 'It will appear soon on the application list',
+                type: 'success'
+            });
+        }).fail(function () {
+            new PNotify({
+                title: 'Error',
+                text: 'Error processing the SLA Agreements',
+                type: 'error'
+            });
+            SPINNER.stop();
+        });
     }
 
 </script>
