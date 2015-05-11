@@ -17,162 +17,95 @@
 
 package eu.seaclouds.platform.dashboard.resources;
 
-import brooklyn.rest.client.BrooklynApi;
-import brooklyn.rest.domain.ApplicationSummary;
-import brooklyn.rest.domain.EntitySummary;
-import brooklyn.rest.domain.LocationSummary;
-import com.google.gson.Gson;
+
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import eu.seaclouds.platform.dashboard.ConfigParameters;
-import eu.seaclouds.platform.dashboard.connectors.DeployerConnector;
+import eu.seaclouds.platform.dashboard.utils.HttpDeleteRequestBuilder;
 import eu.seaclouds.platform.dashboard.utils.HttpGetRequestBuilder;
 import eu.seaclouds.platform.dashboard.utils.HttpPostRequestBuilder;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.apache.http.entity.StringEntity;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 @Path("/deployer")
-@Produces(MediaType.APPLICATION_JSON)
 public class DeployerResource {
 
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("application")
+    public Response removeApplication(@QueryParam("id") String id) {
+        if (id == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        try {
+            String deployerResponse = new HttpDeleteRequestBuilder()
+                    .host(ConfigParameters.DEPLOYER_ENDPOINT)
+                    .path("/v1/applications/" + id)
+                    .build();
+
+            return Response.ok(deployerResponse).build();
+        } catch (IOException | URISyntaxException e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
     @POST
-    @Path("addApplication")
-    public Response addApplication(@QueryParam("yaml") String yaml) {
+    @Path("applications")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addApplication(String yaml) {
         if (yaml == null) {
-            Response.status(Response.Status.NOT_FOUND).entity("Missing yaml file");
-        }
-        try {
-            String deployerResponse = new HttpPostRequestBuilder()
-                    .host(ConfigParameters.DEPLOYER_ENDPOINT)
-                    .path("v1/applications")
-                    .addParam("applicationSpec", yaml)
-                    .build();
-            
-            return new Gson().fromJson(deployerResponse, Response.class);
-        } catch (IOException e) {
-            return Response.serverError().entity("Connection error: couldn't reach Deployer endpoint").build();
-        } catch (URISyntaxException e) {
-            return Response.serverError().entity("Bad request").build();
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }else {
+            try {
+                String deployerResponse = new HttpPostRequestBuilder()
+                        .entity(new StringEntity(yaml))
+                        .host(ConfigParameters.DEPLOYER_ENDPOINT)
+                        .path("/v1/applications")
+                        .build();
+
+                return Response.ok(deployerResponse).build();
+            } catch (IOException | URISyntaxException e){
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            }
         }
     }
-    
+
     @GET
-    @Path("listApplications")
-    public Response listApplications(){
+    @Path("applications")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listApplications() {
         try {
-            String rawApplicationsList = new HttpGetRequestBuilder()
+            String deployerResponse = new HttpGetRequestBuilder()
                     .host(ConfigParameters.DEPLOYER_ENDPOINT)
-                    .path("v1/applications")
+                    .path("/v1/applications/tree")
                     .build();
 
-            List<ApplicationSummary> applicationSummaries = 
-                    new Gson().fromJson(
-                            rawApplicationsList, 
-                            new TypeToken<List<ApplicationSummary>>(){}.getType());
-            
-            for (ApplicationSummary application : applicationSummaries) {
-                // TODO: complete
-                // ....
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+            JsonArray applicationList = new JsonParser().parse(deployerResponse).getAsJsonArray();
 
-        return null;
-    }
-    
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        BrooklynApi BROOKLYN_API = new DeployerConnector().getConnection();
-        if (BROOKLYN_API != null) {
-            List<ApplicationSummary> applicationSummaries = BROOKLYN_API.getApplicationApi().list();
-
-            Collections.sort(applicationSummaries, new Comparator<ApplicationSummary>() {
-                @Override
-                public int compare(ApplicationSummary s1, ApplicationSummary s2) {
-                    return s1.getId().compareTo(s2.getId());
-                }
-            });
-
-            JsonArray jsonResult = new JsonArray();
-
-            for (ApplicationSummary application : applicationSummaries) {
-
-                JsonObject jsonApplication = new JsonObject();
-                jsonResult.add(jsonApplication);
-
-                jsonApplication.addProperty("id", application.getId());
-                jsonApplication.addProperty("status", application.getStatus().toString());
-
-                JsonObject jsonSpec = new JsonObject();
-                jsonApplication.add("spec", jsonSpec);
-
-                jsonSpec.addProperty("name", application.getSpec().getName());
-                jsonSpec.addProperty("type", application.getSpec().getName());
-
-                JsonArray jsonDescendantsEntities = new JsonArray();
-                jsonApplication.add("descendants", jsonDescendantsEntities);
-
-                List<EntitySummary> descendants;
-                try {
-                    descendants = BROOKLYN_API.getEntityApi().list(application.getId());
-
-                    if (descendants != null) {
-                        for (EntitySummary childEntity : descendants) {
-                            JsonObject jsonDescendantEntity = new JsonObject();
-                            jsonDescendantsEntities.add(jsonDescendantEntity);
-
-
-                            jsonDescendantEntity.addProperty("id", childEntity.getId());
-                            jsonDescendantEntity.addProperty("name", childEntity.getName());
-                            jsonDescendantEntity.addProperty("type", childEntity.getType());
-
-                            JsonArray jsonArrayLocations = new JsonArray();
-                            jsonDescendantEntity.add("locations", jsonArrayLocations);
-
-                            List<LocationSummary> locations = BROOKLYN_API.getEntityApi().getLocations(application.getId(), childEntity.getId());
-                            if (locations != null) {
-
-                                for (LocationSummary locationSummary : locations) {
-                                    LocationSummary locationDetails = BROOKLYN_API.getLocationApi().get(locationSummary.getId(), null);
-
-                                    if (locationDetails != null) {
-                                        JsonObject jsonLocation = new JsonObject();
-                                        jsonArrayLocations.add(jsonLocation);
-                                        jsonLocation.addProperty("id", locationDetails.getId());
-                                        jsonLocation.addProperty("name", locationDetails.getName());
-                                        jsonLocation.addProperty("type", locationDetails.getType());
-                                        jsonLocation.addProperty("spec", locationDetails.getSpec());
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    // The application removed after calling getApplicationApi().list()
-                    jsonResult.remove(jsonApplication);
+            //TODO: This is not recursive, it only retrieves locations in the first level of  the application topology
+            for(JsonElement application  : applicationList){
+                for(JsonElement entity : application.getAsJsonObject().getAsJsonArray("children")){
+                    deployerResponse = new HttpGetRequestBuilder()
+                            .host(ConfigParameters.DEPLOYER_ENDPOINT)
+                            .path("/v1/applications/"+ application.getAsJsonObject().get("id").getAsString() +
+                                    "/entities/" + entity.getAsJsonObject().get("id").getAsString()+ "/locations")
+                            .build();
+                    entity.getAsJsonObject().add("locations", new JsonParser().parse(deployerResponse));
                 }
             }
 
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(new Gson().toJson(jsonResult));
+            return Response.ok(applicationList.toString()).build();
 
-        } else { // Can't connect with Brooklyn endpoint
-            response.sendError(500, "Connection error: couldn't reach Deployer endpoint");
+        } catch (IOException | URISyntaxException e) {
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
+
     }
 
 }

@@ -17,16 +17,15 @@
 
 package eu.seaclouds.platform.dashboard.utils;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import javax.servlet.http.HttpServletRequest;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Creates a GET HTTP request to another URL, by using Apache HttpClient.
@@ -37,13 +36,6 @@ public class HttpGetRequestBuilder extends HttpRequestBuilder {
 
 
     HttpGet requestBase;
-    private HttpServletRequest request;
-
-    public HttpGetRequestBuilder request(HttpServletRequest request) throws UnsupportedEncodingException {
-        this.request = request;
-        this.params(request.getParameterMap());
-        return this;
-    }
 
     @Override
     public String build() throws IOException, URISyntaxException {

@@ -20,11 +20,12 @@ package eu.seaclouds.platform.dashboard.utils;
 import com.beust.jcommander.internal.Maps;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Map;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 public class HttpRequestBuilderTest {
     
@@ -80,12 +81,40 @@ public class HttpRequestBuilderTest {
     }
     
     @Test
+    public void testDeleteRequest() {
+        try {
+            Map<String, String[]> params = Maps.newLinkedHashMap();
+            params.put("key1", new String[]{"value1"});
+            params.put("key2", new String[]{"value2"});
+
+            String response = new HttpDeleteRequestBuilder()
+                    .scheme("http")
+                    .host(HTTP_TEST_HOST)
+                    .path("/delete")
+                    .params(params)
+                    .build();
+
+            JsonObject root = new JsonParser().parse(response).getAsJsonObject();
+
+            JsonObject jsonArgs = root.get("args").getAsJsonObject();
+            Assert.assertEquals(jsonArgs.get("key1").getAsString(), "value1");
+            Assert.assertEquals(jsonArgs.get("key2").getAsString(), "value2");
+            
+            Assert.assertEquals(root.get("url").getAsString(), "http://" + HTTP_TEST_HOST + "/delete?key1=value1&key2=value2") ;
+            
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
+    }
+
+    @Test
     public void testPostRequest() {
         try {
             Map<String, String[]> params = Maps.newLinkedHashMap();
             params.put("key1", new String[]{"value1"});
             params.put("key2", new String[]{"value2"});
-            
+
             String response = new HttpPostRequestBuilder()
                     .scheme("http")
                     .host(HTTP_TEST_HOST)
@@ -98,9 +127,9 @@ public class HttpRequestBuilderTest {
             JsonObject jsonArgs = root.get("form").getAsJsonObject();
             Assert.assertEquals(jsonArgs.get("key1").getAsString(), "value1");
             Assert.assertEquals(jsonArgs.get("key2").getAsString(), "value2");
-            
+
             Assert.assertEquals(root.get("url").getAsString(), "http://" + HTTP_TEST_HOST + "/post");
-            
+
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
             Assert.fail();

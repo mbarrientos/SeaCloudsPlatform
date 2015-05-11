@@ -17,9 +17,6 @@
 
 package eu.seaclouds.platform.dashboard.utils;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -30,6 +27,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /**
  * Creates a POST HTTP request to another URL, by using Apache HttpClient.
@@ -52,8 +53,13 @@ public class HttpPostRequestBuilder extends HttpRequestBuilder {
         return this;
     }
 
+    public HttpPostRequestBuilder entity(HttpEntity entity){
+        this.entity = entity;
+        return this;
+    }
+
     public String build() throws IOException, URISyntaxException {
-        if (params != null) {
+        if (params != null || entity == null) {
             if (!isMultipart) {
                 this.entity = new UrlEncodedFormEntity(params);
             } else {
@@ -77,7 +83,6 @@ public class HttpPostRequestBuilder extends HttpRequestBuilder {
             if (this.entity != null) {
                 this.requestBase.setEntity(this.entity);
             }
-            
             return httpClient.execute(requestBase, responseHandler);
         }
     }
