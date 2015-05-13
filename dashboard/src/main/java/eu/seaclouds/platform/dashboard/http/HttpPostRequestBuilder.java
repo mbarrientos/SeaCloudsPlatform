@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package eu.seaclouds.platform.dashboard.utils;
+package eu.seaclouds.platform.dashboard.http;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -59,7 +59,7 @@ public class HttpPostRequestBuilder extends HttpRequestBuilder {
     }
 
     public String build() throws IOException, URISyntaxException {
-        if (params != null || entity == null) {
+        if (params != null && entity == null) {
             if (!isMultipart) {
                 this.entity = new UrlEncodedFormEntity(params);
             } else {

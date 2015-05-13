@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package eu.seaclouds.platform.dashboard.utils;
+package eu.seaclouds.platform.dashboard.http;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

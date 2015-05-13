@@ -23,8 +23,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import eu.seaclouds.platform.dashboard.ConfigParameters;
-import eu.seaclouds.platform.dashboard.utils.HttpGetRequestBuilder;
-import eu.seaclouds.platform.dashboard.utils.HttpPostRequestBuilder;
+import eu.seaclouds.platform.dashboard.http.HttpGetRequestBuilder;
+import eu.seaclouds.platform.dashboard.http.HttpPostRequestBuilder;
 import org.apache.http.entity.StringEntity;
 
 import javax.ws.rs.*;
@@ -40,16 +40,17 @@ public class MonitorResource {
 
     @GET
     @Path("metrics/value")
-    public Response getMetric(@QueryParam("applicationID") String applicationID,
+    public Response getMetric(@QueryParam("applicationId") String applicationId,
                               @QueryParam("entityId") String entityId,
                               @QueryParam("metricId") String metricId) {
 
-        if (applicationID != null && entityId != null && metricId != null) {
+        if (applicationId != null && entityId != null && metricId != null) {
 
             try {
                 String monitorResponse = new HttpGetRequestBuilder()
                         .host(ConfigParameters.DEPLOYER_ENDPOINT)
-                        .path("/v1/applications/" + applicationID + "/entities/" + entityId + "/sensors/" + metricId)
+                        .path("/v1/applications/" + applicationId + "/entities/" + entityId + "/sensors/" + metricId)
+                        .addParam("raw", "true")
                         .build();
 
                 return Response.ok(monitorResponse).build();
@@ -74,6 +75,31 @@ public class MonitorResource {
                 || sensorType.equals("java.lang.Byte");
     }
 
+    private JsonArray retrieveMetrics(String applicationId) throws IOException, URISyntaxException {
+        String rawEntityList = new HttpGetRequestBuilder()
+                .host(ConfigParameters.DEPLOYER_ENDPOINT)
+                .path("/v1/applications/" + applicationId + "/entities")
+                .build();
+        
+        JsonArray entityList = new JsonParser().parse(rawEntityList).getAsJsonArray();
+        JsonArray allMetricsList = new JsonArray();
+        for (JsonElement entity : entityList) {
+            String entityId = entity.getAsJsonObject().getAsJsonPrimitive("id").getAsString();
+            String entityName = entity.getAsJsonObject().getAsJsonPrimitive("name").getAsString();
+
+            // Creating entity object
+            JsonArray entityMetrics = retrieveMetrics(applicationId, entityId);
+            JsonObject entityJson = new JsonObject();
+            entityJson.addProperty("id", entityId);
+            entityJson.addProperty("name", entityName);
+            entityJson.add("metrics", entityMetrics);
+            
+            allMetricsList.add(entityJson);
+        }
+        
+        return allMetricsList;
+    }
+    
     private JsonArray retrieveMetrics(String applicationId, String entityId) throws IOException, URISyntaxException {
         String monitorResponse = new HttpGetRequestBuilder()
                 .host(ConfigParameters.DEPLOYER_ENDPOINT)
@@ -95,15 +121,13 @@ public class MonitorResource {
         return metricList.getAsJsonArray();
 
     }
-
+    
     @GET
     @Path("metrics")
-    public Response availableMetrics(@QueryParam("applicationId") String applicationId,
-                                     @QueryParam("entityId") String entityId) {
-
-        if (applicationId != null && entityId != null) {
+    public Response availableMetrics(@QueryParam("applicationId") String applicationId){
+        if (applicationId != null) {
             try {
-                JsonArray metricList = retrieveMetrics(applicationId, entityId);
+                JsonArray metricList = retrieveMetrics(applicationId);
                 return Response.ok(metricList.toString()).build();
             } catch (IOException | URISyntaxException e) {
                 return Response.status(Response.Status.NOT_FOUND).build();
@@ -113,7 +137,7 @@ public class MonitorResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-
+    
 
     @POST
     @Path("rules")

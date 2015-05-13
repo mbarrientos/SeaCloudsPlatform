@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package eu.seaclouds.platform.dashboard.utils;
+package eu.seaclouds.platform.dashboard.http;
 
 import com.beust.jcommander.internal.Maps;
 import com.google.gson.JsonObject;

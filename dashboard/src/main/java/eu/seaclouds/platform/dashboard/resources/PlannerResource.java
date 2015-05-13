@@ -35,10 +35,7 @@ public class PlannerResource {
     public Response matchmake(@QueryParam("yaml") String yaml) {
 
         if (yaml != null) {
-
-
-                return Response.ok("TODO").build();
-
+                return Response.ok().build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

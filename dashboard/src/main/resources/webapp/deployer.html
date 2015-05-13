@@ -158,7 +158,7 @@
                                data-target="#app-status-collapsable"><i class="fa fa-chevron-down"></i></a>
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-collapse collapse  " id="app-status-collapsable">
+                        <div class="panel-collapse collapse " id="app-status-collapsable">
                             <div class="panel-body" id="yaml-input-panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -206,63 +206,106 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <div class="panel-heading" id="monitoring-rules-heading">
                             <i class="fa fa-dashboard"></i> Monitoring rules
+                            <a aria-expanded="false" data-toggle="collapse" data-parent="#accordion"
+                               data-target="#monitoring-rules-collapsable"><i class="fa fa-chevron-down"></i></a>
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <form id="form-monitoring-rules" class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <textarea id="textarea-monitoring-rules" class="form-control" style="resize: none"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-6">
-                                        <label for="file-monitoring-rules">Upload a file</label>
-                                        <input type="file" id="file-monitoring-rules">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="button-wrapper" style="padding: 7px">
-                                            <button type="button" class="btn btn-primary" onclick="processMonitoringRules()">
-                                                Load rules
-                                            </button>
+                        <div class="panel-collapse collapse" id="monitoring-rules-collapsable">
+                            <div class="panel-body">
+                                <form id="form-monitoring-rules" class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-lg-12">
+                                            <textarea id="textarea-monitoring-rules" class="form-control" style="resize: none"></textarea>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                    <div class="form-group">
+                                        <div class="col-lg-6">
+                                            <label for="file-monitoring-rules">Upload a file</label>
+                                            <input type="file" id="file-monitoring-rules">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="button-wrapper pull-right" style="padding: 7px">
+                                                <button type="button" class="btn btn-primary" onclick="processMonitoringRules()">
+                                                    Load plan
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-
-
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-dashboard"></i> SLA Agreements
+                        <div class="panel-heading" id="deployment-model-heading">
+                            <i class="fa fa-dashboard"></i> Deployment model (Monitoring platform)
+                            <a aria-expanded="false" data-toggle="collapse" data-parent="#accordion"
+                               data-target="#deployment-model-collapsable"><i class="fa fa-chevron-down"></i></a>
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <form id="form-sla-agreements" class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <div class="col-lg-12">
-                                        <textarea id="textarea-sla-agreements" class="form-control" style="resize: none"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-lg-6">
-                                        <label for="file-sla-agreement">Upload a file</label>
-                                        <input type="file" id="file-sla-agreement">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="button-wrapper" style="padding: 7px">
-                                            <button type="button" class="btn btn-primary" onclick="processSlaAgreements()">
-                                                Load agreements
-                                            </button>
+                        <div class="panel-collapse collapse" id="deployment-model-collapsable">
+                            <div class="panel-body">
+                                <form id="form-deployment-model" class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-lg-12">
+                                            <textarea id="textarea-deployment-model" class="form-control" style="resize: none"></textarea>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                    <div class="form-group">
+                                        <div class="col-lg-6">
+                                            <label for="file-deployment-model">Upload a file</label>
+                                            <input type="file" id="file-deployment-model">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="button-wrapper pull-right" style="padding: 7px">
+                                                <button type="button" class="btn btn-primary" onclick="processDeploymentModel()">
+                                                    Load model
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row"> 
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" id="sla-agreements-heading">
+                            <i class="fa fa-dashboard"></i> SLA Agreements
+                            <a aria-expanded="false" data-toggle="collapse" data-parent="#accordion"
+                               data-target="#sla-agreements-collapsable"><i class="fa fa-chevron-down"></i></a>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-collapse collapse" id="sla-agreements-collapsable">
+                            <div class="panel-body">
+                                <form id="form-sla-agreements" class="form-horizontal" role="form">
+                                    <div class="form-group">
+                                        <div class="col-lg-12">
+                                            <textarea id="textarea-sla-agreements" class="form-control" style="resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-6">
+                                            <label for="file-sla-agreement">Upload a file</label>
+                                            <input type="file" id="file-sla-agreement">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="button-wrapper pull-right" style="padding: 7px">
+                                                <button type="button" class="btn btn-primary" onclick="processSlaAgreements()">
+                                                    Load agreements
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
 
@@ -298,13 +341,22 @@
     var CONTENT_ID = "deployed-applications";
     var APP_DEPLOYER_TEXTAREA;
     var MONITORING_RULES_TEXTAREA;
+    var DEPLOYMENT_MODEL_TEXTAREA;
     var SLA_AGREEMENTS_TEXTAREA;
 
     $(document).ready(function () {
         $("#app-status-heading").on("click", function () {
             $("#app-status-collapsable").collapse("toggle");
         });
-
+        $("#monitoring-rules-heading").on("click", function () {
+            $("#monitoring-rules-collapsable").collapse("toggle");
+        });
+        $("#deployment-model-heading").on("click", function () {
+            $("#deployment-model-collapsable").collapse("toggle");
+        });
+        $("#sla-agreements-heading").on("click", function () {
+            $("#sla-agreements-collapsable").collapse("toggle");
+        });
         PNotify.prototype.options.styling = "fontawesome";
 
         setupTextArea();
@@ -320,19 +372,21 @@
         var monitoringRules = document.getElementById("textarea-monitoring-rules");
         MONITORING_RULES_TEXTAREA = CodeMirror.fromTextArea(monitoringRules, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
         MONITORING_RULES_TEXTAREA.setSize("100%", 400);
-        MONITORING_RULES_TEXTAREA.setValue("Write your monitoring rules here...");
 
+        var deploymentModel = document.getElementById("textarea-deployment-model");
+        DEPLOYMENT_MODEL_TEXTAREA = CodeMirror.fromTextArea(deploymentModel, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
+        DEPLOYMENT_MODEL_TEXTAREA.setSize("100%", 400);
+        
         var slaAgreements = document.getElementById("textarea-sla-agreements");
         SLA_AGREEMENTS_TEXTAREA = CodeMirror.fromTextArea(slaAgreements, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
         SLA_AGREEMENTS_TEXTAREA.setSize("100%", 400);
-        SLA_AGREEMENTS_TEXTAREA.setValue("Write your SLA Agreements here...");
 
         $("#app-status-collapsable").on('shown.bs.collapse', function() {
             if(APP_DEPLOYER_TEXTAREA.getValue().length==0){
-                APP_DEPLOYER_TEXTAREA.setValue(" ");
+                APP_DEPLOYER_TEXTAREA.setValue("");
             }
             APP_DEPLOYER_TEXTAREA.focus();
-        })
+        });
 
         $("#yaml-input-file").on("change", function(){
             var unparsedFile = $("#yaml-input-file").prop('files')[0];
@@ -354,7 +408,7 @@
 
     function displayApplicationOverview() {
         var boxHTML = "";
-        $.get("servlets/listApplications", function getApplications(response) {
+        $.get("api/deployer/applications", function getApplications(response) {
             if (response.length > 0) {
                 $.each(response, function (appIdx, app) {
                     boxHTML += generateAppOverviewBox(app);
@@ -379,57 +433,56 @@
 
         // Header
         appHTML += "<div class=\"panel-heading clearfix\">";
-        appHTML += "<i class=\"fa fa-gears fa-fw\"><\/i> " + application.spec.name +
+        appHTML += "<i class=\"fa fa-gears fa-fw\"><\/i> " + application.name +
                 "<button type=\"button\" class=\"btn btn-danger navbar-right\" onClick=deleteApp('" + application.id + "')>Remove</button>";
         appHTML += "</div>";
 
         // Body
         appHTML += "<div class=\"panel-body\" id=\"information-panel\">";
         appHTML += "<strong>ID: </strong> " +  application.id + "<br>";
-        appHTML += "<strong>Name: </strong> " +  application.spec.name + "<br>";
-        appHTML += "<strong>Type: </strong> " +  application.spec.type  + "<br>";
+        appHTML += "<strong>Name: </strong> " +  application.name + "<br>";
+        appHTML += "<strong>Type: </strong> " +  application.type  + "<br>";
 
-        if(application.status == "RUNNING"){
-            appHTML += "<strong>Status: </strong> <span class=\"text-success\">" +  application.status + "</span><br>";
-        } else if(application.status == "STARTING"){
-            appHTML += "<strong>Status: </strong> <span class=\"text-muted\">" +  application.status + "</span><br>";
+        if(application.serviceState == "running"){
+            appHTML += "<strong>Status: </strong> <span class=\"text-success\">" +  application.serviceState + "</span><br>";
+        } else if(application.serviceState == "starting"){
+            appHTML += "<strong>Status: </strong> <span class=\"text-muted\">" +  application.serviceState + "</span><br>";
         }else{
-            appHTML += "<strong>Status: </strong> <span class=\"text-danger\">" +  application.status + "</span><br>";
+            appHTML += "<strong>Status: </strong> <span class=\"text-danger\">" +  application.serviceState + "</span><br>";
         }
 
         appHTML += "<ul class=\"list-unstyled\"><li><strong>Application Components</strong></li>";
-        application.descendants.forEach(function(descendant){
+        application.children.forEach(function(child){
             appHTML += "<li role=\"presentation\" class=\"dropdown-header\">" +
-                    "<a href=\"#\" data-toggle=\"collapse\" class=\"active\" data-target=\"#" + descendant.id + "-collapse\">" +
-                    "<i class=\"fa fa-search\"></i> " + descendant.name + " Summary  <i class=\"fa fa-angle-down\"></i></a></li>";
+                    "<a href=\"#\" data-toggle=\"collapse\" class=\"active\" data-target=\"#" + child.id + "-collapse\">" +
+                    "<i class=\"fa fa-search\"></i> " + child.name + " Summary  <i class=\"fa fa-angle-down\"></i></a></li>";
 
-            var collapseStatus = $("#" +descendant.id + "-collapse");
+            var collapseStatus = $("#" +child.id + "-collapse");
             if(collapseStatus && collapseStatus.hasClass("in")){
-                appHTML += "<li id=\"" + descendant.id + "-collapse\" class=\"collapse in\">";
+                appHTML += "<li id=\"" + child.id + "-collapse\" class=\"collapse in\">";
             }else{
-                appHTML += "<li id=\"" + descendant.id + "-collapse\" class=\"collapse\">";
+                appHTML += "<li id=\"" + child.id + "-collapse\" class=\"collapse\">";
             }
 
             appHTML += "<ul  class=\"list-unstyled\" style=\"padding-left : 5%\">";
-            appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>ID: </strong>" + descendant.id + "</li>";
-            appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>Name: </strong>" + descendant.name + "</li>";
-            appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>Type: </strong>" + descendant.type + "</li>";
+            appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>ID: </strong>" + child.id + "</li>";
+            appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>Name: </strong>" + child.name + "</li>";
+            appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>Type: </strong>" + child.type + "</li>";
             appHTML += "<li role=\"presentation\" class=\"dropdown-header\">" +
-                    "<a href=\"#\" data-toggle=\"collapse\" class=\"active\" data-target=\"#" + descendant.id + "-locations-collapse\">" +
+                    "<a href=\"#\" data-toggle=\"collapse\" class=\"active\" data-target=\"#" + child.id + "-locations-collapse\">" +
                     "<i class=\"fa fa-map-marker\"></i> Locations <i class=\"fa fa-angle-down\"></i></a>" ;
 
-            collapseStatus = $("#" +descendant.id + "-locations-collapse");
+            collapseStatus = $("#" +child.id + "-locations-collapse");
             if(collapseStatus && collapseStatus.hasClass("in")){
-                appHTML += "<li id=\"" + descendant.id + "-locations-collapse\" class=\"collapse in\">";
+                appHTML += "<li id=\"" + child.id + "-locations-collapse\" class=\"collapse in\">";
             }else{
-                appHTML += "<li id=\"" + descendant.id + "-locations-collapse\" class=\"collapse\">";
+                appHTML += "<li id=\"" + child.id + "-locations-collapse\" class=\"collapse\">";
             }
 
             appHTML += "<ul  class=\"list-unstyled\" style=\"padding-left : 5%\">";
 
-            descendant.locations.forEach(function(location){
-                appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>ID: </strong>" + location.id + "</li>";
-                appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>Name: </strong>" + location.name + "</li><br/>";
+            child.locations.forEach(function(location){
+                appHTML += "<li><i class=\"fa fa-chevron-right\"></i> <strong>Name: </strong>" + location.spec + "</li><br/>";
             })
 
             appHTML += "</ul>";
@@ -453,7 +506,7 @@
         // http://stackoverflow.com/a/15089299
         SPINNER.spin(document.getElementById("loading-spinner"));
         $.ajax({
-            url: "servlets/removeApplication" + "?" + $.param({application: applicationId}),
+            url: "api/deployer/application" + "?" + $.param({id: applicationId}),
             type: 'DELETE'
         }).done(function(){
             new PNotify({
@@ -481,7 +534,7 @@
         SPINNER.spin(document.getElementById("loading-spinner"));
         $("#app-status-collapsable").collapse("toggle");
 
-        var query= $.post("servlets/addApplication", {yaml: APP_DEPLOYER_TEXTAREA.getValue()});
+        var query= $.post("api/deployer/applications", APP_DEPLOYER_TEXTAREA.getValue());
         query.done(function () {
             APP_DEPLOYER_TEXTAREA.setValue(" ");
             new PNotify({
@@ -508,7 +561,7 @@
     function processMonitoringRules() {
         SPINNER.spin(document.getElementById("loading-spinner"));
 
-        $.post("servlets/addMonitoringRules", {rules: MONITORING_RULES_TEXTAREA.getValue()}, function sendMonitoringRules(response) {
+        $.post("api/monitor/rules", {rules: MONITORING_RULES_TEXTAREA.getValue()}, function sendMonitoringRules(response) {
             SPINNER.stop();
         }).done(function () {
             new PNotify({
@@ -525,26 +578,62 @@
             SPINNER.stop();
         });
     }
-
-    function processSlaAgreements() {
+    function processDeploymentModel() {
         SPINNER.spin(document.getElementById("loading-spinner"));
 
-        $.post("servlets/addSlaAgreements", {sla: SLA_AGREEMENTS_TEXTAREA.getValue(), rules: MONITORING_RULES_TEXTAREA.getValue()}, function sendSlaAgreements(response) {
+        $.post("api/monitor/rules", {rules: MONITORING_RULES_TEXTAREA.getValue()}, function sendDeploymentModel(response) {
             SPINNER.stop();
         }).done(function () {
             new PNotify({
-                title: 'SLA agreements were added successfully',
-                text: 'It will appear soon on the application list',
+                title: 'Setup of deployment model was successful',
+                text: 'The rest of the modules will be notified soon',
                 type: 'success'
             });
         }).fail(function () {
             new PNotify({
                 title: 'Error',
-                text: 'Error processing the SLA Agreements',
+                text: 'Error processing the deployment model',
                 type: 'error'
             });
             SPINNER.stop();
         });
+    }
+    function processSlaAgreements() {
+        SPINNER.spin(document.getElementById("loading-spinner"));
+
+        if (MONITORING_RULES_TEXTAREA.getValue() == ""){
+            new PNotify({
+                title: 'Missing monitoring rules',
+                text: 'Monitoring rules are necessary for SLA initialization',
+                type: 'error'
+            })
+        } else if (SLA_AGREEMENTS_TEXTAREA.getValue() == ""){
+            new PNotify({
+                title: 'Missing SLA agreements',
+                text: 'SLA agreements field is mandatory',
+                type: 'error'
+            })
+        } else {
+            $.ajax({
+                url: "api/sla/agreements",
+                data: {agreements: SLA_AGREEMENTS_TEXTAREA.getValue(), rules: MONITORING_RULES_TEXTAREA.getValue()},
+                type: 'POST'
+            }).done(function(res) {
+                new PNotify({
+                    title: 'SLA agreements were added successfully',
+                    text: 'It will appear soon on the application list',
+                    type: 'success'
+                });
+            }).fail(function(res) {
+                new PNotify({
+                    title: 'Error',
+                    text: 'Error processing the SLA Agreements',
+                    type: 'error'
+                });
+            }).always(function(res){
+                SPINNER.stop();
+            });
+        }
     }
 
 </script>

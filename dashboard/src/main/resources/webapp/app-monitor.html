@@ -249,7 +249,7 @@ function setupDataTable(){
 
 
 function showAvailableMetrics() {
-    $.get("servlets/getAvailableMetrics", {application: APP_ID}).done(function (entityList){
+    $.get("api/monitor/metrics", {applicationId: APP_ID}).done(function (entityList){
 
         fillAvailableMetricsTable(entityList);
 
@@ -283,7 +283,7 @@ function addGraph(appId, entityId, entityName, sensorName){
     SPINNER.spin(document.getElementById("loading-spinner"));
 
     // Checking first if sensor is available by pulling a single value.
-    var query = $.get('servlets/getMetricValueServlet',{application:appId, entity:entityId, sensor:sensorName});
+    var query = $.get('api/monitor/metrics/value',{applicationId:appId, entityId:entityId, metricId:sensorName});
     query.done(function() {
         new PNotify({
             title: 'New sensor added',
@@ -415,7 +415,7 @@ function setupGraphs (containerID, entityID, sensorName) {
     }
 
     var programedInterval = setInterval(function(){
-        var query = $.get('servlets/getMetricValueServlet',{application:APP_ID, entity:entityID, sensor:sensorName}, updateFunction);
+        var query = $.get('api/monitor/metrics/value',{applicationId:APP_ID, entityId:entityID, metricId:sensorName}, updateFunction);
     }, 500);
 
     ACTIVE_API_CALLS.push({

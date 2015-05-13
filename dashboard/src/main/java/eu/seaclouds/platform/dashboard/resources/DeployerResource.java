@@ -22,9 +22,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import eu.seaclouds.platform.dashboard.ConfigParameters;
-import eu.seaclouds.platform.dashboard.utils.HttpDeleteRequestBuilder;
-import eu.seaclouds.platform.dashboard.utils.HttpGetRequestBuilder;
-import eu.seaclouds.platform.dashboard.utils.HttpPostRequestBuilder;
+import eu.seaclouds.platform.dashboard.http.HttpDeleteRequestBuilder;
+import eu.seaclouds.platform.dashboard.http.HttpGetRequestBuilder;
+import eu.seaclouds.platform.dashboard.http.HttpPostRequestBuilder;
 import org.apache.http.entity.StringEntity;
 
 import javax.ws.rs.*;

@@ -271,7 +271,7 @@
     function processAppTopology() {
         SPINNER.spin(document.getElementById("loading-spinner"));
 
-        $.get("servlets/getMatchmaking", {yaml: APP_TOPOLOGY_TEXTAREA.getValue()}, function getMatchmaking(response) {
+        $.get("api/planner/matchmake", {yaml: APP_TOPOLOGY_TEXTAREA.getValue()}, function getMatchmaking(response) {
             PLANNER_OUTPUT_TEXTAREA.setValue(response);
             SPINNER.stop();
         }).fail(function () {

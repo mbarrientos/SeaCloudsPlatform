@@ -19,40 +19,42 @@ package eu.seaclouds.platform.dashboard.resources;
 
 
 import eu.seaclouds.platform.dashboard.ConfigParameters;
-import eu.seaclouds.platform.dashboard.utils.HttpPostRequestBuilder;
-
+import eu.seaclouds.platform.dashboard.http.HttpPostRequestBuilder;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.net.URISyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/sla")
 @Produces(MediaType.APPLICATION_JSON)
 public class SlaResource {
-
+    static Logger log = LoggerFactory.getLogger(SlaResource.class);
+    
     @POST
     @Path("agreements")
-    public Response addAgreements(@QueryParam("agreements") String agreements,
-                                   @QueryParam("rules") String rules) {
-
+    public Response addAgreements(@FormParam("agreements") String agreements,
+                                   @FormParam("rules") String rules) {
+        
         if (agreements != null && rules != null) {
             try {
 
-
                 String slaResponse = new HttpPostRequestBuilder()
                         .multipartPostRequest(true)
-                        .addParam("agreements", agreements)
+                        .addParam("sla", agreements)
                         .addParam("rules", rules)
                         .host(ConfigParameters.SLA_ENDPOINT)
-                        .path("/sla-service/seaclouds/agreements")
+                        .path("/seaclouds/agreements")
                         .build();
 
-                return Response.ok(slaResponse).build();
+                return Response.ok().build();
             } catch (URISyntaxException | IOException e) {
+                log.error(e.getMessage());
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
         } else {

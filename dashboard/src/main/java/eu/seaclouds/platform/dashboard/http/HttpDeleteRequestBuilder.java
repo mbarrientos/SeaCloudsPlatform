@@ -15,7 +15,7 @@
  *      limitations under the License.
  */
 
-package eu.seaclouds.platform.dashboard.utils;
+package eu.seaclouds.platform.dashboard.http;
 
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.utils.URIBuilder;
