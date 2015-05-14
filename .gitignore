@@ -6,4 +6,3 @@ target/
 .metadata
 .settings/
 /bin/
-planner/optimizer/src/test/java/eu/seaclouds/platform/planner/optimizerTest/resources/output*
