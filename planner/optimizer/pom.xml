@@ -30,4 +30,10 @@ limitations under the License.
   <groupId>eu.seaclouds-project</groupId>
   <artifactId>optimizer</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
 </project>
