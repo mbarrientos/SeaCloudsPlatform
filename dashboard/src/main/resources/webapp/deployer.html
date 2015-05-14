@@ -328,10 +328,7 @@
 <script src="js/sb-admin.js"></script>
 
 <!-- Code Mirror Scripts -->
-<script src="js/lib/codemirror.js"></script>
-<script src="js/lib/codemirror-yaml.js"></script>
-<script src="js/lib/codemirror-xml.js"></script>
-<script src="js/lib/codemirror-simplescrollbars.js"></script>
+<script src="js/lib/codemirror-compressed.js"></script>
 
 <!-- PNotify Scripts -  -->
 <script src="js/lib/pnotify.custom.min.js"></script>
@@ -372,14 +369,18 @@
         var monitoringRules = document.getElementById("textarea-monitoring-rules");
         MONITORING_RULES_TEXTAREA = CodeMirror.fromTextArea(monitoringRules, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
         MONITORING_RULES_TEXTAREA.setSize("100%", 400);
+        MONITORING_RULES_TEXTAREA.setValue("Paste here an XML containing the Monitoring Rules");
 
         var deploymentModel = document.getElementById("textarea-deployment-model");
         DEPLOYMENT_MODEL_TEXTAREA = CodeMirror.fromTextArea(deploymentModel, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
         DEPLOYMENT_MODEL_TEXTAREA.setSize("100%", 400);
-        
+        DEPLOYMENT_MODEL_TEXTAREA.setValue("Paste here an XML containing the Deployment Model for the Monitor Component");
+
         var slaAgreements = document.getElementById("textarea-sla-agreements");
         SLA_AGREEMENTS_TEXTAREA = CodeMirror.fromTextArea(slaAgreements, {scrollbarStyle: "simple", tabSize: 2, mode:"xml"})
         SLA_AGREEMENTS_TEXTAREA.setSize("100%", 400);
+        SLA_AGREEMENTS_TEXTAREA.setValue("Paste here an XML containing the SLA Agreements");
+
 
         $("#app-status-collapsable").on('shown.bs.collapse', function() {
             if(APP_DEPLOYER_TEXTAREA.getValue().length==0){

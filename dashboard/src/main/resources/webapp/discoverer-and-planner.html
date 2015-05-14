@@ -217,9 +217,8 @@
 <script src="js/sb-admin.js"></script>
 
 <!-- Code Mirror Scripts -->
-<script src="js/lib/codemirror.js"></script>
-<script src="js/lib/codemirror-yaml.js"></script>
-<script src="js/lib/codemirror-simplescrollbars.js"></script>
+<script src="js/lib/codemirror-compressed.js"></script>
+
 
 <!-- PNotify Scripts -  -->
 <script type="text/javascript" src="js/lib/pnotify.custom.min.js"></script>
@@ -262,7 +261,7 @@
         PLANNER_OUTPUT_TEXTAREA = CodeMirror.fromTextArea(plannerOutput, {readOnly: true, scrollbarStyle: "simple", tabSize: 2})
         PLANNER_OUTPUT_TEXTAREA.setSize("100%", 400);
 
-        PLANNER_OUTPUT_TEXTAREA.setValue("");
+        PLANNER_OUTPUT_TEXTAREA.setValue("Please submit first an Abstract Application Model");
 
         SPINNER.stop();
 
