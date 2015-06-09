@@ -123,9 +123,8 @@
                 </executions>
                 <configuration>
                     <excludes combine.children="append">
-                        <exclude>**/css/lib/*</exclude>
-                        <exclude>**/css/fonts/*</exclude>
-                        <exclude>**/js/lib/*</exclude>
+                        <!-- TODO:  Include propietary files -->
+                        <exclude>**/static/**/*</exclude>
                     </excludes>
                 </configuration>
             </plugin>

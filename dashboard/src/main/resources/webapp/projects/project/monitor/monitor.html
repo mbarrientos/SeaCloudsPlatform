@@ -1,0 +1,68 @@
+<!--
+  ~  Copyright 2014 SeaClouds
+  ~  Contact: SeaClouds
+  ~
+  ~      Licensed under the Apache License, Version 2.0 (the "License");
+  ~      you may not use this file except in compliance with the License.
+  ~      You may obtain a copy of the License at
+  ~
+  ~          http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~      Unless required by applicable law or agreed to in writing, software
+  ~      distributed under the License is distributed on an "AS IS" BASIS,
+  ~      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~      See the License for the specific language governing permissions and
+  ~      limitations under the License.
+  -->
+
+<div ng-controller="MonitorCtrl">
+
+
+    <div role="tabpanel">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" ng-class="{active: !isMetricSettingVisible()}"><a aria-controls="metric-viewer" role="tab" data-toggle="tab" ng-click="showMetricSettings(false)">Metric Viewer</a></li>
+            <li role="presentation" ng-class="{active: isMetricSettingVisible()}"><a aria-controls="metric-settings" role="tab" data-toggle="tab" ng-click="showMetricSettings(true)">Settings</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <!-- Metric Viewer -->
+            <div id="metric-viewer" role="tabpanel" class="tab-pane" ng-class="{active: !isMetricSettingVisible()}" ng-if="!isMetricSettingVisible()">
+                <div  ng-if="!hasMetricsEnabled()">
+                    <h1 class="text-center"><small>Please enable some metrics first</small></h1>
+                </div>
+                <div class="col-lg-6" ng-repeat="metric in metrics | filter:{enabled:true}">
+                   <h2><small>{{metric.name}} - {{metric.units}}</small></h2>
+                    <canvas  class="chart chart-line"  ng-attr-id="{{projectId + '-' + metric.name}}"
+                             series="[metric.name + ' - ' + metric.units]" data="[metric.values]" labels="metric.labels" options="legendTemplate">
+                    </canvas>
+                </div>
+            </div>
+
+            <!-- Metric Settings -->
+            <div id="metric-settings" role="tabpanel" class="tab-pane" ng-class="{active: isMetricSettingVisible()}" ng-if="isMetricSettingVisible()">
+                <table datatable="" class="table table-striped" >
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Enabled</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="metric in metrics">
+                        <td>{{metric.name}}</td>
+                        <td>{{metric.description}}</td>
+                        <td><input type="checkbox" ng-model="metric.enabled"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>

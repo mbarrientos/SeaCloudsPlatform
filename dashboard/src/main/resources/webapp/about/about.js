@@ -1,4 +1,4 @@
-<!--
+/*
     Copyright 2014 SeaClouds
     Contact: SeaClouds
 
@@ -13,7 +13,16 @@
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
--->
-<div class="jumbotron">
-    Sorry, the content that you're trying to look seems to be not available on this moment.
-</div>
+*/
+
+'use strict';
+
+angular.module('seacloudsDashboard.about', ['ngRoute'])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider.when('/about', {
+            templateUrl: 'about/about.html'
+        })
+    }])
+    .controller('AboutCtrl', function($scope){
+        $scope.Page.setTitle('SeaClouds Dashboard - About');
+    });;;
