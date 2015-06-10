@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', 'angularTopologyEditor', 'ui.codemirror', 'ngFileUpload', 'jlareau.pnotify'])
+angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', 'angularTopologyEditor', 'ui.codemirror', 'ngFileUpload'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/add-application-wizard', {
             templateUrl: 'projects/add-application-wizard/add-application-wizard.html'

@@ -18,22 +18,32 @@
 'use strict';
 
 angular.module('seacloudsDashboard.header', [])
-    .controller('HeaderCtrl', function ($scope, $location) {
+    .controller('HeaderCtrl', function ($scope, $location, notificationService) {
 
         $scope.login = $scope.UserCredentials.login;
         $scope.logout = $scope.UserCredentials.logout;
         $scope.isUserAuthenticated = $scope.UserCredentials.isUserAuthenticated;
 
-        $scope.projects = $scope.Projects.getProjects();;
+        $scope.projects = {};
 
-        $scope.isViewActive = function(route) {
+        $scope.Projects.getProjects().
+            success(function (projects) {
+                $scope.projects = projects;
+            }).
+            error(function(){
+                //TODO: Handle the error better than showing a notification
+                notificationService.error("Unable to retrieve the projects");
+
+            })
+
+            $scope.isViewActive = function (route) {
             return $location.path().startsWith(route);
         }
     })
-    .directive('header', function(){
+    .directive('header', function () {
         return {
             restrict: 'E',
             templateUrl: 'header/header.html',
-            controller : 'HeaderCtrl'
+            controller: 'HeaderCtrl'
         };
     });

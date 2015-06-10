@@ -21,7 +21,6 @@ angular.module('seacloudsDashboard.projects.project.sla', ['jlareau.pnotify'])
     .directive('sla', function(){
         return {
             restrict: 'E',
-            scope : { projectId : '='},
             templateUrl: 'projects/project/sla/sla.html',
             controller : 'SlaCtrl'
         };

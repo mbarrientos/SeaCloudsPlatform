@@ -15,6 +15,10 @@
  *      limitations under the License.
  */
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+    display: none !important;
+}
+
 .col-centered{
     display: block;
     margin-left: auto;

@@ -38,14 +38,18 @@
                                 <div class="col-lg-12">
                                     <h5>Status:</h5>
                                 </div>
-
                                 <div class="col-lg-4">
-                                    <i tooltip="{{getStatusTooltip(project)}}"   tooltip-placement="top"
-                                       tooltip-trigger="mouseenter" class="fa fa-3x" ng-class="{'fa-thumbs-up' : project.status == 'OK',
-                                     'fa-wrench' : project.status == 'STARTING', 'fa-warning': project.status == 'RECONFIGURE', 'fa-fire': project.status == 'FAILURE'}"></i>
+                                    <i tooltip="{{getUpTooltip(project)}}" tooltip-placement="top"
+                                       tooltip-trigger="mouseenter" class="fa fa-3x"
+                                       ng-class="{'fa-circle' : project.serviceUp, 'fa-circle-o': !project.serviceUp}"></i>
                                 </div>
                                 <div class="col-lg-4">
-                                    <i tooltip="{{getSLATooltip(project)}}"   tooltip-placement="top"
+                                    <i tooltip="{{getStatusTooltip(project)}}" tooltip-placement="top"
+                                       tooltip-trigger="mouseenter" class="fa fa-3x" ng-class="{'fa-thumbs-up' : project.serviceState == 'running',
+                                     'fa-wrench' : project.serviceState == 'starting', 'fa-warning': project.serviceState == 'reconfiguring', 'fa-fire': project.serviceState == 'on-fire'}"></i>
+                                </div>
+                                <div class="col-lg-4">
+                                    <i tooltip="{{getSLATooltip(project)}}" tooltip-placement="top"
                                        tooltip-trigger="mouseenter" class="fa fa-3x"
                                        ng-class="{'fa-heartbeat' : project.slaStatus == 'OK',
                                      'fa-ambulance' : project.slaStatus == 'FAILED'}"></i>

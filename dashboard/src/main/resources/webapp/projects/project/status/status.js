@@ -22,46 +22,55 @@ angular.module('seacloudsDashboard.projects.project.status', [])
     .directive('status', function () {
         return {
             restrict: 'E',
-            scope: {projectId: '='},
             templateUrl: 'projects/project/status/status.html',
             controller: 'StatusCtrl'
         };
     })
     .controller('StatusCtrl', function ($scope) {
-        $scope.topology = {
-            "nodes": [{
-                "name": "PHP Node",
-                "label": "PHP",
-                "type": "WebApplication",
-                "status": "running",
-                "properties": {"language": "PHP"}
-            }, {
-                "name": "Rest Component",
-                "label": "rest1",
-                "type": "RestService",
-                "status": "onfire",
-                "properties": {"language": "JAVA"}
-            }, {
-                "name": "Database1",
-                "label": "db1",
-                "type": "Database",
-                "status": "running",
-                "properties": {"category": "mysql"}
-            }, {"name": "CloudFoundry Pivotal", "label": "CF", "type": "Cloud", "properties": {}}, {
-                "name": "Heroku",
-                "label": "Heroku",
-                "type": "Cloud",
-                "properties": {}
-            }],
-            "links": [{"source": "PHP Node", "target": "Rest Component", "properties": {}}, {
-                "source": "Rest Component",
-                "target": "Database1",
-                "properties": {}
-            }, {"source": "Rest Component", "target": "CloudFoundry Pivotal", "properties": {}}, {
-                "source": "PHP Node",
-                "target": "CloudFoundry Pivotal",
-                "properties": {}
-            }, {"source": "Database1", "target": "Heroku", "properties": {}}]
-        };
 
+
+        var generateTopology = function (parentEntity) {
+            var parentTopology = {
+                nodes: [],
+                links: []
+            }
+
+            if (parentEntity) {
+                var type = undefined;
+                if(parentEntity.type.search("database") >= 0){
+                    type = "Database"
+                }else if(parentEntity.type.search("webapp") >= 0){
+                    type = "WebApplication"
+                }else {
+                    type = "BasicApplication"
+                }
+
+                parentTopology.nodes.push(
+                    {
+                        name: parentEntity.name,
+                        label: parentEntity.name,
+                        status: parentEntity.serviceState,
+                        type : type
+                    })
+
+                if (parentEntity.children) {
+                    parentEntity.children.forEach(function (childEntity) {
+                        parentTopology.links.push({
+                            source: parentEntity.name,
+                            target: childEntity.name,
+                            properties: {}
+                        })
+
+                        var childTopology = generateTopology(childEntity);
+                        parentTopology.nodes = parentTopology.nodes.concat(childTopology.nodes);
+                        parentTopology.links = parentTopology.links.concat(childTopology.links);
+                    })
+                }
+            }
+
+            return parentTopology;
+
+
+        }
+        $scope.topology = generateTopology($scope.project);
     });

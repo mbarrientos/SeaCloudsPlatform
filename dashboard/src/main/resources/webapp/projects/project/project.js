@@ -17,24 +17,57 @@
 
 'use strict';
 
-angular.module('seacloudsDashboard.projects.project', ['ngRoute', 'seacloudsDashboard.projects.project.status',
+angular.module('seacloudsDashboard.projects.project', ['ngRoute', 'seacloudsDashboard.projects', 'seacloudsDashboard.projects.project.status',
     'seacloudsDashboard.projects.project.monitor', 'seacloudsDashboard.projects.project.sla'])
-    .config(['$routeProvider', function($routeProvider) {
+    .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/projects/:project', {
             templateUrl: 'projects/project/project.html'
         })
     }])
-    .controller('ProjectCtrl', function($scope, $routeParams){
+    .controller('ProjectCtrl', function ($scope, $routeParams, $location, notificationService) {
         $scope.Page.setTitle('SeaClouds Dashboard - Project details');
-        $scope.project = $scope.Projects.getProject(parseInt($routeParams.project));
+
+        $scope.project = undefined;
+
+        $scope.Projects.getProject($routeParams.project).
+            success(function(project){
+                $scope.project = project;
+            }).
+            error(function(){
+                notificationService.error("Cannot retrieve the project, please try it again");
+            })
+
+
+
+        $scope.$watch('projects', function (data) {
+            $scope.Projects.getProject($routeParams.project).
+                success(function(project){
+                    $scope.project = project;
+                }).
+                error(function(){
+                    notificationService.error("Cannot retrieve the project, please try it again");
+                })
+        })
+
         var tabSelected = 1;
 
-        $scope.getSelectedTab = function(){
+        $scope.getSelectedTab = function () {
             return tabSelected;
         }
 
-        $scope.setSelectedTab = function(tab){
+        $scope.setSelectedTab = function (tab) {
             tabSelected = tab;
+        }
+
+        $scope.removeProject = function () {
+            $scope.Projects.removeProject($scope.project.id).
+                success(function () {
+                    $location.path("/projects")
+                    notificationService.success("The application will be removed soon");
+                }).
+                error(function () {
+                    notificationService.error("An error happened during the removal process, please try it again");
+                })
         }
 
     });

@@ -21,7 +21,6 @@ angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'ch
     .directive('monitor', function(){
         return {
             restrict: 'E',
-            scope : { projectId : '='},
             templateUrl: 'projects/project/monitor/monitor.html',
             controller : 'MonitorCtrl'
         };

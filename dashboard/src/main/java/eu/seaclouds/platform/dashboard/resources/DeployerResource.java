@@ -64,8 +64,8 @@ public class DeployerResource {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("application")
-    public Response removeApplication(@QueryParam("id") String id) {
+    @Path("applications/{id}")
+    public Response removeApplication(@PathParam("id") String id) {
         //TODO: Remove monitoring rules and so on when the application is removed
         if (id == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

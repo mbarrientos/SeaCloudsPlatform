@@ -25,17 +25,43 @@ angular.module('seacloudsDashboard.projects', ['ngRoute', 'ngFitText',
         })
     }])
     .controller('ProjectsCtrl', function ($scope) {
-        $scope.projects = $scope.Projects.getProjects();
-        ;
+
+        $scope.isViewActive = function (route) {
+            return $location.path().startsWith(route);
+        };
         $scope.Page.setTitle('SeaClouds Dashboard - Projects overview');
+
+
+        $scope.projects = [];
+
+        $scope.Projects.getProjects().
+            success(function (projects) {
+                $scope.projects = projects;
+            }).
+            error(function () {
+                //TODO: Handle the error better than showing a notification
+                notificationService.error("Unable to retrieve the projects");
+
+            })
+
+
+        var appUp = "The application is up";
+        var appDown = "The application is down";
+        $scope.getUpTooltip = function (project){
+            if(project.serviceUp){
+                return appUp;
+            }else{
+                return appDown;
+            }
+        }
 
         var slaOK = "The application is satisfying the SLA's";
         var slaFAILED = "There are some violations in SLA's";
 
         $scope.getSLATooltip = function (project) {
-            if(project.slaStatus == "OK") {
+            if (project.slaStatus == "OK") {
                 return slaOK;
-            }else{
+            } else {
                 return slaFAILED;
             }
         }
@@ -46,13 +72,13 @@ angular.module('seacloudsDashboard.projects', ['ngRoute', 'ngFitText',
         var statusFAILURE = "The application failed during the execution";
 
         $scope.getStatusTooltip = function (project) {
-            if (project.status == "OK") {
+            if (project.serviceState == "running") {
                 return statusOK;
-            }else if (project.status == "STARTING"){
+            } else if (project.serviceState == "starting") {
                 return statusSTARTING;
-            }else if (project.status == "RECONFIGURE"){
+            } else if (project.serviceState == "reconfiguring") {
                 return statusRECONFIGURING;
-            }else{
+            } else {
                 return statusFAILURE;
             }
 
