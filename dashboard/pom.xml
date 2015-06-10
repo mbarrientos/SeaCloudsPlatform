@@ -65,9 +65,18 @@
             <version>${dropwizard.version}</version>
         </dependency>
         <dependency>
+            <groupId>it.polimi.modaclouds.monitoring</groupId>
+            <artifactId>metrics-observer</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.brooklyn</groupId>
+            <artifactId>brooklyn-test-support</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
