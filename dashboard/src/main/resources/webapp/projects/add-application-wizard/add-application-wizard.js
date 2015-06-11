@@ -34,10 +34,8 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
         $scope.monitoringModelInput = "Please load your file here...";
         $scope.monitoringRulesInput = "Please load your file here...";
         $scope.slaInput = "Please load your file here...";
-        $scope.deployedApp = {
-            id : 1
-        }
         $scope.wizardLog = "";
+
 
         // File uploader
         $scope.matchmakerInputFile = undefined;
@@ -108,22 +106,72 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
 
         $scope.deployApplication = function () {
 
-            $scope.wizardLog += "Installing Monitoring Model...";
-            $scope.wizardLog += "\t Done. \n";
-            $scope.wizardLog += "Installing Monitoring Rules...";
-            $scope.wizardLog += "\t Done. \n";
-            $scope.wizardLog += "Installing Service Level Agreements...";
-            $scope.wizardLog += "\t Done. \n";
-            $scope.wizardLog += "Starting the deployment process...";
-            $scope.wizardLog += "\t Done. \n";
+            var damSuccessCb = function () {
+                $scope.wizardLog += "Starting the deployment process...";
+                $scope.wizardLog += "\t Done. \n";
+            }
 
-            notificationService.success('The application was succesfully deployed');
+            var damFailCb = function () {
+                $scope.wizardLog += "Starting the deployment process...";
+                $scope.wizardLog += "\t ERROR. \n";
+            }
+
+            var modelSuccessCb = function () {
+                $scope.wizardLog += "Installing Monitoring Model...";
+                $scope.wizardLog += "\t Done. \n";
+            }
+
+            var modelFailCb = function () {
+                $scope.wizardLog += "Installing Monitoring Model...";
+                $scope.wizardLog += "\t ERROR. \n";
+            }
+
+
+            var rulesSuccessCb = function () {
+                $scope.wizardLog += "Installing Monitoring Rules...";
+                $scope.wizardLog += "\t Done. \n";
+            }
+
+            var rulesFailCb = function () {
+                $scope.wizardLog += "Installing Monitoring Rules...";
+                $scope.wizardLog += "\t ERROR. \n";
+            }
+
+            var agreementSuccessCb = function () {
+                $scope.wizardLog += "Installing Service Level Agreements...";
+                $scope.wizardLog += "\t Done. \n";
+            }
+
+            var agreementFailCb = function () {
+                $scope.wizardLog += "Installing Service Level Agreements...";
+                $scope.wizardLog += "\t ERROR. \n";
+            }
+
+
+            $scope.Projects.addProject($scope.damInput, damSuccessCb, damFailCb, $scope.monitoringModelInput,
+                modelSuccessCb, modelFailCb, $scope.monitoringRulesInput, rulesSuccessCb, rulesFailCb,
+                $scope.slaInput, agreementSuccessCb, agreementFailCb).
+                success(function (data) {
+                    $scope.wizardLog += "\n\n";
+                    $scope.wizardLog += "The application deployment process was triggered succesfully*. \n";
+                    $scope.wizardLog += "* Please notice that although the wizard finished the application runtime" +
+                        "failures could happen please go to the status view in order to verify " +
+                        "that everything is running properly"
+                    $scope.$apply()
+                }).
+                error(function (data) {
+                    $scope.wizardLog += "\n\n";
+                    $scope.wizardLog += "Something wrong happened!\n";
+                    $scope.wizardLog += "Please restart the process and try again\n";
+                    $scope.wizardLog += "All the changes were reverted.\n";
+                    $scope.$apply()
+                })
+
 
         }
-
         $scope.steps = ['Application properties', 'Design topology',
             'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy'];
-        $scope.currentStep = 1;
+        $scope.currentStep = 4;
         $scope.isSelected = function (step) {
             return $scope.currentStep == step;
         };
@@ -230,7 +278,6 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                         var r = new FileReader();
                         r.onload = function (e) {
                             scope.$parent.matchmakerInput = e.target.result;
-                            scope.apply();
                         }
                         r.readAsText(scope.matchmakerInputFile[0]);
                     }
@@ -241,7 +288,6 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                         var r = new FileReader();
                         r.onload = function (e) {
                             scope.$parent.optimizerInput = e.target.result;
-                            scope.apply();
                         }
                         r.readAsText(scope.optimizerInputFile[0]);
                     }
@@ -281,29 +327,26 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                         var r = new FileReader();
                         r.onload = function (e) {
                             scope.$parent.damInput = e.target.result;
-                            scope.apply();
                         }
                         r.readAsText(scope.damInputFile[0]);
                     }
                 });
 
                 scope.$watch('monitoringModelInputFile', function () {
-                    if (scope.damInputFile) {
+                    if (scope.monitoringModelInputFile) {
                         var r = new FileReader();
                         r.onload = function (e) {
                             scope.$parent.monitoringModelInput = e.target.result;
-                            scope.apply();
                         }
                         r.readAsText(scope.monitoringModelInputFile[0]);
                     }
                 });
 
                 scope.$watch('monitoringRulesInputFile', function () {
-                    if (scope.damInputFile) {
+                    if (scope.monitoringRulesInputFile) {
                         var r = new FileReader();
                         r.onload = function (e) {
                             scope.$parent.monitoringRulesInput = e.target.result;
-                            scope.apply();
                         }
                         r.readAsText(scope.monitoringRulesInputFile[0]);
                     }
@@ -314,7 +357,6 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                         var r = new FileReader();
                         r.onload = function (e) {
                             scope.$parent.slaInput = e.target.result;
-                            scope.apply();
                         }
                         r.readAsText(scope.slaInputFile[0]);
                     }

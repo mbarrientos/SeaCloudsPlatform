@@ -52,8 +52,8 @@ public class DashboardApplication extends Application<DashboardConfiguration> {
     public void run(DashboardConfiguration configuration, Environment environment) throws Exception {
         ((DefaultServerFactory) configuration.getServerFactory()).setJerseyRootPath("/api/*");
 
-        environment.jersey().register(new DeployerResource(configuration.getDeployerFactory(), configuration.getMonitorFactory(), configuration.getSlaFactory()));
-        environment.jersey().register(new MonitorResource(configuration.getMonitorFactory(), configuration.getDeployerFactory()));
+        environment.jersey().register(new DeployerResource(configuration.getDeployerFactory()));
+        environment.jersey().register(new MonitorResource(configuration.getMonitorFactory()));
         environment.jersey().register(new PlannerResource());
         environment.jersey().register(new SlaResource(configuration.getSlaFactory()));
     }

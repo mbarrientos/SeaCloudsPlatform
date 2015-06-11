@@ -93,7 +93,7 @@ seacloudsDashboard.factory('Projects', function ($http, $q) {
             return $http.get("/api/deployer/applications");
         },
         getProject: function (id) {
-            var promise =  new Promise(function (resolve, reject) {
+            var promise = new Promise(function (resolve, reject) {
                 $http.get("/api/deployer/applications").
                     success(function (data) {
                         var project = data.filter(function (project) {
@@ -105,35 +105,94 @@ seacloudsDashboard.factory('Projects', function ($http, $q) {
                         reject(Error(err));
                     });
             });
-            promise.success = function(fn) {
+            promise.success = function (fn) {
                 promise.then(fn);
                 return promise;
             }
 
-            promise.error = function(fn) {
+            promise.error = function (fn) {
                 promise.then(null, fn);
                 return promise;
             }
 
             return promise;
         },
-        addProject: function (dam, monitoringRules, monitorDam, agreements) {
-            return $http.post("/api/deployer/applications", JSON.stringify({
-                dam: dam,
-                monitoringRules: monitoringRules,
-                monitorDam: monitorDam,
-                agreements: agreements
-            }));
+        addProject: function (dam, damSuccessCallback, damErrorCallback,
+                              monitorDam, monitorDamSuccessCallback, monitorDamErrorCallback,
+                              monitoringRules, monitoringRulesSuccessCallback, monitoringRulesErrorCallback,
+                              agreements, agreementsSuccessCallback, agreementsErrorCallback) {
+
+
+            var promise = new Promise(function (resolveParent, rejectParent) {
+                var deployerResponse;
+
+                // Start application deployment
+                $http.post("/api/deployer/applications", dam).
+                    success(function (response) {
+                        deployerResponse = response;
+                        damSuccessCallback(response)
+
+                        // Deploy monitor model
+                        $http.post("/api/monitor/model", monitorDam).
+                            success(function () {
+                                monitorDamSuccessCallback();
+
+                                // Deploy monitor rules
+                                $http.post("/api/monitor/rules", monitoringRules).
+                                    success(function () {
+                                        monitoringRulesSuccessCallback();
+
+                                        $http.post("/api/sla/agreements", {
+                                            rules: monitoringRules,
+                                            agreements: agreements
+                                        }).
+                                            success(function (err) {
+                                                agreementsSuccessCallback();
+                                                resolveParent(deployerResponse);
+
+                                            }).
+                                            error(function (err) {
+                                                //TODO: Rollback monitoring rules + monitor model + deployed app
+                                                agreementsErrorCallback();
+                                                rejectParent(err);
+                                            })
+                                    }).
+                                    error(function (err) {
+                                        //TODO: Rollback monitor model + deployed app
+                                        monitoringRulesErrorCallback();
+                                        rejectParent(err);
+                                    })
+                            }).
+                            error(function (err) {
+                                //TODO: Rollback deployed app
+                                monitorDamErrorCallback();
+                                rejectParent(err);
+                            })
+
+                    }).
+                    error(function (err) {
+                        damErrorCallback();
+                        rejectParent(err);
+                    })
+
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+
+
         },
         removeProject: function (id) {
             return $http.delete("/api/deployer/applications/" + id);
         }
-        /*,
-         getProject: function (index) {
-         return projects.filter(function (project) {
-         return project.id == index;
-         })[0]
-         }*/
     };
 });
 
