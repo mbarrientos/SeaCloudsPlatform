@@ -34,8 +34,16 @@ var Types = function() {
         type : "Database",
         icon : "\uf1c0",
     });
-    
-    
+
+
+    var BasicApplication = Object.create(Graph.Node).init({
+        name : "BasicApplication",
+        label : "app",
+        type : "BasicApplication",
+        icon : "\uf1b3",
+    });
+
+
     var WebApplication = Object.create(Graph.Node).init({
         name : "WebApplication",
         label : "www",
@@ -90,14 +98,15 @@ var Types = function() {
     
 
     return {
+        BasicApplication: BasicApplication,
+        ApplicationServer: ApplicationServer,
         WebApplication: WebApplication,
+        Tomcat: Tomcat,
+        Apache: Apache,
+        Nginx: Nginx,
         Database: Database,
         RestService: RestService,
         NoSql : NoSql,
-        Cloud: Cloud,
-        ApplicationServer,
-        Tomcat, 
-        Apache,
-        Nginx
+        Cloud: Cloud
     };
 }();
