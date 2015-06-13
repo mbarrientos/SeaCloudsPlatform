@@ -22,7 +22,7 @@
         .directive('topologyEditor', function ($window) {
             return {
                 restrict: 'E',
-                scope: {topology: '=', visible: '=?'},
+                scope: {topology: '='},
                 link: function (scope, elem, attrs) {
 
                     var drawCanvas = function(){
@@ -31,7 +31,10 @@
                         elem.html('<div id="' + uniqid + '" class="topology-editor"></div>');
 
                         var canvasOptions = {
-                            addlinkcallback: Editor.addlinkcallback
+                            addlinkcallback: Editor.addlinkcallback,
+                            changehandler: function(model) {
+                                console.log("New model is " + model);
+                            }
                         };
 
                         if (attrs.height) {
@@ -48,7 +51,7 @@
                         Editor.init(canvas);
                         Editor.fromjson(scope.topology);
                         canvas.restart();
-                    }
+                    };
 
                     // Resize watcher
                     angular.element($window).bind('resize', function () {
@@ -62,18 +65,8 @@
                     // Visibility watcher
                     scope.visible = (typeof scope.visible == 'undefined')? true : scope.visible;
 
-                    if(scope.visible) {
-                        drawCanvas()
-                    }
-
-                    scope.$watch('visible', function(visible) {
-                        if(visible) {
-                            drawCanvas()
-                        }
-                    });
-
-
+                    drawCanvas();
                 }
-            }
+            };
         });
-})(window, document, angular)
+})(window, document, angular);

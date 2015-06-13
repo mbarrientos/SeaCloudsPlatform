@@ -164,9 +164,12 @@ var Editor = (function() {
     };
 
 
-    
     function init(canvas) {
         this.canvas = canvas;
+
+        populate_controls();
+        initialize_fieldssets();
+        initialize_forms();
 
         /*
          * Edit/Delete node
@@ -198,6 +201,7 @@ var Editor = (function() {
                 activeform.load(node);
                 activeform.show(function(node) {
                     canvas.restart();
+                    canvas.firechange();
                 });
             }
             else if (action == "delete") {
@@ -235,10 +239,27 @@ var Editor = (function() {
                 activeform.load(link);
                 activeform.show(function(editlink) {
                     canvas.restart();
+                    canvas.firechange();
                 });
             }
         });
 
+        $("#add-buttons- [data-type]").on("click", function() {
+            var datatype = this.getAttribute("data-type");
+            if (datatype === undefined) {
+                log.warn("Button " + this.id + " does not have data-type attribute");
+            }
+    
+            $("[aria-describedby]").popover('hide');
+            
+            activeform = buttonform_map[datatype];
+            activeform.reset();
+            activeform.show(function(node) {
+                canvas.addnode(node);
+                canvas.restart();
+            });
+        });
+        
         /*
          * Main "Add..." button behaviour
          */
@@ -447,22 +468,16 @@ var Editor = (function() {
         this.canvas.fromjson(json, typemap);
     };
     
-    $(document).ready(function() {
-        log.debug("ready");
-        
-        /*
-         * Populate controls 
-         */
+    function populate_controls() {
         Forms.populate_select($("#code-language"), language_options);
         Forms.populate_select($("#database-category"), database_options);
         Forms.populate_select($("#nf-cost"), cost_options);
         Forms.populate_select($("#nf-location-static-options"), location_static_options);
         Forms.populate_select($("#nf-location-dynamic-options"), location_dynamic_options);
         Forms.populate_select($("#nf-qos-operator"), qos_operators);
-      
-        /*
-         * Initialize fieldsets
-         */
+    }
+    
+    function initialize_fieldssets() {
         commonset.setup("set-common");
         codetechset.setup("set-code-tech");
         databasetechset.setup("set-database-tech");
@@ -473,9 +488,9 @@ var Editor = (function() {
         qos_table = Object.create(Forms.DynamicTable).setup("nf-qos");
         link_operations_table = Object.create(Forms.DynamicTable)
             .setup("link-operations");
-        /*
-         * Initialize forms
-         */
+    }
+    
+    function initialize_forms() {
         webappform.setup(
             Types.WebApplication,
             document.getElementById("add-form"),
@@ -512,7 +527,6 @@ var Editor = (function() {
             "Database": databaseform,
             "RestService": restform,
         };
-    
         /*
          * Additional behaviour
          */
@@ -526,8 +540,8 @@ var Editor = (function() {
                 language_version_options[$('#code-language').val()]
             );
         });
-    });
-
+    }
+    
     return {
         init : init,
         addlinkcallback: addlinkcallback,

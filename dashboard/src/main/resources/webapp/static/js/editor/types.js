@@ -34,8 +34,8 @@ var Types = function() {
         type : "Database",
         icon : "\uf1c0",
     });
-
-
+    
+    
     var BasicApplication = Object.create(Graph.Node).init({
         name : "BasicApplication",
         label : "app",

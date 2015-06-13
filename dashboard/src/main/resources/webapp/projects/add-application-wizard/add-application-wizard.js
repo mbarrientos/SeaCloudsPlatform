@@ -65,21 +65,12 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                 "type": "Database",
                 "status": "running",
                 "properties": {"category": "mysql"}
-            }, {"name": "CloudFoundry Pivotal", "label": "CF", "type": "Cloud", "properties": {}}, {
-                "name": "Heroku",
-                "label": "Heroku",
-                "type": "Cloud",
-                "properties": {}
             }],
             "links": [{"source": "PHP Node", "target": "Rest Component", "properties": {}}, {
                 "source": "Rest Component",
                 "target": "Database1",
                 "properties": {}
-            }, {"source": "Rest Component", "target": "CloudFoundry Pivotal", "properties": {}}, {
-                "source": "PHP Node",
-                "target": "CloudFoundry Pivotal",
-                "properties": {}
-            }, {"source": "Database1", "target": "Heroku", "properties": {}}]
+            }]
         };
 
         $scope.processAAM = function () {
@@ -171,7 +162,7 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
         }
         $scope.steps = ['Application properties', 'Design topology',
             'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy'];
-        $scope.currentStep = 4;
+        $scope.currentStep = 2;
         $scope.isSelected = function (step) {
             return $scope.currentStep == step;
         };

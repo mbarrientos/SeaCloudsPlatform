@@ -18,7 +18,10 @@
  *       addlinkcallback : function(link) {
  *           log.debug(link);
  *           return link;
- *       }
+ *       },
+ *       changehandler : function(newmodel) {
+ *           console.log("model has changed");
+ *       } 
  *   });
  * 
  * To update the canvas when nodes are added/modified/removed: Canvas.restart()
@@ -53,6 +56,8 @@
  * listener.
  */
 
+"use strict";
+
 Graph.Link.popovertitle = function(i) {
     return "";
 };
@@ -85,6 +90,8 @@ Graph.Node.popovercontent = function(i) {
 
 var Canvas = (function() {
 
+    var WIDTH = 960,
+        HEIGHT = 500;
         
     var NODE_RADIUS = 20;
 
@@ -97,16 +104,16 @@ var Canvas = (function() {
         linkingenabled,     /* set to false for a RO canvas. def:true */
         linkbydefault,      /* default mode: T: links; F: drag node. def: F 
                              * Press mod keys to swith mode.*/
+        changehandler,      /* Function to call on add, delete or firechange */
         addlinkcallback;    /* callback to control link to add */
-
-
+        
     /*
      * All these variables are initialized in init()
      */
     
-    var id,                 /* element id */
-        self,
+    var self,
         force,              /* d3 layout force */
+        div,                /* container div */
         svg,                /* svg element to add to div id="canvas" */
         drag_line,          /* line that appears when linking */
         g_nodes,            /* array of Graph.Nodes */
@@ -115,23 +122,21 @@ var Canvas = (function() {
         d3_nodes,           /* d3 selection of nodes */
         srcnode,            /* source node when linking */
         linking,            /* true if linking */
+        model,              /* store json model (tojson) of the canvas */ 
         drag;               /* d3 drag (used for dragging nodes) */
 
-    function init(elementId, parameters) {
+    function init(id, parameters) {
         
         self = this;
-        id = elementId;
+        
         var p = parameters || {};
-
-        var style = window.getComputedStyle(document.getElementById(id));
-        var width = style.getPropertyValue('width').split("px")[0];
-        var height = style.getPropertyValue('height').split("px")[0];
-
-        width = p.width || width;
-        height = p.height || height || 450;
+        
+        width = p.width || WIDTH;
+        height = p.height || HEIGHT;
         linkingenabled = _get(p.linkingenabled, true);
         linkbydefault = _get(p.linkbydefault, false);
         addlinkcallback = p.addlinkcallback;
+        changehandler = p.changehandler;
 
         force = d3.layout.force()
             .size([width, height])
@@ -143,7 +148,8 @@ var Canvas = (function() {
         /*
          * Append svg to canvas
          */
-        svg = d3.select("#" + id).append("svg")
+        div = d3.select("#" + id);
+        svg = div.append("svg")
             .attr("width", width)
             .attr("height", height)
             .on("mousemove", mousemove)
@@ -216,15 +222,11 @@ var Canvas = (function() {
          */
         d3.select(window)
             .on('keydown', keydown)
-            .on('keyup', keyup);
-        
+            .on('keyup', keyup)
+            .on("resize", resize);
         restart();
+        model = tojson();
         log.debug("Canvas(" + width + "," + height + ") initialized");
-    }
-
-    function resize(newHeight, newWidth){
-
-
     }
 
     function _get(value, defaultvalue) {
@@ -376,14 +378,33 @@ var Canvas = (function() {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
     }
+
     
+    function resize(width, height) {
+        if (width === undefined) {
+            width = div.node().clientWidth;
+            height = div.node().clientHeight;
+        }
+        svg
+            .attr("width", width)
+            .attr("height", height);
+        svg.select("rect")
+            .attr("width", width)
+            .attr("height", height);
+        force.size([width, height]).resume();
+
+        return [ width, height ];
+    }
+
     
     function restart() {
         
         /*
          * handle links
          */
-        d3_links = d3_links.data(links);
+        d3_links = d3_links.data(links, function(l) { 
+            return l.source.name + "-" + l.target.name; 
+        });
     
         var newlinks = d3_links.enter().append("svg:path");
         
@@ -396,8 +417,12 @@ var Canvas = (function() {
                 {
                     'container' : 'body',
                     'placement' : 'auto right',
-                    'title'     : function() { return d.popovertitle(i); },
-                    'content'   : function() { return d.popovercontent(i); },
+                    'title'     : function() { 
+                        return d.popovertitle(links.indexOf(d)); 
+                    },
+                    'content'   : function() { 
+                        return d.popovercontent(links.indexOf(d)); 
+                    },
                     'html'      : true,
                     'trigger'   : 'manual'
                 }
@@ -436,7 +461,7 @@ var Canvas = (function() {
          * TODO: Evaluate use second arg = function(d) { return d.name; }
          */
         var selection = svg.select("g.nodegroup").selectAll("g");
-        var data = selection.data(g_nodes);
+        var data = selection.data(g_nodes, function(n) { return n.name; });
         d3_nodes = data;
         
         data.select("text.nodelabel").text(function(d) { return d.label; });
@@ -462,8 +487,8 @@ var Canvas = (function() {
                 {
                     'container' : 'body',
                     'placement' : 'auto right',
-                    'title'     : function() { return d.popovertitle(i); },
-                    'content'   : function() { return d.popovercontent(i); },
+                    'title'     : function() { return d.popovertitle(d.index); },
+                    'content'   : function() { return d.popovercontent(d.index); },
                     'html'      : true,
                     'trigger'   : 'manual'
                 }
@@ -539,6 +564,7 @@ var Canvas = (function() {
     function addnode(node) {
         log.info("Adding node " + node.toString());
         g_nodes.push(node);
+        firechange();
     }
 
     function addlink(link) {
@@ -546,6 +572,7 @@ var Canvas = (function() {
         
         if (link) {
             links.push(link);
+            firechange();
         }
     }
      
@@ -594,6 +621,7 @@ var Canvas = (function() {
         _remove(g_nodes, function(n) {
             return n === node;
         });
+        firechange();
         restart();
     }
 
@@ -603,7 +631,22 @@ var Canvas = (function() {
         _remove(links, function(l) {
             return l === link;
         });
+        firechange();
         restart();
+    }
+    
+    /*
+     * Notify externally to the canvas that a node/link has changed
+     */
+    function firechange() {
+        /*
+         * Internally, this method is used also on other change methods:
+         * addnode, removenode, addlink, removelink
+         */
+        model = tojson();
+        if (changehandler !== undefined) {
+            changehandler(model);
+        }
     }
     
     var tojson = function() {
@@ -670,7 +713,6 @@ var Canvas = (function() {
     return {
         init: init,
         restart: restart,
-        resize : resize,
         getnode: getnode,
         getnodebyname: getnodebyname,
         getlink: getlink,
@@ -681,6 +723,10 @@ var Canvas = (function() {
         removenode: removenode,
         removelink: removelink,
         tojson: tojson,
-        fromjson: fromjson
+        fromjson: fromjson,
+        resize: resize,
+        firechange: firechange,
+        nodes: function() { return g_nodes.slice(); },
+        links: function() { return links.slice(); }
     };
 });

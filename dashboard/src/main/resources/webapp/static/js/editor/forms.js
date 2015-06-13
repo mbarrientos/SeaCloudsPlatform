@@ -76,7 +76,6 @@ var Forms = (function() {
         show_impl: function() {
             this.$div.find("button.btn-primary").text(
                 this.node === undefined? "Add" : "Edit");
-            // this.reset();
             this.$allsets.hide();
             $.map(this.fieldsets, function (set, i) { set.show(); });
             
@@ -101,10 +100,6 @@ var Forms = (function() {
             $.map(this.fieldsets, function(set) { set.store(node); });
             
             this.acceptcallback(node);
-            // if (isnewnode) {
-                // Canvas.addnode(node);
-            // }
-            // Canvas.restart();
             this.node = undefined;
         },
         createnode: function() {
@@ -210,26 +205,32 @@ var Forms = (function() {
      */
     var DynamicTable = {
         setup: function(tableid) {
-            //var self = this;
-            //this.id = tableid;
-            //this.counter = 0;
-            //this.$table = $(document.getElementById(tableid));
-            //this.$tbody = this.$table.find("tbody").first();
-            //var $row = this.$tbody.find("tr").first();
-            //this.rowhtml = $row[0].outerHTML;
-            //
-            ///*
-            // * change attributes to row elements
-            // */
-            //this._changerow($row);
-            //this.counter++;
-            //
-            ///*
-            // * assign default behaviour addrow to buttons with data-action="add"
-            // */
-            //this.$table.find("[data-action='add']").on("click", function() {
-            //    self.addrow();
-            //});
+            var self = this;
+            this.id = tableid;
+            this.counter = 0;
+            var elem = document.getElementById(tableid);
+            if (!elem) {
+                console.warn("DynamicTable.setup. Element[id=" + 
+                    tableid + "] not found");
+                return;
+            }
+            this.$table = $(document.getElementById(tableid));
+            this.$tbody = this.$table.find("tbody").first();
+            var $row = this.$tbody.find("tr").first();
+            this.rowhtml = $row[0].outerHTML;
+            
+            /*
+            * change attributes to row elements
+            */
+            this._changerow($row);
+            this.counter++;
+            
+            /*
+            * assign default behaviour addrow to buttons with data-action="add"
+            */
+            this.$table.find("[data-action='add']").on("click", function() {
+               self.addrow();
+            });
             return this;
         },
         addrow: function() {
