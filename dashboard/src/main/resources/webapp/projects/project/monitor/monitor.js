@@ -18,63 +18,108 @@
 'use strict';
 
 angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'chart.js'])
-    .directive('monitor', function(){
+    .directive('monitor', function () {
         return {
             restrict: 'E',
             templateUrl: 'projects/project/monitor/monitor.html',
-            controller : 'MonitorCtrl'
+            controller: 'MonitorCtrl'
         };
     })
-    .controller('MonitorCtrl', function($scope){
-        $scope.metrics = [
-            {
-                name:  "Ping",
-                description : "Application latency",
-                units: "Miliseconds",
-                enabled : false,
-                values: [90,100,80,85,95,92,90,86,90,95],
-                labels: ["18:41:22", "18:41:23","18:41:24","18:41:26", "18:41:28","18:41:29", "18:41:30",
-                    "18:41:31", "18:41:32","18:41:33"]
-            },
-            {
-                name : "CPU Usage",
-                description : "CPU used by the application",
-                units: "Percent",
-                enabled : false,
-                values: [30,44,22,60,55,65,70,60,45,35],
-                labels: ["18:41:22", "18:41:23","18:41:24","18:41:26", "18:41:28","18:41:29", "18:41:30",
-                    "18:41:31", "18:41:32","18:41:33"]
+    .controller('MonitorCtrl', function ($scope, $interval, $filter, DTOptionsBuilder, notificationService) {
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDisplayLength(3);
+        $scope.chartOptions ={
+            maintainAspectRatio: false,
+            responsive: true,
+        }
+        $scope.availableMetrics = [];
 
-            },
-            {
-                name : "Available RAM",
-                description : "Available RAM for the application",
-                units: "Megabytes",
-                enabled : false,
-                values: [330,440,220,60,30,193,260,400,800,1200],
-                labels: ["18:41:22", "18:41:23","18:41:24","18:41:26", "18:41:28","18:41:29", "18:41:30",
-                    "18:41:31", "18:41:32","18:41:33"]
+        $scope.$watch('availableMetrics', function (entities) {
+            entities.forEach(function (entity) {
 
-            },
-        ];
+                entity.metrics.forEach(function (metric) {
+                    if (metric.enabled) {
+                        if (!metric.updateFunction) {
+                            metric.data = {
+                                labels: [],
+                                values: []
+                            };
+
+                            metric.updateFunction = $interval(function () {
+
+                                $scope.Projects.getMetricValue(entity.applicationId, entity.id, metric.name).
+                                    success(function (value) {
+                                        metric.data.values.push(value);
+                                        metric.data.labels.push($filter('date')(new Date(), "shortTime"))
+                                        if (metric.data.values.length > 10) {
+                                            metric.data.values.shift();
+                                            metric.data.labels.shift();
+                                        }
+                                    }).
+                                    error(function (value) {
+                                        // Handle error
+                                    })
+                                // Update data
+                            }, 1000);
+                        }
+
+                    } else {
+                        if (metric.updateFunction) {
+                            $interval.cancel(metric.updateFunction);
+                            metric.updateFunction = undefined;
+                            metric.data = {
+                                labels: [],
+                                values: []
+                            };
+
+                        }
+                    }
+                })
+
+            })
+        }, true);
+
+        $scope.$on('$destroy', function () {
+            $scope.availableMetrics.forEach(function (entity) {
+                entity.metrics.forEach(function (metric) {
+                    if (metric.updateFunction) {
+                        $interval.cancel(metric.updateFunction);
+                    }
+                })
+            });
+        });
+
+        $scope.Projects.getAvailableMetrics($scope.project.id).
+            success(function (data) {
+                $scope.availableMetrics = data;
+            }).
+            error(function () {
+                //TODO: Handle the error better than showing a notification
+                notificationService.error("Unable to retrieve the available metrics");
+            });
 
 
         var metricSetupActive = true;
 
-        $scope.hasMetricsEnabled = function(){
+        $scope.hasMetricsEnabled = function () {
             var hasMetricsEnabled = false;
-            $scope.metrics.forEach(function(item){
-                hasMetricsEnabled = hasMetricsEnabled ||  item.enabled;
-            })
+
+            $scope.availableMetrics.forEach(function (entity) {
+                entity.metrics.forEach(function (metric) {
+                    hasMetricsEnabled = hasMetricsEnabled || metric.enabled;
+
+                })
+            });
+
             return hasMetricsEnabled;
         }
 
 
-        $scope.isMetricSettingVisible = function(){
+        $scope.isMetricSettingVisible = function () {
             return metricSetupActive;
         }
 
-        $scope.showMetricSettings = function(status){
+        $scope.showMetricSettings = function (status) {
             metricSetupActive = status;
         }
-    });
+    })
+;

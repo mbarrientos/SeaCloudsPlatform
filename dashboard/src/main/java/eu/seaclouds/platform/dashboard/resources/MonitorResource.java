@@ -50,8 +50,6 @@ public class MonitorResource {
     }
 
 
-
-
     @GET
     @Path("rules")
     public Response getMonitoringRules() {

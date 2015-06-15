@@ -205,9 +205,8 @@
 
 
 
-.metric-chart {
+.chart-container {
     height: 300px;
-    width: 400px;
 }
 /* Wizard CSS */
 /* TODO: Wizard step graph is not responsive */

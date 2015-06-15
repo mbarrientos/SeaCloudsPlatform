@@ -43,7 +43,7 @@ public class DeployerResource {
 
     private final DeployerFactory deployer;
 
-    public DeployerResource(){
+    public DeployerResource() {
         this(new DeployerFactory());
         log.warn("Using default configuration for DeployerResource");
     }
@@ -51,6 +51,7 @@ public class DeployerResource {
     public DeployerResource(DeployerFactory deployerFactory) {
         this.deployer = deployerFactory;
     }
+
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Path("applications/{id}")
@@ -135,6 +136,71 @@ public class DeployerResource {
     }
 
     @GET
+    @Path("applications/{id}/sensors")
+    public Response availableSensors(@PathParam("id") String applicationId) {
+        if (applicationId != null) {
+            try {
+                String rawEntityList = new HttpGetRequestBuilder()
+                        .host(deployer.getEndpoint())
+                        .setCredentials(deployer.getUser(), deployer.getPassword()).path("/v1/applications/" + applicationId + "/entities")
+                        .build();
+
+                JsonArray entityList = new JsonParser().parse(rawEntityList).getAsJsonArray();
+                JsonArray allMetricsList = new JsonArray();
+                for (JsonElement entity : entityList) {
+                    String entityId = entity.getAsJsonObject().getAsJsonPrimitive("id").getAsString();
+                    String entityName = entity.getAsJsonObject().getAsJsonPrimitive("name").getAsString();
+
+                    // Creating entity object
+                    rawEntityList = new HttpGetRequestBuilder()
+                            .host(deployer.getEndpoint())
+                            .setCredentials(deployer.getUser(), deployer.getPassword()).path("/v1/applications/" + applicationId + "/entities/" + entityId + "/sensors")
+                            .build();
+
+
+                    JsonArray entityMetrics = new JsonParser().parse(rawEntityList).getAsJsonArray();
+                    Iterator<JsonElement> entityMetricsIterator = entityMetrics.iterator();
+
+                    while (entityMetricsIterator.hasNext()) {
+                        JsonObject sensor = entityMetricsIterator.next().getAsJsonObject();
+                        sensor.remove("links");
+
+                        String rawSensorValue = new HttpGetRequestBuilder()
+                                .host(deployer.getEndpoint())
+                                .setCredentials(deployer.getUser(), deployer.getPassword())
+                                .path("/v1/applications/" + applicationId + "/entities/" + entityId + "/sensors/" +
+                                        sensor.get("name").getAsString())
+                                .addParam("raw", "true")
+                                .build();
+
+                        sensor.addProperty("value", rawSensorValue);
+
+
+                        if (rawSensorValue == null || rawSensorValue.isEmpty()) {
+                            entityMetricsIterator.remove();
+
+                        }
+
+                    }
+
+                    JsonObject entityJson = new JsonObject();
+                    entityJson.addProperty("id", entityId);
+                    entityJson.addProperty("name", entityName);
+                    entityJson.add("sensors", entityMetrics);
+
+                    allMetricsList.add(entityJson);
+                }
+
+                return Response.ok(allMetricsList.toString()).build();
+            } catch (IOException | URISyntaxException e) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
     @Path("metrics/value")
     public Response getMetric(@QueryParam("applicationId") String applicationId,
                               @QueryParam("entityId") String entityId,
@@ -173,6 +239,7 @@ public class DeployerResource {
                 || sensorType.equals("java.lang.Byte");
     }
 
+
     private JsonArray retrieveMetrics(String applicationId) throws IOException, URISyntaxException {
         String rawEntityList = new HttpGetRequestBuilder()
                 .host(deployer.getEndpoint())
@@ -185,15 +252,20 @@ public class DeployerResource {
         for (JsonElement entity : entityList) {
             String entityId = entity.getAsJsonObject().getAsJsonPrimitive("id").getAsString();
             String entityName = entity.getAsJsonObject().getAsJsonPrimitive("name").getAsString();
+            String entityType = entity.getAsJsonObject().getAsJsonPrimitive("type").getAsString();
 
             // Creating entity object
             JsonArray entityMetrics = retrieveMetrics(applicationId, entityId);
             JsonObject entityJson = new JsonObject();
+            entityJson.addProperty("applicationId", applicationId);
             entityJson.addProperty("id", entityId);
             entityJson.addProperty("name", entityName);
+            entityJson.addProperty("type", entityType);
             entityJson.add("metrics", entityMetrics);
 
-            allMetricsList.add(entityJson);
+            if (entityMetrics.size() > 0) {
+                allMetricsList.add(entityJson);
+            }
         }
 
         return allMetricsList;
@@ -223,14 +295,13 @@ public class DeployerResource {
     }
 
     @GET
-    @Path("metrics")
-    public Response availableMetrics(@QueryParam("applicationId") String applicationId) {
+    @Path("metrics/{id}")
+    public Response availableMetrics(@PathParam("id") String applicationId) {
         if (applicationId != null) {
             try {
                 JsonArray metricList = retrieveMetrics(applicationId);
                 return Response.ok(metricList.toString()).build();
             } catch (IOException | URISyntaxException e) {
-                log.error(e.getMessage());
                 return Response.status(Response.Status.NOT_FOUND).build();
             }
 
@@ -238,5 +309,4 @@ public class DeployerResource {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
-
 }

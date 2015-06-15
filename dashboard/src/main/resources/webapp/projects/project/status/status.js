@@ -18,7 +18,7 @@
 'use strict';
 
 
-angular.module('seacloudsDashboard.projects.project.status', [])
+angular.module('seacloudsDashboard.projects.project.status', ['datatables'])
     .directive('status', function () {
         return {
             restrict: 'E',
@@ -26,8 +26,31 @@ angular.module('seacloudsDashboard.projects.project.status', [])
             controller: 'StatusCtrl'
         };
     })
-    .controller('StatusCtrl', function ($scope) {
+    .controller('StatusCtrl', function ($scope,DTOptionsBuilder, notificationService) {
 
+        $scope.entities = undefined
+
+        $scope.Projects.getSensors($scope.project.id).
+            success(function(data){
+                $scope.entities = data;
+            }).
+            error(function(){
+                //TODO: Handle the error better than showing a notification
+                notificationService.error("Unable to retrieve the sensors");
+            });
+
+
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDisplayLength(5);
+
+        var statusSetupActive = false;
+
+        $scope.isStatusSettingVisible = function(){
+            return statusSetupActive;
+        }
+
+        $scope.showStatusSettings = function(status){
+            statusSetupActive = status;
+        }
 
         var generateTopology = function (parentEntity) {
             var parentTopology = {

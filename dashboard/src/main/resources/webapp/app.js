@@ -79,7 +79,7 @@ seacloudsDashboard.factory('UserCredentials', function ($location) {
 
 });
 
-seacloudsDashboard.factory('Projects', function ($http, $q) {
+seacloudsDashboard.factory('Projects', function ($http) {
     /* var projects = [
      {id: 1, name: 'WebChat Application', status: 'STARTING', slaStatus: 'OK'},
      {id: 2, name: 'Nuro Game Server', status: 'OK', slaStatus: 'FAILED'},
@@ -192,7 +192,73 @@ seacloudsDashboard.factory('Projects', function ($http, $q) {
         },
         removeProject: function (id) {
             return $http.delete("/api/deployer/applications/" + id);
-        }
+        },
+        getSensors: function (id) {
+            var promise = new Promise(function (resolve, reject) {
+                $http.get("/api/deployer/applications/" + id + "/sensors").
+                    success(function (sensors) {
+                        resolve(sensors);
+                    }).
+                    error(function (err) {
+                        reject(Error(err));
+                    });
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
+        getAvailableMetrics: function (applicationId) {
+            var promise = new Promise(function (resolve, reject) {
+                $http.get("/api/monitor/metrics/" + applicationId).
+                    success(function (sensors) {
+                        resolve(sensors);
+                    }).
+                    error(function (err) {
+                        reject(Error(err));
+                    });
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
+        getMetricValue: function (applicationId, entityId, metricId) {
+            var promise = new Promise(function (resolve, reject) {
+                $http.get("/api/monitor/metrics/value?applicationId=" + applicationId + "&entityId=" + entityId + "&metricId=" + metricId).
+                    success(function (value) {
+                        resolve(value);
+                    }).
+                    error(function (err) {
+                        reject(Error(err));
+                    });
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
     };
 });
 
