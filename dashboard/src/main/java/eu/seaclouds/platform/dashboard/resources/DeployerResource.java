@@ -201,8 +201,9 @@ public class DeployerResource {
         }
     }
 
-    @Path("metrics/value")
-    public Response getMetric(@QueryParam("applicationId") String applicationId,
+    @GET
+    @Path("applications/{id}/metrics/value")
+    public Response getMetric(@PathParam("id") String applicationId,
                               @QueryParam("entityId") String entityId,
                               @QueryParam("metricId") String metricId) {
 
@@ -216,6 +217,9 @@ public class DeployerResource {
                         .addParam("raw", "true")
                         .build();
 
+                if(monitorResponse == null) {
+                    monitorResponse = "0";
+                }
                 return Response.ok(monitorResponse).build();
             } catch (IOException | URISyntaxException e) {
                 log.error(e.getMessage());
@@ -295,7 +299,7 @@ public class DeployerResource {
     }
 
     @GET
-    @Path("metrics/{id}")
+    @Path("applications/{id}/metrics")
     public Response availableMetrics(@PathParam("id") String applicationId) {
         if (applicationId != null) {
             try {

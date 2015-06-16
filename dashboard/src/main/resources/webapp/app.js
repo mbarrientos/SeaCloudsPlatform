@@ -217,7 +217,7 @@ seacloudsDashboard.factory('Projects', function ($http) {
         },
         getAvailableMetrics: function (applicationId) {
             var promise = new Promise(function (resolve, reject) {
-                $http.get("/api/monitor/metrics/" + applicationId).
+                $http.get("/api/deployer/applications/" + applicationId + "/metrics").
                     success(function (sensors) {
                         resolve(sensors);
                     }).
@@ -239,7 +239,7 @@ seacloudsDashboard.factory('Projects', function ($http) {
         },
         getMetricValue: function (applicationId, entityId, metricId) {
             var promise = new Promise(function (resolve, reject) {
-                $http.get("/api/monitor/metrics/value?applicationId=" + applicationId + "&entityId=" + entityId + "&metricId=" + metricId).
+                $http.get("/api/deployer/applications/" + applicationId + "/metrics/value?entityId=" + entityId + "&metricId=" + metricId).
                     success(function (value) {
                         resolve(value);
                     }).

@@ -48,11 +48,11 @@
                             <small>{{metric.name}}<br> {{entity.name}}</small>
                         </h5>
                         <div class="chart-container">
-                                                    <span class="text-center" ng-if="metric.data.values.length == 0">
-                            <h3>
-                                <small>No data available yet</small>
-                            </h3>
-                        </span>
+                            <span class="text-center" ng-if="metric.data.values.length == 0">
+                                <h3>
+                                    <small>No data available yet</small>
+                                </h3>
+                            </span>
                             <canvas class="chart chart-line" ng-attr-id="{{entity.id + '-' + metric.name}}"
                                     series="[metric.name + ' - ' + entity.type]" data="[metric.data.values]"
                                     labels="metric.data.labels"

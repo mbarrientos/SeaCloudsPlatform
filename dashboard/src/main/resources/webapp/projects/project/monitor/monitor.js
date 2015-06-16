@@ -98,7 +98,7 @@ angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'ch
             });
 
 
-        var metricSetupActive = true;
+        var metricSetupActive = false;
 
         $scope.hasMetricsEnabled = function () {
             var hasMetricsEnabled = false;
