@@ -251,6 +251,50 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
 
             return promise;
         },
+        matchmake: function (aam) {
+            var promise = new Promise(function (resolve, reject) {
+                $http.post("/api/planner/matchmake", aam)
+                    .success(function (value) {
+                        resolve(value);
+                    })
+                    .error(function (err) {
+                        reject(Error(err));
+                    });
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
+        optimize: function (adp) {
+            var promise = new Promise(function (resolve, reject) {
+                    $http.post("/api/planner/optimize", adp)
+                    .success(function (value) {
+                        resolve(value);
+                    })
+                    .error(function (err) {
+                        reject(Error(err));
+                    })
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
         getAgreements: function (applicationId) {
             var promise = new Promise(function (resolve, reject) {
                 /*$http.get("/api/sla/agreements/" + applicationId + "/status").

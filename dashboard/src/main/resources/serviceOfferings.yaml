@@ -29,6 +29,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 55.0
+        availabilityPOC: 0.9995
+        costPOC: 0.145
     capabilities:
         host: tosca.nodes.softwareComponent
 
@@ -57,6 +60,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 30.0
+        availabilityPOC: 0.9995
+        costPOC: 0.06
     capabilities:
         host: tosca.nodes.softwareComponent
 
@@ -86,6 +92,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 40.0
+        availabilityPOC: 0.9995
+        costPOC: 0.07
     capabilities:
         host: tosca.nodes.softwareComponent
 
@@ -115,6 +124,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 50.0
+        availabilityPOC: 0.9995
+        costPOC: 0.14
     capabilities:
         host: tosca.nodes.softwareComponent
 
@@ -142,6 +154,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 10
+        availabilityPOC: 0.9995
+        costPOC: 0.013
     capabilities:
         host: tosca.nodes.softwareComponent
 
@@ -168,6 +183,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 20.0
+        availabilityPOC: 0.9995
+        costPOC: 0.26
     capabilities:
         host: tosca.nodes.softwareComponent
 
@@ -197,6 +215,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 15.0
+        availabilityPOC: 0.99861
+        costPOC: 0.032
     capabilities:
         host: tosca.nodes.softwareComponent
     
@@ -223,6 +244,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.gentoo, linux.rhel, linux.suse, linux.ubuntu, windows, windows.2008, windows.2012, freeBSD]}
         unavailable: false
+        performancePOC: 100.0
+        availabilityPOC: 0.99861
+        costPOC: 0.32
     capabilities:
         host: tosca.nodes.softwareComponent 
        
@@ -253,6 +277,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.suse, linux.ubuntu, windows, windows.2008, windows.2008ee, windows.2008r2]}
         unavailable: false
+        performancePOC: 22.0
+        availabilityPOC: 0.9995
+        costPOC: 0.03
     capabilities:
         host: tosca.nodes.softwareComponent  
         
@@ -282,6 +309,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.suse, linux.ubuntu, windows, windows.2008, windows.2008ee, windows.2008r2]}
         unavailable: false
+        performancePOC: 44.0
+        availabilityPOC: 0.9995
+        costPOC: 0.06
     capabilities:
         host: tosca.nodes.softwareComponent  
         
@@ -311,6 +341,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.suse, linux.ubuntu, windows, windows.2008, windows.2008ee, windows.2008r2]}
         unavailable: false
+        performancePOC:  66.0
+        availabilityPOC: 0.9995
+        costPOC: 0.12
     capabilities:
         host: tosca.nodes.softwareComponent    
         
@@ -340,6 +373,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.suse, linux.ubuntu, windows, windows.2008, windows.2008ee, windows.2008r2]}
         unavailable: false
+        performancePOC:  132.0
+        availabilityPOC: 0.9995
+        costPOC: 0.24
     capabilities:
         host: tosca.nodes.softwareComponent
         
@@ -369,6 +405,9 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.suse, linux.ubuntu, windows, windows.2008, windows.2008ee, windows.2008r2]}
         unavailable: false
+        performancePOC:  200.0
+        availabilityPOC: 0.9995
+        costPOC: 0.45
     capabilities:
         host: tosca.nodes.softwareComponent
         
@@ -399,5 +438,11 @@ node_templates:
         networkLinkDedicated: false
         operatingSystem: {valid_values: [linux, linux.centos, linux.debian, linux.fedora, linux.suse, linux.ubuntu, windows, windows.2008, windows.2008ee, windows.2008r2]}
         unavailable: false
+        performancePOC:  400.0
+        availabilityPOC: 0.9995
+        costPOC: 0.9
     capabilities:
         host: tosca.nodes.softwareComponent  
+        
+  latencyExternalPOC: 200.0
+  latencyInternalPOC: 2.0

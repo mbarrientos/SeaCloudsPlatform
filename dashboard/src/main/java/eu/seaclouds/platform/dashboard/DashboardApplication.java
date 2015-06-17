@@ -54,7 +54,7 @@ public class DashboardApplication extends Application<DashboardConfiguration> {
 
         environment.jersey().register(new DeployerResource(configuration.getDeployerFactory()));
         environment.jersey().register(new MonitorResource(configuration.getMonitorFactory()));
-        environment.jersey().register(new PlannerResource());
+        environment.jersey().register(new PlannerResource(configuration.getPlannerFactory()));
         environment.jersey().register(new SlaResource(configuration.getSlaFactory()));
     }
 }

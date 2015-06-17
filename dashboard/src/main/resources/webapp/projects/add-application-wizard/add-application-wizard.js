@@ -74,20 +74,33 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
         };
 
         $scope.processAAM = function () {
-            if (isValidJSON($scope.matchmakerInput)) {
-                notificationService.success('Success!!!');
-                $scope.matchmakerResult = "{}";
-
+            if (isValidYAML($scope.matchmakerInput)) {
+                $scope.Projects.matchmake($scope.matchmakerInput).
+                    success(function (adp) {
+                        $scope.matchmakerResult = adp;
+                        $scope.apply();
+                        notificationService.success('The matchmaking process finished succesfully');
+                    })
+                    .error(function () {
+                        notificationService.error('Something wrong happened');
+                    });
             } else {
-                notificationService.error('Bad syntax');
+                notificationService.error('Syntax error, the input file must be a YAML file');
             }
 
         }
 
         $scope.processADP = function () {
-            if (isValidJSON($scope.optimizerInput)) {
-                notificationService.success('Success!!!');
-                $scope.optimizerResult = "{}";
+            if (isValidYAML($scope.optimizerInput)) {
+                $scope.Projects.optimize($scope.optimizerInput)
+                    .success(function (dam) {
+                        $scope.optimizerResult = dam.toString();
+                        $scope.$apply();
+                        notificationService.success('The optimization process finished succesfully');
+                    })
+                    .error(function () {
+                        notificationService.error('Something wrong happened');
+                    });
             } else {
                 notificationService.error('Bad syntax');
             }
@@ -146,8 +159,8 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                     $scope.wizardLog += "\n\n";
                     $scope.wizardLog += "The application deployment process was triggered succesfully*. \n";
                     $scope.wizardLog += "* Please notice that although the wizard finished the application runtime" +
-                        "failures could happen please go to the status view in order to verify " +
-                        "that everything is running properly"
+                    "failures could happen please go to the status view in order to verify " +
+                    "that everything is running properly"
                     $scope.$apply()
                 }).
                 error(function (data) {
