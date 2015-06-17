@@ -18,26 +18,20 @@
 package eu.seaclouds.platform.dashboard.resources;
 
 
+import com.google.gson.JsonObject;
 import eu.seaclouds.platform.dashboard.config.PlannerFactory;
-import eu.seaclouds.platform.planner.core.Planner;
+import eu.seaclouds.platform.dashboard.http.HttpPostRequestBuilder;
 import eu.seaclouds.platform.planner.optimizer.Optimizer;
 import eu.seaclouds.platform.planner.optimizer.heuristics.SearchMethodName;
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.net.URISyntaxException;
-import java.util.List;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seaclouds.utils.toscamodel.INamedEntity;
-import seaclouds.utils.toscamodel.IToscaEnvironment;
-import seaclouds.utils.toscamodel.Tosca;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -59,17 +53,24 @@ public class PlannerResource {
     public Response matchmake(String yaml) {
         
         if (yaml != null) {
-            /*
-            String plannerResponse = new HttpPostRequestBuilder()
-                    .multipartPostRequest(true)
-                    .host(planner.getEndpoint())
-                    .path("/service")
-                    .addParam("aam_json", yaml)
-                    .build();
-                    
-                                 */
-                
-                return Response.ok(doPlan(yaml)).build();
+
+            String plannerResponse = null;
+            try {
+
+                JsonObject plannerInput = new JsonObject();
+                plannerInput.addProperty("yaml", yaml);
+                plannerResponse = new HttpPostRequestBuilder()
+                        .host(planner.getEndpoint())
+                        .path("/service")
+                        .addParam("aam_json", plannerInput.toString())
+                        .build();
+                return Response.ok(plannerResponse).build();
+
+            } catch (IOException | URISyntaxException e) {
+                return Response.serverError().build();
+            }
+
+
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
@@ -86,41 +87,5 @@ public class PlannerResource {
         } catch (URISyntaxException | IOException e) {
             return Response.serverError().build();
         }
-    }
-
-    /**
-     * Returns one IToscaEnvironment as String.
-     * NOTE: It is useful to have a string rather than a file because
-     *       we are returning some IToscaEnvironment to the dashboard
-     *       as a string wrapped into a json array.
-     *       This methos is invoked at the very end of the execution
-     *       of the web service.
-     **/
-    private static String iteToString(IToscaEnvironment ite) {
-        StringWriter sw = new StringWriter();
-        ite.writeFile(sw);
-        sw.flush();
-        return sw.toString();
-    }
-    
-    private String doPlan(String plan){
-        // TODO: This should be inside Planner logic
-        StringReader sr = new StringReader(plan);
-        IToscaEnvironment aam = Tosca.newEnvironment();
-        aam.readFile(sr, true);
-
-        Planner p = new Planner();
-
-        List<IToscaEnvironment> optOffers = p.plan(aam);
-        
-		        /* wrapping the result in a json array */
-        JSONObject responseData = new JSONObject();
-        int offerIndex = 0;
-        for(IToscaEnvironment currentOffer : optOffers) {
-            INamedEntity ee = (INamedEntity) currentOffer;
-            responseData.put("offer_" + offerIndex, iteToString(currentOffer));
-            offerIndex++;
-        }
-        return responseData.toString();
     }
 }

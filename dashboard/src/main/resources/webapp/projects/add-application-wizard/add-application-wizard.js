@@ -75,10 +75,9 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
 
         $scope.processAAM = function () {
             if (isValidYAML($scope.matchmakerInput)) {
-                $scope.Projects.matchmake($scope.matchmakerInput).
+                $scope.SeaCloudsApi.matchmake($scope.matchmakerInput).
                     success(function (adp) {
-                        $scope.matchmakerResult = adp;
-                        $scope.apply();
+                        $scope.matchmakerResult = JSON.stringify(adp);
                         notificationService.success('The matchmaking process finished succesfully');
                     })
                     .error(function () {
@@ -92,10 +91,9 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
 
         $scope.processADP = function () {
             if (isValidYAML($scope.optimizerInput)) {
-                $scope.Projects.optimize($scope.optimizerInput)
+                $scope.SeaCloudsApi.optimize($scope.optimizerInput)
                     .success(function (dam) {
-                        $scope.optimizerResult = dam.toString();
-                        $scope.$apply();
+                        $scope.optimizerResult = JSON.stringify(dam);
                         notificationService.success('The optimization process finished succesfully');
                     })
                     .error(function () {

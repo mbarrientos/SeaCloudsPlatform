@@ -55,11 +55,6 @@
         </dependency>
         <dependency>
             <groupId>eu.seaclouds-project</groupId>
-            <artifactId>planner-core</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>eu.seaclouds-project</groupId>
             <artifactId>optimizer</artifactId>
             <version>0.1.0-SNAPSHOT</version>
         </dependency>
