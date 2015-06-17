@@ -26,12 +26,16 @@
                     <li class="divider">
                         <hr>
                     </li>
-                    <li role="presentation" ng-class="{active:getSelectedTab()==1}"><a ng-click="setSelectedTab(1)">Topology
-                        & Status</a></li>
-                    <li role="presentation" ng-class="{active:getSelectedTab()==2}"><a ng-click="setSelectedTab(2)">Application
-                        Monitor</a></li>
-                    <li role="presentation" ng-class="{active:getSelectedTab()==3}"><a
-                            ng-click="setSelectedTab(3)">SLA</a></li>
+                    <li role="presentation" ng-class="{active:getSelectedTab()==1}">
+                        <a aria-controls="profile" role="tab" data-toggle="tab" ng-click="setSelectedTab(1)">Topology
+                            & Status</a></li>
+                    <li role="presentation" ng-class="{active:getSelectedTab()==2}">
+                        <a aria-controls="profile" role="tab" data-toggle="tab" ng-click="setSelectedTab(2)">Application
+                            Monitor</a>
+                    </li>
+                    <li role="presentation" ng-class="{active:getSelectedTab()==3}">
+                        <a aria-controls="profile" role="tab" data-toggle="tab" ng-click="setSelectedTab(3)">SLA</a>
+                    </li>
                     <li class="divider">
                         <hr>
                     </li>
@@ -41,9 +45,12 @@
             </div>
 
             <div class="col-lg-10">
-                <status ng-if="getSelectedTab()==1"></status>
-                <monitor ng-if="getSelectedTab()==2"></monitor>
-                <sla ng-if="getSelectedTab()==3"></sla>
+                <status role="tabpanel" class="tab-pane" ng-class="{active:getSelectedTab()==1}" id="status"
+                        ng-show="getSelectedTab()==1"></status>
+                <monitor role="tabpanel" class="tab-pane" ng-class="{active:getSelectedTab()==2}" id="monitor"
+                         ng-show="getSelectedTab()==2"></monitor>
+                <sla role="tabpanel" class="tab-pane" ng-class="{active:getSelectedTab()==3}" id="sla"
+                     ng-show="getSelectedTab()==3"></sla>
             </div>
         </div>
 

@@ -79,15 +79,7 @@ seacloudsDashboard.factory('UserCredentials', function ($location) {
 
 });
 
-seacloudsDashboard.factory('Projects', function ($http) {
-    /* var projects = [
-     {id: 1, name: 'WebChat Application', status: 'STARTING', slaStatus: 'OK'},
-     {id: 2, name: 'Nuro Game Server', status: 'OK', slaStatus: 'FAILED'},
-     {id: 3, name: 'IoT Broker', status: 'OK', slaStatus: 'OK'},
-     {id: 4, name: 'A really big application name', status: "FAILURE", slaStatus: 'OK'},
-     {id: 5, name: 'ATOS Case Study', status: "RECONFIGURE", slaStatus: 'FAILED'},
-     {id: 4, name: 'An awesome application', status: "OK", slaStatus: 'OK'}];
-     */
+seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
     return {
         getProjects: function () {
             return $http.get("/api/deployer/applications");
@@ -259,14 +251,154 @@ seacloudsDashboard.factory('Projects', function ($http) {
 
             return promise;
         },
+        getAgreements: function (applicationId) {
+            var promise = new Promise(function (resolve, reject) {
+                /*$http.get("/api/sla/agreements/" + applicationId + "/status").
+                 success(function (value) {
+                 resolve(value);
+                 }).
+                 error(function (err) {
+                 reject(Error(err));
+                 });*/
+
+
+                var fakeResponse = {
+                    "agreementId": applicationId,
+                    "name": "FakeAgreement",
+                    "context": {
+                        "agreementInitiator": "client-prueba",
+                        "expirationTime": "2014-03-07T12:00:00+0100",
+                        "templateId": "template02",
+                        "service": "service5",
+                        "serviceProvider": "AgreementResponder",
+                        "agreementResponder": "provider03"
+                    },
+                    "terms": {
+                        "allTerms": {
+                            "serviceDescriptionTerm": null,
+                            "serviceProperties": [
+                                {
+                                    "name": "ServiceProperties",
+                                    "serviceName": "ServiceName",
+                                    "variableSet": {
+                                        "variables": [
+                                            {"name": "metric1", "metric": "xs:double", "location": "metric1"},
+                                            {"name": "metric2", "metric": "xs:double", "location": "metric2"},
+                                            {"name": "metric3", "metric": "xs:double", "location": "metric3"},
+                                            {"name": "metric4", "metric": "xs:double", "location": "metric4"}
+                                        ]
+                                    }
+                                }
+                            ],
+                            "guaranteeTerms": [
+                                {
+                                    "name": "GTMetric1",
+                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
+                                    "serviceLevelObjetive": {
+                                        "kpitarget": {
+                                            "kpiName": "metric1",
+                                            "customServiceLevel": "{\"constraint\" : \"metric1 BETWEEN (0.05, 1)\"}"
+                                        }
+                                    }
+                                }, {
+                                    "name": "GTMetric2",
+                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
+                                    "serviceLevelObjetive": {
+                                        "kpitarget": {
+                                            "kpiName": "metric2",
+                                            "customServiceLevel": "{\"constraint\" : \"metric2 BETWEEN (0.1, 1)\"}"
+                                        }
+                                    }
+                                }, {
+                                    "name": "GTMetric3",
+                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
+                                    "serviceLevelObjetive": {
+                                        "kpitarget": {
+                                            "kpiName": "metric3",
+                                            "customServiceLevel": "{\"constraint\" : \"metric3 BETWEEN (0.15, 1)\"}"
+                                        }
+                                    }
+                                }, {
+                                    "name": "GTMetric4",
+                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
+                                    "serviceLevelObjetive": {
+                                        "kpitarget": {
+                                            "kpiName": "metric4",
+                                            "customServiceLevel": "{\"constraint\" : \"metric4 BETWEEN (0.2, 1)\"}"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                };
+                resolve(fakeResponse);
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        },
+        getAgreementStatus: function (applicationId) {
+            var promise = new Promise(function (resolve, reject) {
+                /*$http.get("/api/sla/agreements/" + applicationId).
+                 success(function (value) {
+                 resolve(value);
+                 }).
+                 error(function (err) {
+                 reject(Error(err));
+                 });*/
+
+                var fakeResponse = {
+                    "AgreementId": applicationId,
+                    "guaranteestatus": "FULFILLED",
+                    "guaranteeterms": [
+                        {"name": "GTMetric1", "status": "FULFILLED", "violations": []},
+                        {"name": "GTMetric2", "status": "NON_DETERMINED", "violations": []},
+                        {
+                            "name": "GTMetric3", "status": "VIOLATED", "violations": [{
+                                "uuid": "e431d68b-86ac-4c72-a6db-939e949b6c1",
+                                "datetime": "2014-08-13T10:01:01CEST",
+                                "contract_uuid": "agreement07",
+                                "service_name": "ServiceName",
+                                "service_scope": "",
+                                "metric_name": "GTMetric3",
+                                "actual_value": "0.021749629938806803"
+                            }]
+                        },
+                        {"name": "GTMetric4", "status": "FULFILLED", violations: []}
+                    ]
+                }
+                resolve(fakeResponse);
+            });
+            promise.success = function (fn) {
+                promise.then(fn);
+                return promise;
+            }
+
+            promise.error = function (fn) {
+                promise.then(null, fn);
+                return promise;
+            }
+
+            return promise;
+        }
+
     };
 });
 
 
-seacloudsDashboard.controller('GlobalCtrl', function ($scope, Page, UserCredentials, Projects) {
+seacloudsDashboard.controller('GlobalCtrl', function ($scope, Page, UserCredentials, SeaCloudsApi) {
     $scope.Page = Page;
     $scope.UserCredentials = UserCredentials;
-    $scope.Projects = Projects;
+    $scope.SeaCloudsApi = SeaCloudsApi;
 
     if (!UserCredentials.isUserAuthenticated()) {
         $location.path('/access-restricted.html');

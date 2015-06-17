@@ -24,17 +24,18 @@ angular.module('seacloudsDashboard.projects', ['ngRoute', 'ngFitText',
             templateUrl: 'projects/projects.html'
         })
     }])
-    .controller('ProjectsCtrl', function ($scope) {
+    .controller('ProjectsCtrl', function ($scope, $interval) {
 
         $scope.isViewActive = function (route) {
             return $location.path().startsWith(route);
         };
-        $scope.Page.setTitle('SeaClouds Dashboard - Projects overview');
+        $scope.Page.setTitle('SeaClouds Dashboard - SeaCloudsApi overview');
 
 
         $scope.projects = [];
+        $scope.updateFunction = undefined;
 
-        $scope.Projects.getProjects().
+        $scope.SeaCloudsApi.getProjects().
             success(function (projects) {
                 $scope.projects = projects;
             }).
@@ -43,6 +44,24 @@ angular.module('seacloudsDashboard.projects', ['ngRoute', 'ngFitText',
                 notificationService.error("Unable to retrieve the projects");
 
             })
+
+        $scope.updateFunction = $interval(function () {
+            $scope.SeaCloudsApi.getProjects().
+                success(function (projects) {
+                    $scope.projects = projects;
+                }).
+                error(function () {
+                    //TODO: Handle the error better than showing a notification
+                    notificationService.error("Unable to retrieve the projects");
+
+                })
+        }, 5000);
+
+        $scope.$on('$destroy', function () {
+            if($scope.updateFunction){
+                $interval.cancel($scope.updateFunction);
+            }
+        });
 
 
         var appUp = "The application is up";

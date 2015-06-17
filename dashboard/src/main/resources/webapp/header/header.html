@@ -26,7 +26,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/#/">
-                    <img alt="SeaClouds Logo" src="static/img/navbar-header-logo.png">
+                    <span><img alt="SeaClouds Logo" src="static/img/navbar-header-logo.png">
+                    <small>SeaClouds</small></span>
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="header-menu">
@@ -46,6 +47,7 @@
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><span us-spinner="{lines: 13, length: 6, width: 2, radius: 5, left: '0px', top: '25px'}"></span></li>
                     <li  ng-if="!isUserAuthenticated()"><a href="#/signin">Sign In <i class="fa fa-sign-in"></i></a></li>
                     <li  ng-if="isUserAuthenticated()"><a ng-click="logout()">Sign Out <i class="fa fa-sign-out"></i></a></li>
                 </ul>

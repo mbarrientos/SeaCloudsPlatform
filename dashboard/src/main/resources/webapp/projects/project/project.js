@@ -24,12 +24,12 @@ angular.module('seacloudsDashboard.projects.project', ['ngRoute', 'seacloudsDash
             templateUrl: 'projects/project/project.html'
         })
     }])
-    .controller('ProjectCtrl', function ($scope, $routeParams, $location, notificationService) {
+    .controller('ProjectCtrl', function ($scope, $routeParams, $location, $interval, notificationService) {
         $scope.Page.setTitle('SeaClouds Dashboard - Project details');
 
         $scope.project = undefined;
 
-        $scope.Projects.getProject($routeParams.project).
+        $scope.SeaCloudsApi.getProject($routeParams.project).
             success(function(project){
                 $scope.project = project;
             }).
@@ -38,9 +38,29 @@ angular.module('seacloudsDashboard.projects.project', ['ngRoute', 'seacloudsDash
             })
 
 
+        $scope.updateFunction = undefined;
+
+        $scope.updateFunction = $interval(function () {
+            $scope.SeaCloudsApi.getProject($routeParams.project).
+                success(function (project) {
+                    $scope.project = project;
+                }).
+                error(function () {
+                    //TODO: Handle the error better than showing a notification
+                    notificationService.error("Unable to retrieve the project");
+
+                })
+        }, 5000);
+
+        $scope.$on('$destroy', function () {
+            if($scope.updateFunction){
+                $interval.cancel($scope.updateFunction);
+            }
+        });
+
 
         $scope.$watch('projects', function (data) {
-            $scope.Projects.getProject($routeParams.project).
+            $scope.SeaCloudsApi.getProject($routeParams.project).
                 success(function(project){
                     $scope.project = project;
                 }).
@@ -60,7 +80,7 @@ angular.module('seacloudsDashboard.projects.project', ['ngRoute', 'seacloudsDash
         }
 
         $scope.removeProject = function () {
-            $scope.Projects.removeProject($scope.project.id).
+            $scope.SeaCloudsApi.removeProject($scope.project.id).
                 success(function () {
                     $location.path("/projects")
                     notificationService.success("The application will be removed soon");

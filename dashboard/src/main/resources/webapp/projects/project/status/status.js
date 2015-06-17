@@ -26,11 +26,11 @@ angular.module('seacloudsDashboard.projects.project.status', ['datatables'])
             controller: 'StatusCtrl'
         };
     })
-    .controller('StatusCtrl', function ($scope,DTOptionsBuilder, notificationService) {
+    .controller('StatusCtrl', function ($scope, $interval, DTOptionsBuilder, notificationService) {
 
         $scope.entities = undefined
 
-        $scope.Projects.getSensors($scope.project.id).
+        $scope.SeaCloudsApi.getSensors($scope.project.id).
             success(function(data){
                 $scope.entities = data;
             }).

@@ -18,6 +18,8 @@
 package eu.seaclouds.platform.dashboard.resources;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import eu.seaclouds.platform.dashboard.config.SlaFactory;
@@ -39,14 +41,15 @@ public class SlaResource {
 
     private final SlaFactory sla;
 
-    public SlaResource(){
+    public SlaResource() {
         this(new SlaFactory());
         log.warn("Using default configuration for SlaResource");
     }
 
-    public SlaResource(SlaFactory slaFactory){
+    public SlaResource(SlaFactory slaFactory) {
         this.sla = slaFactory;
     }
+
     @POST
     @Path("agreements")
     public Response addAgreements(String json) {
@@ -67,9 +70,9 @@ public class SlaResource {
                         .path("/seaclouds/agreements")
                         .addHeader("Accept", "application/json")
                         .build();
-                                // Change to JSON if necessary
-                                // .addHeader("Content-Type", "application/json")
-                                // .addHeader("Accept", "application/json")
+                // Change to JSON if necessary
+                // .addHeader("Content-Type", "application/json")
+                // .addHeader("Accept", "application/json")
 
 
                 // Notify the SLA when the rules are ready (Issue #56)
@@ -119,6 +122,82 @@ public class SlaResource {
         } catch (IOException | URISyntaxException e) {
             log.error(e.getMessage());
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    @GET
+    @Path("agreements/{id}")
+    public Response getAgreement(@PathParam("id") String id) {
+        if (id != null) {
+            try {
+
+                String slaResponse = new HttpGetRequestBuilder()
+                        .host(sla.getEndpoint())
+                        .path("/agreements/" + id)
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("Accept", "application/json")
+                        .build();
+
+                return Response.ok(slaResponse).build();
+
+            } catch (IOException | URISyntaxException e) {
+                log.error(e.getMessage());
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        }
+    }
+
+    @GET
+    @Path("agreements/{id}/status")
+    public Response getAgreementStatus(@PathParam("id") String id) {
+        if (id != null) {
+            try {
+
+
+                // Get guarantee status
+                String slaResponse = new HttpGetRequestBuilder()
+                        .host(sla.getEndpoint())
+                        .path("/agreements/" + id + "/guaranteestatus")
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("Accept", "application/json")
+                        .build();
+
+
+                JsonObject agreementStatusJson = new JsonParser().parse(slaResponse).getAsJsonObject();
+                JsonArray terms = agreementStatusJson.getAsJsonArray("guaranteeterms");
+
+                for (JsonElement term : terms) {
+                    String guaranteeTermName = term.getAsJsonObject().get("name").getAsString();
+                    String guaranteeTermStatus =  term.getAsJsonObject().get("status").getAsString();
+
+                    if(guaranteeTermStatus.equals("VIOLATED")){
+                        slaResponse = new HttpGetRequestBuilder()
+                                .host(sla.getEndpoint())
+                                .path("/violations?agreementId=" + id + "&guaranteeTerm=" + guaranteeTermName)
+                                .addHeader("Content-Type", "application/json")
+                                .addHeader("Accept", "application/json")
+                                .build();
+
+                        term.getAsJsonObject().add("violations", new JsonParser().parse(slaResponse));
+                    }else{
+                        term.getAsJsonObject().add("violations", new JsonArray());
+                    }
+
+
+                }
+
+                return Response.ok(agreementStatusJson.toString()).build();
+
+            } catch (IOException | URISyntaxException e) {
+                log.error(e.getMessage());
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+
         }
 
     }

@@ -46,11 +46,11 @@ angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'ch
 
                             metric.updateFunction = $interval(function () {
 
-                                $scope.Projects.getMetricValue(entity.applicationId, entity.id, metric.name).
+                                $scope.SeaCloudsApi.getMetricValue(entity.applicationId, entity.id, metric.name).
                                     success(function (value) {
                                         metric.data.values.push(value);
-                                        metric.data.labels.push($filter('date')(new Date(), "shortTime"))
-                                        if (metric.data.values.length > 10) {
+                                        metric.data.labels.push($filter('date')(new Date(), "mediumTime"))
+                                        if (metric.data.values.length > 20) {
                                             metric.data.values.shift();
                                             metric.data.labels.shift();
                                         }
@@ -58,8 +58,7 @@ angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'ch
                                     error(function (value) {
                                         // Handle error
                                     })
-                                // Update data
-                            }, 1000);
+                            }, 5000);
                         }
 
                     } else {
@@ -88,7 +87,7 @@ angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'ch
             });
         });
 
-        $scope.Projects.getAvailableMetrics($scope.project.id).
+        $scope.SeaCloudsApi.getAvailableMetrics($scope.project.id).
             success(function (data) {
                 $scope.availableMetrics = data;
             }).
@@ -98,7 +97,7 @@ angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'ch
             });
 
 
-        var metricSetupActive = false;
+        var metricSetupActive = true;
 
         $scope.hasMetricsEnabled = function () {
             var hasMetricsEnabled = false;

@@ -17,22 +17,57 @@
 
 'use strict';
 
-angular.module('seacloudsDashboard.projects.project.sla', ['jlareau.pnotify'])
-    .directive('sla', function(){
+angular.module('seacloudsDashboard.projects.project.sla', [])
+    .directive('sla', function () {
         return {
             restrict: 'E',
             templateUrl: 'projects/project/sla/sla.html',
-            controller : 'SlaCtrl'
+            controller: 'SlaCtrl'
         };
     })
-    .controller('SlaCtrl', function($scope, notificationService){
+    .controller('SlaCtrl', function ($scope, $interval, notificationService) {
 
         $scope.slaInput = "Please load your file here...";
-
         $scope.editorOptionsSLA = {
             mode: 'xml',
             lineNumbers: true
         };
+
+        $scope.agreement = undefined;
+        $scope.terms = undefined;
+
+        $scope.SeaCloudsApi.getAgreementStatus($scope.project.id).
+            success(function (value) {
+                $scope.terms = value;
+            }).
+            error(function () {
+                // Handle error
+            })
+
+        $scope.SeaCloudsApi.getAgreements($scope.project.id)
+            .success(function (agreement) {
+                $scope.agreement = agreement;
+            }).error(function () {
+                notificationService.error("An error occurred while retrieving the SLAs")
+            })
+
+
+        $scope.updateFunction = undefined;
+        $scope.updateFunction = $interval(function () {
+            $scope.SeaCloudsApi.getAgreementStatus($scope.project.id).
+                success(function (value) {
+                    $scope.terms = value;
+                }).
+                error(function (value) {
+                    // Handle error
+                })
+        }, 5000);
+
+        $scope.$on('$destroy', function () {
+            if ($scope.updateFunction) {
+                $interval.cancel($scope.updateFunction);
+            }
+        });
 
         $scope.processSLA = function () {
             if (isValidXML($scope.slaInput)) {
@@ -58,96 +93,22 @@ angular.module('seacloudsDashboard.projects.project.sla', ['jlareau.pnotify'])
         });
 
         var selectedSLA = 0;
-
         var slaSetupActive = false;
 
-        $scope.isSLASettingVisible = function(){
+        $scope.isSLASettingVisible = function () {
             return slaSetupActive;
         }
 
-        $scope.showSLASettings = function(status){
+        $scope.showSLASettings = function (status) {
             slaSetupActive = status;
         }
 
-        $scope.viewSLA = function(index){
+        $scope.viewSLATerm = function (index) {
             selectedSLA = index;
         }
 
-        $scope.getActiveSLAIndex = function(){
+        $scope.getActiveTermIndex = function () {
             return selectedSLA;
         }
-
-        $scope.slaHasBeenViolated = function(index){
-            return $scope.slas[index].violations.length != 0;
-        }
-
-        $scope.getCurrentSLA = function(){
-            return $scope.slas[selectedSLA];
-        }
-
-
-
-        $scope.slas = [
-            {
-                name : "User - Nuro",
-                terms : [
-                    {
-                        constraint : "response time < 2000ms",
-                        penalties : ["5 times a day = 10% bonus discount"]
-                    },
-                    {
-                        constraint : "day availability > 99,5% ",
-                        penalties : ["2 times a month = 10% bonus discount", "4 times a month = 50% bonus discount"]
-                    }
-                ],
-                violations : [
-                    {
-                        date : "26-03-2015",
-                        amount : 3
-                    },
-                    {
-                        date : "20-03-2015",
-                        amount : 1
-                    },
-                ],
-                penalties : [
-                    {
-                        date : "26-03-2015",
-                        definition : "10% bonus discount"
-                    }
-                ]
-
-            },
-            {
-                name : "Nuro - Amazon",
-                terms : [
-                    {
-                        constraint : "throughput < 10 MB/s ",
-                        penalties : ["2 times a day = 10% bonus discount"]
-                    },
-                ],
-                violations : [
-                ],
-                penalties : [
-                ]
-            },
-            {
-                name : "Nuro - CloudFoundry",
-                terms : [
-                    {
-                        constraint : "request per second < 1000 ",
-                        penalties : ["1 times a day = 30% bonus discount"]
-                    },
-                    {
-                        constraint : "database queries per second < 100 ",
-                        penalties : ["5 times a day = 10% bonus discount"]
-                    }
-                ],
-                violations : [
-                ],
-                penalties : [
-                ]
-            }
-        ];
 
     });

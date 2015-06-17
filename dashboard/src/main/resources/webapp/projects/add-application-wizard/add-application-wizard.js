@@ -139,7 +139,7 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
             }
 
 
-            $scope.Projects.addProject($scope.damInput, damSuccessCb, damFailCb, $scope.monitoringModelInput,
+            $scope.SeaCloudsApi.addProject($scope.damInput, damSuccessCb, damFailCb, $scope.monitoringModelInput,
                 modelSuccessCb, modelFailCb, $scope.monitoringRulesInput, rulesSuccessCb, rulesFailCb,
                 $scope.slaInput, agreementSuccessCb, agreementFailCb).
                 success(function (data) {
