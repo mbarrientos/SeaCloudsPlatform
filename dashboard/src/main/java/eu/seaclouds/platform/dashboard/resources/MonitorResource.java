@@ -53,7 +53,6 @@ public class MonitorResource {
     @GET
     @Path("rules")
     public Response getMonitoringRules() {
-
         try {
             String monitorResponse = new HttpGetRequestBuilder()
                     .host(monitor.getEndpoint())
@@ -64,7 +63,6 @@ public class MonitorResource {
         } catch (IOException | URISyntaxException e) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-
     }
 
     @POST

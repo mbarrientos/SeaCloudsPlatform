@@ -25,13 +25,14 @@ angular.module('seacloudsDashboard.projects.project.sla', [])
             controller: 'SlaCtrl'
         };
     })
-    .controller('SlaCtrl', function ($scope, $interval, notificationService) {
-
+    .controller('SlaCtrl', function ($scope, $interval, notificationService, DTOptionsBuilder) {
         $scope.slaInput = "Please load your file here...";
         $scope.editorOptionsSLA = {
             mode: 'xml',
             lineNumbers: true
         };
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDisplayLength(3);
+
 
         $scope.agreement = undefined;
         $scope.terms = undefined;
@@ -109,6 +110,10 @@ angular.module('seacloudsDashboard.projects.project.sla', [])
 
         $scope.getActiveTermIndex = function () {
             return selectedSLA;
+        }
+
+        $scope.getSlaTermConstrain = function (index) {
+            return $scope.agreement.terms.allTerms.guaranteeTerms[index].serviceLevelObjetive.kpitarget.customServiceLevel;
         }
 
     });

@@ -35,7 +35,7 @@ angular.module('seacloudsDashboard.projects.project.status', ['datatables'])
                 $scope.entities = data;
             }).
             error(function(){
-                //TODO: Handle the error better than showing a notification
+                //TODO: Handle the error better thwan showing a notification
                 notificationService.error("Unable to retrieve the sensors");
             });
 
