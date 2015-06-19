@@ -116,7 +116,8 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
 
             var promise = new Promise(function (resolveParent, rejectParent) {
                 var deployerResponse;
-
+                var xmlParser = new DOMParser();
+                var xmlSerialzier = new XMLSerializer()
                 // Start application deployment
                 $http.post("/api/deployer/applications", dam).
                     success(function (response) {
@@ -125,14 +126,18 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
 
 
                         var futureEntityId = response.entityId;
+                        var rulesXml = xmlParser.parseFromString(rules, "text/xml");
+
+                        rulesXml.getElementsByTagName("monitoringRule").forEach(function(rule){
+                            var oldId = rule.getAtribute("id");
+                            rule.setAttribute("id", oldId + "-" + futureEntityId)
+                        })
 
                         // Deploy monitor rules
-                        $http.post("/api/monitor/rules", monitoringRules).
+                        $http.post("/api/monitor/rules", xmlSerialzier.rulesXml(monitoringRules)).
                             success(function () {
                                 monitoringRulesSuccessCallback();
 
-
-                                var xmlParser = new DOMParser();
                                 var agreementsXml = xmlParser.parseFromString(agreements, "text/xml");
                                 if (agreementsXml.getElementsByTagName("wsag:AgreementId")) {
                                     var idTag = xmlDoc.createElement("wsag:AgreementId");
@@ -149,7 +154,7 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
 
                                 $http.post("/api/sla/agreements", {
                                     rules: monitoringRules,
-                                    agreements: new XMLSerializer().serializeToString(agreementsXml)
+                                    agreements: XMLSerializer().serializeToString(agreementsXml)
                                 }).
                                     success(function (err) {
                                         agreementsSuccessCallback();
