@@ -68,5 +68,56 @@
                     drawCanvas();
                 }
             };
+        })
+        .directive('topologyStatus', function ($window) {
+            return {
+                restrict: 'E',
+                scope: {topology: '='},
+                link: function (scope, elem, attrs) {
+
+                    var drawCanvas = function(){
+                        var randLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                        var uniqid = randLetter + Date.now();
+                        elem.html('<div id="' + uniqid + '" class="topology-config"></div>');
+
+                        var canvasOptions = {
+                            addlinkcallback: Editor.addlinkcallback,
+                            changehandler: function(model) {
+                                console.log("New model is " + model);
+                            }
+                        };
+
+                        if (attrs.height) {
+                            canvasOptions.height = 450;
+                        }
+
+                        if (attrs.width) {
+                            canvasOptions.width = $window.innerWidth;
+                        }
+
+                        var canvas = Canvas();
+                        canvas.init(uniqid, canvasOptions);
+
+                        Status.init(canvas);
+                        Status.fromjson(scope.topology);
+                        canvas.restart();
+                    };
+
+                    // Resize watcher
+                    angular.element($window).bind('resize', function () {
+                        scope.windowHeight = $window.innerHeight;
+                        scope.windowWidth = $window.innerWidth;
+                        //TODO: Fix resize
+
+                        scope.$apply();
+                    });
+
+                    // Visibility watcher
+                    scope.visible = (typeof scope.visible == 'undefined')? true : scope.visible;
+
+                    drawCanvas();
+                }
+            };
         });
 })(window, document, angular);
+

@@ -126,7 +126,7 @@ var Editor = (function() {
         
         var content = "";
         for (var i = 0; i < terms.length; i++) {
-            term = terms[i];
+            var term = terms[i];
             content += item(term[0], term[1]);
         }
         return "<dl>" + content + "</dl>";
