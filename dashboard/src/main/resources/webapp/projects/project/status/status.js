@@ -72,7 +72,9 @@ angular.module('seacloudsDashboard.projects.project.status', ['datatables'])
                     {
                         name: parentEntity.name,
                         label: parentEntity.name,
-                        status: parentEntity.serviceState,
+                        properties: {
+                            status: parentEntity.serviceState
+                        },
                         type : type
                     })
 
