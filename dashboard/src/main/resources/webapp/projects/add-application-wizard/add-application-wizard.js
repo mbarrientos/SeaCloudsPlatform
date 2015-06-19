@@ -96,17 +96,7 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                 $scope.wizardLog += "Starting the deployment process...";
                 $scope.wizardLog += "\t ERROR. \n";
             }
-
-            var modelSuccessCb = function () {
-                $scope.wizardLog += "Installing Monitoring Model...";
-                $scope.wizardLog += "\t Done. \n";
-            }
-
-            var modelFailCb = function () {
-                $scope.wizardLog += "Installing Monitoring Model...";
-                $scope.wizardLog += "\t ERROR. \n";
-            }
-
+            
 
             var rulesSuccessCb = function () {
                 $scope.wizardLog += "Installing Monitoring Rules...";
@@ -129,8 +119,7 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
             }
 
 
-            $scope.SeaCloudsApi.addProject($scope.damInput, damSuccessCb, damFailCb, $scope.monitoringModelInput,
-                modelSuccessCb, modelFailCb, $scope.monitoringRulesInput, rulesSuccessCb, rulesFailCb,
+            $scope.SeaCloudsApi.addProject($scope.damInput, damSuccessCb, damFailCb, $scope.monitoringModelInput, $scope.monitoringRulesInput, rulesSuccessCb, rulesFailCb,
                 $scope.slaInput, agreementSuccessCb, agreementFailCb).
                 success(function (data) {
                     $scope.wizardLog += "\n\n";
@@ -208,7 +197,7 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
                 case 3:
                     return isValidJSON($scope.matchmakerResult) && isValidJSON($scope.optimizerResult)
                 case 4:
-                    return isValidYAML($scope.damInput) && isValidJSON($scope.monitoringModelInput)
+                    return isValidYAML($scope.damInput)
                         && isValidXML($scope.monitoringRulesInput) && isValidXML($scope.slaInput)
                 case 5:
                     return true;

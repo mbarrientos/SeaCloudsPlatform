@@ -110,7 +110,6 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
             return promise;
         },
         addProject: function (dam, damSuccessCallback, damErrorCallback,
-                              monitorDam, monitorDamSuccessCallback, monitorDamErrorCallback,
                               monitoringRules, monitoringRulesSuccessCallback, monitoringRulesErrorCallback,
                               agreements, agreementsSuccessCallback, agreementsErrorCallback) {
 
@@ -124,43 +123,50 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
                         deployerResponse = response;
                         damSuccessCallback(response)
 
-                        // Deploy monitor model
-                        $http.post("/api/monitor/model", monitorDam).
+
+                        var futureEntityId = response.entityId;
+
+                        // Deploy monitor rules
+                        $http.post("/api/monitor/rules", monitoringRules).
                             success(function () {
-                                monitorDamSuccessCallback();
+                                monitoringRulesSuccessCallback();
 
-                                // Deploy monitor rules
-                                $http.post("/api/monitor/rules", monitoringRules).
-                                    success(function () {
-                                        monitoringRulesSuccessCallback();
 
-                                        $http.post("/api/sla/agreements", {
-                                            rules: monitoringRules,
-                                            agreements: agreements
-                                        }).
-                                            success(function (err) {
-                                                agreementsSuccessCallback();
-                                                resolveParent(deployerResponse);
+                                var xmlParser = new DOMParser();
+                                var agreementsXml = xmlParser.parseFromString(agreements, "text/xml");
+                                if (agreementsXml.getElementsByTagName("wsag:AgreementId")) {
+                                    var idTag = xmlDoc.createElement("wsag:AgreementId");
+                                    var idValue = xmlDoc.createTextNode(futureEntityId);
+                                    idTag.appendChild(idValue);
+                                    agreementsXml.documentElement.replaceChild(idTag, agreementsXml.getElementsByTagName("wsag:AgreementId")[0]);
+                                } else {
+                                    var idTag = xmlDoc.createElement("wsag:AgreementId");
+                                    var idValue = xmlDoc.createTextNode(futureEntityId);
+                                    idTag.appendChild(idValue);
+                                    agreementsXml.firstElementChild.appendChild(idTag)
+                                }
 
-                                            }).
-                                            error(function (err) {
-                                                //TODO: Rollback monitoring rules + monitor model + deployed app
-                                                agreementsErrorCallback();
-                                                rejectParent(err);
-                                            })
+
+                                $http.post("/api/sla/agreements", {
+                                    rules: monitoringRules,
+                                    agreements: new XMLSerializer().serializeToString(agreementsXml)
+                                }).
+                                    success(function (err) {
+                                        agreementsSuccessCallback();
+                                        resolveParent(deployerResponse);
+
                                     }).
                                     error(function (err) {
-                                        //TODO: Rollback monitor model + deployed app
-                                        monitoringRulesErrorCallback();
+                                        //TODO: Rollback monitoring rules + monitor model + deployed app
+                                        agreementsErrorCallback();
                                         rejectParent(err);
                                     })
                             }).
                             error(function (err) {
-                                //TODO: Rollback deployed app
-                                monitorDamErrorCallback();
+                                //TODO: Rollback monitor model + deployed app
+                                monitoringRulesErrorCallback();
                                 rejectParent(err);
                             })
-
                     }).
                     error(function (err) {
                         damErrorCallback();
@@ -275,7 +281,7 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
         },
         optimize: function (adp) {
             var promise = new Promise(function (resolve, reject) {
-                    $http.post("/api/planner/optimize", adp)
+                $http.post("/api/planner/optimize", adp)
                     .success(function (value) {
                         resolve(value);
                     })
@@ -408,14 +414,14 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
                         {"name": "GTMetric2", "status": "NON_DETERMINED", "violations": []},
                         {
                             "name": "GTMetric3", "status": "VIOLATED", "violations": [{
-                                "uuid": "e431d68b-86ac-4c72-a6db-939e949b6c1",
-                                "datetime": "2014-08-13T10:01:01CEST",
-                                "contract_uuid": "agreement07",
-                                "service_name": "ServiceName",
-                                "service_scope": "",
-                                "metric_name": "GTMetric3",
-                                "actual_value": "0.021749629938806803"
-                            }]
+                            "uuid": "e431d68b-86ac-4c72-a6db-939e949b6c1",
+                            "datetime": "2014-08-13T10:01:01CEST",
+                            "contract_uuid": "agreement07",
+                            "service_name": "ServiceName",
+                            "service_scope": "",
+                            "metric_name": "GTMetric3",
+                            "actual_value": "0.021749629938806803"
+                        }]
                         },
                         {"name": "GTMetric4", "status": "FULFILLED", violations: []}
                     ]
