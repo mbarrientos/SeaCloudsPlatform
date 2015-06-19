@@ -22,7 +22,7 @@ var Types = function() {
         var d3_element = d3.select(dom_element);
         
         d3_element.select("circle.node").
-            attr("class", "node " + this.status);
+            attr("class", "node " + this.properties.status);
         
         d3_element.select(".nodelabel").text(this.label);
     };
