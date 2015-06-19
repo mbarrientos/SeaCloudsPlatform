@@ -113,11 +113,56 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
                               monitoringRules, monitoringRulesSuccessCallback, monitoringRulesErrorCallback,
                               agreements, agreementsSuccessCallback, agreementsErrorCallback) {
 
-
-            var promise = new Promise(function (resolveParent, rejectParent) {
-                var deployerResponse;
+            var generateMonitoringRulesId = function(monitoringRules, entityId){
                 var xmlParser = new DOMParser();
                 var xmlSerialzier = new XMLSerializer()
+                var rulesXml = xmlParser.parseFromString(monitoringRules, "text/xml");
+                var rules = rulesXml.getElementsByTagName("monitoringRule");
+                
+                for (var i = 0; i< rules.length; i++){
+                    var rule = rules[i];
+                    var oldId = rule.getAttribute("id");
+                    var oldLabel = rule.getAttribute("label");
+                    rule.setAttribute("id", oldId + "-" + entityId);
+                    rule.setAttribute("label", oldLabel + "-" + entityId);
+
+                    var actions = rule.getElementsByTagName("action");
+                    for (var i = 0; i < actions.length; i++){
+                        var action = actions[i];
+                        // TODO: Check if this substitution is really neccesary for each type of metric (eg. sth different to OutputMetric)
+                        var parameters = action.getElementsByTagName("parameter");
+                        if(action.getAttribute("name") == "OutputMetric"){
+                            for(var j = 0; j < parameters.length; j++){
+                                var parameter = parameters[j];
+                                if(parameter.getAttribute("name") == "metric"){
+                                    var oldId = parameter.firstChild.nodeValue;
+                                    parameter.firstChild.nodeValue = oldId + "-" + entityId;
+                                }
+                            }
+                        }
+
+                    }
+
+
+                }
+
+                return xmlSerialzier.serializeToString(rulesXml);
+            }
+            
+            var generateAgreementsId = function(agreements, entityId){
+                var xmlParser = new DOMParser();
+                var xmlSerialzier = new XMLSerializer()
+
+                var agreementsXml = xmlParser.parseFromString(agreements, "text/xml");
+                agreementsXml.documentElement.setAttribute("wsag:AgreementId", entityId)
+
+                return xmlSerialzier.serializeToString(agreementsXml);
+
+            }
+            
+            var promise = new Promise(function (resolveParent, rejectParent) {
+                var deployerResponse;
+
                 // Start application deployment
                 $http.post("/api/deployer/applications", dam).
                     success(function (response) {
@@ -126,35 +171,16 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
 
 
                         var futureEntityId = response.entityId;
-                        var rulesXml = xmlParser.parseFromString(rules, "text/xml");
-
-                        rulesXml.getElementsByTagName("monitoringRule").forEach(function(rule){
-                            var oldId = rule.getAtribute("id");
-                            rule.setAttribute("id", oldId + "-" + futureEntityId)
-                        })
-
+                
                         // Deploy monitor rules
-                        $http.post("/api/monitor/rules", xmlSerialzier.rulesXml(monitoringRules)).
+                        $http.post("/api/monitor/rules", generateMonitoringRulesId(monitoringRules, futureEntityId)).
                             success(function () {
                                 monitoringRulesSuccessCallback();
 
-                                var agreementsXml = xmlParser.parseFromString(agreements, "text/xml");
-                                if (agreementsXml.getElementsByTagName("wsag:AgreementId")) {
-                                    var idTag = xmlDoc.createElement("wsag:AgreementId");
-                                    var idValue = xmlDoc.createTextNode(futureEntityId);
-                                    idTag.appendChild(idValue);
-                                    agreementsXml.documentElement.replaceChild(idTag, agreementsXml.getElementsByTagName("wsag:AgreementId")[0]);
-                                } else {
-                                    var idTag = xmlDoc.createElement("wsag:AgreementId");
-                                    var idValue = xmlDoc.createTextNode(futureEntityId);
-                                    idTag.appendChild(idValue);
-                                    agreementsXml.firstElementChild.appendChild(idTag)
-                                }
-
-
+         
                                 $http.post("/api/sla/agreements", {
                                     rules: monitoringRules,
-                                    agreements: XMLSerializer().serializeToString(agreementsXml)
+                                    agreements: generateAgreementsId(agreements, futureEntityId)
                                 }).
                                     success(function (err) {
                                         agreementsSuccessCallback();
@@ -306,88 +332,17 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
 
             return promise;
         },
-        getAgreements: function (applicationId) {
+        getAgreementStatus: function (applicationId) {
             var promise = new Promise(function (resolve, reject) {
-                /*$http.get("/api/sla/agreements/" + applicationId + "/status").
+                $http.get("/api/sla/agreements/" + applicationId + "/status").
                  success(function (value) {
-                 resolve(value);
+                    resolve(value);
                  }).
                  error(function (err) {
-                 reject(Error(err));
-                 });*/
+                    reject(Error(err));
+                 });
 
 
-                var fakeResponse = {
-                    "agreementId": applicationId,
-                    "name": "FakeAgreement",
-                    "context": {
-                        "agreementInitiator": "client-prueba",
-                        "expirationTime": "2014-03-07T12:00:00+0100",
-                        "templateId": "template02",
-                        "service": "service5",
-                        "serviceProvider": "AgreementResponder",
-                        "agreementResponder": "provider03"
-                    },
-                    "terms": {
-                        "allTerms": {
-                            "serviceDescriptionTerm": null,
-                            "serviceProperties": [
-                                {
-                                    "name": "ServiceProperties",
-                                    "serviceName": "ServiceName",
-                                    "variableSet": {
-                                        "variables": [
-                                            {"name": "metric1", "metric": "xs:double", "location": "metric1"},
-                                            {"name": "metric2", "metric": "xs:double", "location": "metric2"},
-                                            {"name": "metric3", "metric": "xs:double", "location": "metric3"},
-                                            {"name": "metric4", "metric": "xs:double", "location": "metric4"}
-                                        ]
-                                    }
-                                }
-                            ],
-                            "guaranteeTerms": [
-                                {
-                                    "name": "GTMetric1",
-                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
-                                    "serviceLevelObjetive": {
-                                        "kpitarget": {
-                                            "kpiName": "metric1",
-                                            "customServiceLevel": "{\"constraint\" : \"metric1 BETWEEN (0.05, 1)\"}"
-                                        }
-                                    }
-                                }, {
-                                    "name": "GTMetric2",
-                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
-                                    "serviceLevelObjetive": {
-                                        "kpitarget": {
-                                            "kpiName": "metric2",
-                                            "customServiceLevel": "{\"constraint\" : \"metric2 BETWEEN (0.1, 1)\"}"
-                                        }
-                                    }
-                                }, {
-                                    "name": "GTMetric3",
-                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
-                                    "serviceLevelObjetive": {
-                                        "kpitarget": {
-                                            "kpiName": "metric3",
-                                            "customServiceLevel": "{\"constraint\" : \"metric3 BETWEEN (0.15, 1)\"}"
-                                        }
-                                    }
-                                }, {
-                                    "name": "GTMetric4",
-                                    "serviceScope": {"serviceName": "ServiceName", "value": ""},
-                                    "serviceLevelObjetive": {
-                                        "kpitarget": {
-                                            "kpiName": "metric4",
-                                            "customServiceLevel": "{\"constraint\" : \"metric4 BETWEEN (0.2, 1)\"}"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                };
-                resolve(fakeResponse);
             });
             promise.success = function (fn) {
                 promise.then(fn);
@@ -401,37 +356,15 @@ seacloudsDashboard.factory('SeaCloudsApi', function ($http) {
 
             return promise;
         },
-        getAgreementStatus: function (applicationId) {
+        getAgreements: function (applicationId) {
             var promise = new Promise(function (resolve, reject) {
-                /*$http.get("/api/sla/agreements/" + applicationId).
-                 success(function (value) {
-                 resolve(value);
+                $http.get("/api/sla/agreements/" + applicationId).
+                success(function (value) {
+                    resolve(value);
                  }).
                  error(function (err) {
-                 reject(Error(err));
-                 });*/
-
-                var fakeResponse = {
-                    "AgreementId": applicationId,
-                    "guaranteestatus": "FULFILLED",
-                    "guaranteeterms": [
-                        {"name": "GTMetric1", "status": "FULFILLED", "violations": []},
-                        {"name": "GTMetric2", "status": "NON_DETERMINED", "violations": []},
-                        {
-                            "name": "GTMetric3", "status": "VIOLATED", "violations": [{
-                            "uuid": "e431d68b-86ac-4c72-a6db-939e949b6c1",
-                            "datetime": "2014-08-13T10:01:01CEST",
-                            "contract_uuid": "agreement07",
-                            "service_name": "ServiceName",
-                            "service_scope": "",
-                            "metric_name": "GTMetric3",
-                            "actual_value": "0.021749629938806803"
-                        }]
-                        },
-                        {"name": "GTMetric4", "status": "FULFILLED", violations: []}
-                    ]
-                }
-                resolve(fakeResponse);
+                    reject(Error(err));
+                 })
             });
             promise.success = function (fn) {
                 promise.then(fn);

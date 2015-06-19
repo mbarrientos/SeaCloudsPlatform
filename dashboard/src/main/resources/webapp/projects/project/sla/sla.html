@@ -39,7 +39,8 @@
                         <h3>
                             <small><strong>Name:</strong> {{agreement.name}}</small>
                             <small><strong>Service Provider:</strong> {{agreement.context.serviceProvider}}</small>
-                            <small><strong>Expiration Time:</strong> {{agreement.context.expirationTime | date}}</small>
+                            <small><strong>Expiration Time:</strong> 
+                                <span ng-show="agreement.context.expirationTime"> {{agreement.context.expirationTime | date}}</span> <span ng-show="!agreement.context.expirationTime"> No expiration date</span></small>
                         </h3>
                         <hr>
 
@@ -60,8 +61,9 @@
                         <div ng-repeat="term in terms.guaranteeterms">
                             <div ng-show="$index == getActiveTermIndex()">
                                 <h3>
-                                    <small><strong>Status:</strong>{{term.status}}</small>
-                                    <small><strong>Constrain:</strong>{{getSlaTermConstrain($index)}}</small>
+                                    <small><strong>Status:</strong> {{term.status}}</small>
+                                    <small><strong>Constrain:</strong> {{getSlaTermConstrain($index)}}</small>
+                                    <small><strong>QoS:</strong> {{getSlaTermQoS($index)}}</small>
                                 </h3>
                                 <hr>
                                 <strong>Violations</strong>

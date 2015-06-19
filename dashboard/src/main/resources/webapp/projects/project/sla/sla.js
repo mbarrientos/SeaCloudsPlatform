@@ -112,8 +112,25 @@ angular.module('seacloudsDashboard.projects.project.sla', [])
             return selectedSLA;
         }
 
+
+        $scope.getSlaTermQoS = function (index) {
+            if($scope.agreement) {
+                var obj = JSON.parse($scope.agreement.terms.allTerms.guaranteeTerms[index].serviceLevelObjetive.kpitarget.customServiceLevel);
+                return obj.qos;
+            }else{
+                return "Not available yet"
+            }
+        }
+        
         $scope.getSlaTermConstrain = function (index) {
-            return $scope.agreement.terms.allTerms.guaranteeTerms[index].serviceLevelObjetive.kpitarget.customServiceLevel;
+            
+            if($scope.agreement){
+                var obj = JSON.parse($scope.agreement.terms.allTerms.guaranteeTerms[index].serviceLevelObjetive.kpitarget.customServiceLevel);
+                return obj.constraint;
+            }else{
+                return "Not available yet"
+            }
+
         }
 
     });
