@@ -3,11 +3,17 @@ fieldset legend {
 }
 
 circle.node.running {
-    fill: #00ff00;
+    stroke: #2E9E2E;
+}
+
+circle.node.starting{
+    stroke: #2E9E2E;
+    stroke-dasharray: 5px;
 }
 
 circle.node.on-fire{
-    fill: #ff0000;
+    stroke: #F33F3F;
+
 }
 
 circle.node.frontend {

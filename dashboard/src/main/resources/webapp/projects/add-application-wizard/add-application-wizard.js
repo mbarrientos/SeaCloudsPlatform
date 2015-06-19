@@ -26,6 +26,7 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
     .controller('AddApplicationWizardCtrl', function ($scope, notificationService) {
 
         // Wizard data
+        $scope.applicationName ="";
         $scope.matchmakerInput = "Please load your file here...";
         $scope.matchmakerResult = "Please click the button to get results";
         $scope.optimizerInput = "Please load your file here...";
@@ -45,32 +46,10 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
         $scope.monitoringRulesInputFile = undefined;
         $scope.slaInputFile = undefined;
 
-
+        //TODO: Link topology with the editor
         $scope.topology = {
-            "nodes": [{
-                "name": "PHP Node",
-                "label": "PHP",
-                "type": "WebApplication",
-                "status": "running",
-                "properties": {"language": "PHP"}
-            }, {
-                "name": "Rest Component",
-                "label": "rest1",
-                "type": "RestService",
-                "status": "onfire",
-                "properties": {"language": "JAVA"}
-            }, {
-                "name": "Database1",
-                "label": "db1",
-                "type": "Database",
-                "status": "running",
-                "properties": {"category": "mysql"}
-            }],
-            "links": [{"source": "PHP Node", "target": "Rest Component", "properties": {}}, {
-                "source": "Rest Component",
-                "target": "Database1",
-                "properties": {}
-            }]
+            "nodes": [],
+            "links": []
         };
 
         $scope.processAAM = function () {
@@ -173,7 +152,7 @@ angular.module('seacloudsDashboard.projects.addApplicationWizard', ['ngRoute', '
         }
         $scope.steps = ['Application properties', 'Design topology',
             'Optimize & Plan', 'Configuration summary', 'Process Summary & Deploy'];
-        $scope.currentStep = 2;
+        $scope.currentStep = 1;
         $scope.isSelected = function (step) {
             return $scope.currentStep == step;
         };

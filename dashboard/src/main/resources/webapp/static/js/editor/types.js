@@ -44,6 +44,13 @@ var Types = function() {
     });
 
 
+    var Host = Object.create(Graph.Node).init({
+        name : "Host",
+        label : "host",
+        type : "Host",
+        icon : "\uf233",
+    });
+
     var WebApplication = Object.create(Graph.Node).init({
         name : "WebApplication",
         label : "www",
@@ -107,6 +114,7 @@ var Types = function() {
         Database: Database,
         RestService: RestService,
         NoSql : NoSql,
-        Cloud: Cloud
+        Cloud: Cloud,
+        Host : Host
     };
 }();

@@ -64,6 +64,8 @@ angular.module('seacloudsDashboard.projects.project.status', ['datatables'])
                     type = "Database"
                 }else if(parentEntity.type.search("webapp") >= 0){
                     type = "WebApplication"
+                }else if(parentEntity.type.search("SameServerEntity") >= 0){
+                    type = "Host"
                 }else {
                     type = "BasicApplication"
                 }

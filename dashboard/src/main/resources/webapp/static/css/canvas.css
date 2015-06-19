@@ -6,8 +6,9 @@ rect {
 
 circle.node {
     cursor: pointer;
-    fill: #ccc;
+    fill: white;
     stroke: black;
+    stroke-width: 2px;
 }
 
 path.link {
