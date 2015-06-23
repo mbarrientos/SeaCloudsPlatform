@@ -15,49 +15,95 @@
   ~      limitations under the License.
   -->
 <div class="row">
-    <div class="row">
-        <div class="col-lg-5">
-            <h3>
-                <small>Abstract Application Model</small>
-            </h3>
-            <ui-codemirror class="codemirror-height-sm" ui-codemirror-opts="editorOptionsInput"
-                           ng-model="$parent.matchmakerInput"></ui-codemirror>
-        </div>
-        <div class="col-lg-2 col-centered">
-                <div  ngf-select class="btn btn-default btn-primary"  ngf-multiple="false" ng-model="matchmakerInputFile"><- Load file</div>
-                <hr>
-                <button class="btn btn-default btn-primary" ng-click="processAAM()"> Process -></button>
+    <div class="col-lg-12">
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            <strong>MySQL Database</strong> <i class="fa fa-long-arrow-right"></i> <strong>Amazon
+                            EC2</strong> <i class="fa fa-check text-success pull-right"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <p>
+                            Amazon Elastic Compute Cloud (EC2) is a central part of Amazon.com's cloud
+                            computing platform, Amazon Web Services (AWS).
+                            EC2 allows users to rent virtual computers on which to run their own
+                            computer applications. EC2 allows scalable deployment
+                            of applications by providing a Web service through which a user can boot an
+                            Amazon Machine Image to create a virtual machine,
+                            which Amazon calls an "instance", containing any software desired. A user
+                            can create, launch, and terminate server instances as needed,
+                            paying by the hour for active servers, hence the term "elastic". EC2
+                            provides users with control over the geographical location
+                            of instances that allows for latency optimization and high levels of
+                            redundancy.
+                        </p>
+                        <strong><i class="fa fa-sliders"> Option summary</i></strong>
+                        <ul>
+                            <li><i class="fa fa-cubes"></i> Compute units: <span class="text-success">5 Units</span>
+                            </li>
+                            <li><i class="fa fa-flash"></i> Available Disk: <span
+                                    class="text-success">50 Gigabytes</span>
+                            </li>
+                            <li><i class="fa fa-exchange"></i> Bandwidth: <span
+                                    class="text-success">100 Megabytes/s</span>
+                            </li>
+                            <li><i class="fa fa-money"></i> Monthly costs: <span class="text-success">100 EUR</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-default">More information</button>
+                        <button type="button" class="btn btn-primary">Change target provider</button>
+                    </div>
+                </div>
             </div>
-        <div class="col-lg-5">
-            <h3>
-                <small>Abstract Deployment Plan</small>
-            </h3>
-            <ui-codemirror class="codemirror-height-sm" ui-codemirror-opts="editorOptionsOutput"
-                           ng-model="$parent.matchmakerResult" disabled></ui-codemirror>
-        </div>
-    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                           aria-expanded="false" aria-controls="collapseTwo">
+                            <strong>Java Web Application</strong> <i class="fa fa-long-arrow-right"></i>
+                            <strong>Pivotal CloudFoundry</strong> <i class="fa fa-check text-success pull-right"></i>
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel"
+                     aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        Cloud Foundry is an open source cloud computing platform as a service (PaaS)
+                        originally developed by VMware and now owned by Pivotal Software - a joint
+                        venture by EMC, VMware and General Electric. Cloud Foundry was designed
+                        and developed by a small team from Google led by Derek Collison and was
+                        originally called project B29.
 
-    <hr>
+                        <strong><i class="fa fa-sliders"> Option summary</i></strong>
+                        <ul>
+                            <li><i class="fa fa-cubes"></i> Compute units: <span class="text-success">1 Units</span>
+                            </li>
+                            <li><i class="fa fa-flash"></i> Available RAM: <span class="text-success">512 MB</span>
+                            </li>
+                            <li><i class="fa fa-exchange"></i> Bandwidth: <span
+                                    class="text-success">100 Megabytes/s</span>
+                            </li>
+                            <li><i class="fa fa-money"></i> Monthly costs: <span class="text-success">40 EUR</span>
+                            </li>
 
-    <div class="row">
-        <div class="col-lg-5">
-            <h3>
-                <small>Optimizer ADP</small>
-            </h3>
-            <ui-codemirror class="codemirror-height-sm" ui-codemirror-opts="editorOptionsInput"
-                           ng-model="$parent.optimizerInput"></ui-codemirror>
-        </div>
-        <div class="col-lg-2 col-centered">
-                <div  ngf-select class="btn btn-default btn-primary"  ngf-multiple="false" ng-model="optimizerInputFile"><- Load file</div>
-                <hr>
-                <button class="btn btn-default btn-primary" ng-click="processADP()"> Process -></button>
-        </div>
-        <div class="col-lg-5">
-            <h3>
-                <small>Deployment Application Model Candidates</small>
-            </h3>
-            <ui-codemirror class="codemirror-height-sm" ui-codemirror-opts="editorOptionsOutput"
-                           ng-model="$parent.optimizerResult" disabled></ui-codemirror>
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-default">More information</button>
+                        <button type="button" class="btn btn-primary">Change target provider</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
