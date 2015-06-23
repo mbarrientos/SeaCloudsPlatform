@@ -176,7 +176,9 @@ public class SlaResource {
                     if(guaranteeTermStatus.equals("VIOLATED")){
                         slaResponse = new HttpGetRequestBuilder()
                                 .host(sla.getEndpoint())
-                                .path("/violations?agreementId=" + id + "&guaranteeTerm=" + guaranteeTermName)
+                                .addParam("agreementId", id)
+                                .addParam("guaranteeTerm", guaranteeTermName)
+                                .path("/violations")
                                 .addHeader("Content-Type", "application/json")
                                 .addHeader("Accept", "application/json")
                                 .build();

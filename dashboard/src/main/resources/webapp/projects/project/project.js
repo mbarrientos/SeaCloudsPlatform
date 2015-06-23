@@ -28,10 +28,13 @@ angular.module('seacloudsDashboard.projects.project', ['ngRoute', 'seacloudsDash
         $scope.Page.setTitle('SeaClouds Dashboard - Project details');
 
         $scope.project = undefined;
+        
+        $scope.isLoaded = false;
 
         $scope.SeaCloudsApi.getProject($routeParams.project).
             success(function(project){
                 $scope.project = project;
+                $scope.isLoaded = true;
             }).
             error(function(){
                 notificationService.error("Cannot retrieve the project, please try it again");

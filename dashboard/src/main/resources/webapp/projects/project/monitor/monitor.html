@@ -74,12 +74,14 @@
                     <legend>{{availableMetric.name}}</legend>
                     <thead>
                     <tr>
+                        <th>Metric ID</th>
                         <th>Description</th>
                         <th>Enabled</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="metric in availableMetric.metrics">
+                        <td>{{metric.name}}</td>
                         <td>{{metric.description}}</td>
                         <td><input type="checkbox" ng-model="metric.enabled"></td>
                     </tr>

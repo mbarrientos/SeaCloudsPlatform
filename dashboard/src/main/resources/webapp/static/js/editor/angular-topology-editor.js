@@ -37,13 +37,8 @@
                             }
                         };
 
-                        if (attrs.height) {
-                            canvasOptions.height = 450;
-                        }
-
-                        if (attrs.width) {
-                            canvasOptions.width = $window.innerWidth;
-                        }
+                        canvasOptions.height = (!attrs.height)? 450 : attrs.height;
+                        canvasOptions.width = (!attrs.width)? $window.innerWidth : attrs.width;
 
                         var canvas = Canvas();
                         canvas.init(uniqid, canvasOptions);
@@ -87,13 +82,9 @@
                             }
                         };
 
-                        if (attrs.height) {
-                            canvasOptions.height = 450;
-                        }
-
-                        if (attrs.width) {
-                            canvasOptions.width = $window.innerWidth;
-                        }
+                        canvasOptions.height = (!attrs.height)? 450 : attrs.height;
+                        canvasOptions.width = (!attrs.width)? $window.innerWidth : attrs.width;
+                        
 
                         var canvas = Canvas();
                         canvas.init(uniqid, canvasOptions);

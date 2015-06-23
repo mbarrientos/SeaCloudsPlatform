@@ -15,7 +15,7 @@
   ~      limitations under the License.
   -->
 <div ng-controller="ProjectCtrl" ng-cloak>
-    <div class="container" ng-if="!project">
+    <div class="container" ng-if="!project && isLoaded">
         <span class="text-danger text-center"><h1>This application doesn't exist</h1></span>
     </div>
     <div class="container" ng-if="project">

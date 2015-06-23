@@ -26,7 +26,7 @@ angular.module('seacloudsDashboard.projects.project.monitor', ['datatables', 'ch
         };
     })
     .controller('MonitorCtrl', function ($scope, $interval, $filter, DTOptionsBuilder, notificationService) {
-        $scope.dtOptions = DTOptionsBuilder.newOptions().withDisplayLength(3);
+        $scope.dtOptions = DTOptionsBuilder.newOptions().withDisplayLength(5);
         $scope.chartOptions ={
             maintainAspectRatio: false,
             responsive: true,
